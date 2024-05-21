@@ -1,0 +1,78 @@
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.DependencyResolution.dll.config
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.DependencyResolution.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.DependencyResolution.pdb
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.DataAccess.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Services.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\EntityFramework.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\EntityFramework.SqlServer.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\StructureMap.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.Helpers.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.Mvc.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.Razor.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.WebPages.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.WebPages.Razor.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Entities.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Common.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.DataAccess.pdb
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.DataAccess.dll.config
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Services.pdb
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Services.dll.config
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\EntityFramework.xml
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\EntityFramework.SqlServer.xml
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\StructureMap.pdb
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\StructureMap.xml
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.Helpers.xml
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.Mvc.xml
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.Razor.xml
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.WebPages.xml
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.WebPages.Razor.xml
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Entities.pdb
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Entities.dll.config
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Common.pdb
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\obj\Debug\Docttors-portal.DependencyResolution.csproj.AssemblyReference.cache
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\obj\Debug\Docttors-portal.DependencyResolution.csproj.CoreCompileInputs.cache
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\obj\Debug\Docttors-portal.DependencyResolution.csproj.CopyComplete
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\obj\Debug\Docttors-portal.DependencyResolution.dll
+D:\My_Development\Docttors-portal\Docttors-portal.DependencyResolution\obj\Debug\Docttors-portal.DependencyResolution.pdb
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.DependencyResolution.dll.config
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.DependencyResolution.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.DependencyResolution.pdb
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.DataAccess.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Services.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\EntityFramework.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\EntityFramework.SqlServer.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\StructureMap.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.Helpers.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.Mvc.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.Razor.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.WebPages.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.WebPages.Razor.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Entities.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Common.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.DataAccess.pdb
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.DataAccess.dll.config
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Services.pdb
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Services.dll.config
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\EntityFramework.xml
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\EntityFramework.SqlServer.xml
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\StructureMap.pdb
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\StructureMap.xml
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.Helpers.xml
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.Mvc.xml
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.Razor.xml
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.WebPages.xml
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\System.Web.WebPages.Razor.xml
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Entities.pdb
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Entities.dll.config
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\bin\Debug\Docttors-portal.Common.pdb
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\obj\Debug\Docttors-portal.DependencyResolution.csproj.AssemblyReference.cache
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\obj\Debug\Docttors-portal.DependencyResolution.csproj.CoreCompileInputs.cache
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\obj\Debug\Docttors-portal.DependencyResolution.csproj.CopyComplete
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\obj\Debug\Docttors-portal.DependencyResolution.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.DependencyResolution\obj\Debug\Docttors-portal.DependencyResolution.pdb

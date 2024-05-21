@@ -1,0 +1,273 @@
+﻿@model Docttors_portal.Common.Models.UserRegistrationModel
+@{
+    ViewBag.Title = "DoctorRegisteration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{ if (Model.RegistrationID > 0)
+    {
+        <div class="green">
+            <p><strong>Success:</strong> User Registeration Successfull.</p>
+        </div>
+        }
+}
+@using (Html.BeginForm("DoctorRegisteration", "User", FormMethod.Post))
+{
+    <div style="max-width: 400px;">
+        <h2 class="form-signin-heading">
+            Doctor/Provider Registration
+        </h2>
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="container mt">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10">
+                    <div class="panel panel-default">
+                        <div id="registration_div" runat="server">
+                            <div class="panel-body" style="">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <em style="float: right;"><i><span class="mandatory">*</span>-Indicates required field</i></em>
+                                        <br>
+                                    </div>
+                                    <br>
+                                    <form id="fomr11" runat="server" role="form" name="myForm" enctype="multipart/form-data" novalidate="" class="ng-pristine ng-invalid ng-invalid-required ng-valid-pattern ng-valid-maxlength ng-valid-minlength">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.FirstName)
+                                                    <span class="mandatory">*</span>
+                                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.MiddleName)<span class="mandatory"></span>
+                                                    @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.LastName)<span class="mandatory">*</span>
+                                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.EmailAddress)<span class="mandatory">*</span>
+                                                    @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.Password)<span class="mandatory">*</span>
+                                                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div>
+                                                    @Html.LabelFor(m => m.CPassword)<span class="mandatory">*</span>
+                                                    @Html.TextBoxFor(m => m.CPassword, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.CPassword, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.SpecialtyId)<span class="mandatory">*</span>
+                                                    @Html.DropDownListFor(model => model.SpecialtyId, new SelectList(Model.AllSpecialty.Select(x => new { Value = x.Id, Text = x.Name }), "Value", "Text"), "--- Please Select Your Specialty ---", new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.SpecialtyId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.Position)<span class="mandatory">*</span>
+                                                    @Html.TextBoxFor(m => m.Position, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.ProfilePic)
+                                                    <input id="File1" type="file" class="form-control ng-pristine ng-untouched ng-valid" ng-model="formpic" file-model="myFile">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.AllInsaurance)<span class="mandatory">*</span>
+                                                    @Html.ListBoxFor(m => m.SelectedInsurance, new SelectList(Model.AllInsaurance.Select(x => new { Value = x.Id, Text = x.Name }), "Value", "Text", new
+                                               {
+                                                   @style = "width:200px; background-color:yellow; padding:15px;",
+                                                   @title = "Select Multiple Options",
+                                                   @align = "left",
+
+                                               }))
+                                                    @Html.ValidationMessageFor(model => model.SelectedInsurance, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6" id="otherInsuranceDiv" style="display: none">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Other Insurance
+                                                    </label><span class="mandatory">*</span>
+                                                    <input id="txtOtherInsurance" type="text" class="form-control ng-pristine ng-untouched ng-valid" ng-model="formotherinsurance" runat="server" name="otherinsurance">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <!--<label>
+                                                LICENSE <small>-Cick to search your <a href='http://www.npinumberlookup.org' target='_blank'> NPI#</a>, <a href='https://www.bon.texas.gov/forms/rninq.asp' target='_blank'>LICENSE#</a>(MEDICAL), <a href='https://public.tmb.state.tx.us/HCP_Search/SearchNotice.aspx' target='_blank'>LICENSE#</a>(NURSING)</small>
+                                            </label>-->
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.License)
+                                                    @Html.TextBoxFor(m => m.License, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.License, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.NPI)
+                                                    @Html.TextBoxFor(m => m.License, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.NPI, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.SecLicense)
+                                                    @Html.TextBoxFor(m => m.SecLicense, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.SecLicense, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.DEA)
+                                                    @Html.TextBoxFor(m => m.DEA, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.DEA, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.Address)
+                                                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.City)
+                                                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.StateId)
+                                                    @Html.DropDownListFor(model => model.StateId, new SelectList(Model.StateList, "Id", "Name"), "--- Please Select Your State ---", new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.ZipCode)
+                                                    @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.Phone1)
+                                                    @Html.TextBoxFor(m => m.Phone1, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Phone1, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.Phone2)
+                                                    @Html.TextBoxFor(m => m.Phone2, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.Fax)
+                                                    @Html.TextBoxFor(m => m.Fax, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Fax, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4" id="practiceDiv">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.PracticeName)
+                                                    @Html.TextBoxFor(m => m.PracticeName, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.PracticeLogo)
+                                                    @Html.TextBoxFor(m => m.PracticeLogo, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    @Html.CheckBoxFor(m => m.TermsAndConditions)
+                                                    allows you the provision to see and treat patients online. Please read the <a href="#Disclaimer" target="_blank"><u>disclaimers</u></a> and <a href="#PrivacyPolicy" target="_blank">  <u> privacy statement</u></a>  carefully. By checking
+                                                    the box, you authorize us, to include you as a provider and certify that the information
+                                                    you have provided is true and correct.<br />
+                                                    @Html.ValidationMessageFor(m => m.TermsAndConditions, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <input type="submit" value="Submit" class="btn btn-primary" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts
+{
+    @*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.js"></script>*@
+    <script>
+        // extend jquery range validator to work for required checkboxes
+        var defaultRangeValidator = $.validator.methods.range;
+        $.validator.methods.range = function (value, element, param) {
+            if (element.type === 'checkbox') {
+                // if it's a checkbox return true if it is checked
+                return element.checked;
+            } else {
+                // otherwise run the default validation function
+                return defaultRangeValidator.call(this, value, element, param);
+            }
+        }
+    </script>
+}

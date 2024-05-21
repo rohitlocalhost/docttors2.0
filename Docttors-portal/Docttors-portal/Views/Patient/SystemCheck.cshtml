@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "SystemCheck";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<h2>SystemCheck</h2>
+
+<div class="card">
+    <div class="card-body">
+        <!-- Nav tabs -->
+        <ul class="nav nav-pills nav-justified border" role="tablist">
+            <li class="nav-item waves-effect waves-light" role="presentation">
+                <a class="nav-link active" data-bs-toggle="tab" href="#home-1" role="tab" aria-selected="true" tabindex="-1">
+                    <span class="d-block d-sm-none"><i class="fa fa-home" aria-hidden="true"></i></span>
+                    <span class="d-none d-sm-block"><i class="fa fa-home" aria-hidden="true" style="font-size:20px;"></i></span>
+                </a>
+            </li>
+            <li class="nav-item waves-effect waves-light" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#profile-1" role="tab" aria-selected="false" tabindex="-1">
+                    <span class="d-block d-sm-none"><i class="fa fa-camera" aria-hidden="true"></i></span>
+                    <span class="d-none d-sm-block"><i class="fa fa-camera" aria-hidden="true" style="font-size:20px;"></i></span>
+                </a>
+            </li>
+            <li class="nav-item waves-effect waves-light" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#messages-1" role="tab" aria-selected="false" tabindex="-1">
+                    <span class="d-block d-sm-none"><i class="fa fa-microphone" aria-hidden="true"></i></span>
+                    <span class="d-none d-sm-block"><i class="fa fa-microphone" aria-hidden="true" style="font-size:20px;"></i></span>
+                </a>
+            </li>
+            <li class="nav-item waves-effect waves-light" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#settings-1" role="tab" aria-selected="false" tabindex="-1">
+                    <span class="d-block d-sm-none"><i class="fas fa-volume-up"></i></span>
+                    <span class="d-none d-sm-block"><i class="fas fa-volume-up" style="font-size:20px;"></i></span>
+                </a>
+            </li>
+            <li class="nav-item waves-effect waves-light" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#internet" role="tab" aria-selected="false" tabindex="-1">
+                    <span class="d-block d-sm-none"><i class="fa fa-internet-explorer" aria-hidden="true"></i></span>
+                    <span class="d-none d-sm-block"><i class="fa fa-internet-explorer" aria-hidden="true" style="font-size:20px;"></i></span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content p-3 text-muted mt-5">
+            <div class="tab-pane active show" id="home-1" role="tabpanel">
+                <div class="row mt-4">
+
+                    <div class="col-lg-7 mb-4">
+                        <h5>In order to give you the best telemedicine experience possible, Docttors would like you to follow a few simple steps to make sure your system / device is configured</h5>
+                        1. Click on <a href="#">this link</a> which opens Zoom test in a different tab <br>
+                        2. Click on the blue Join button on the Zoom test page <br>
+                        3. Once Zoom is installed, it will open the Zoom window <br>
+                    </div>
+                    <div class="col-lg-3">
+                        <img src="../../assets/images/system02.png" style="height: 100%; width: 105%; margin-top: -25px;">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="profile-1" role="tabpanel">
+                <div class="row mt-2">
+                    <div class="col-lg-7 mb-4">
+                        You will then have the option to Join the Audio Conference by the Computer or to view the details to dial in by phone. If this is your first time joining a Zoom meeting, we recommend choosing the option Test your Computer Mic &amp; Speaker. <br>
+                    </div>
+                    <div class="col-lg-3">
+                        <img src="../../assets/images/system03.png" style="height: 100%; width: 105%;">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="messages-1" role="tabpanel">
+                <div class="row mt-4">
+                    <div class="col-lg-7 mb-4">
+                        Click Test Speaker and confirm that you can hear the tone. If it does not play, you may need to adjust the volume or choose a different speaker from the drop down menu. <br>
+                    </div>
+                    <div class="col-lg-3">
+                        <img src="../../assets/images/system04.png" style="height: 100%; width: 105%;">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="settings-1" role="tabpanel">
+                <div class="row mt-4">
+                    <div class="col-lg-7 mb-4">
+                        6. Click Test Mic and speak into your microphone. Click the button Recording when you are done speaking and it will play your microphone test back to you. If you cannot hear your microphone recording, you can select another microphone from the drop down menu, or adjust the input level. <br>
+                    </div>
+                    <div class="col-lg-3">
+                        <img src="../../assets/images/system05.png" style="height: 100%; width: 105%;">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="internet" role="tabpanel">
+                <div class="row mt-4">
+                    <div class="col-lg-7 mb-4">
+                        Once you've confirm that your microphone and speakers are working properly, you can close out of the audio settings window. To continue using computer audio, now choose Join Audio Conference by Computer. You can also check the option Automatically join audio by computer when joining a meeting if you want Zoom to automatically connect to computer audio each time you join a Zoom meeting. <br>
+                    </div>
+                    <div class="col-lg-3">
+                        <img src="../../assets/images/system06.png" style="height: 100%; width: 105%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

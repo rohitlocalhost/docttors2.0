@@ -1,0 +1,39 @@
+﻿@model Docttors_portal.Common.Models.UserLogOnModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Html.EnableClientValidation(true);
+}
+
+@using (Html.BeginForm("Index", "Login", FormMethod.Post))
+{
+    <div style="max-width: 400px;">
+        <h2 class="form-signin-heading">
+            Login
+        </h2>
+        @Html.ValidationSummary(true)
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        <div>
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "error" })
+        </div>
+        <br />
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        <div>
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "error" })
+        </div>
+        <div class="checkbox" >
+            @Html.CheckBoxFor(m => m.RememberMe)
+            @Html.Label("Remember Me", new { @for = "RememberMe" })
+        </div>
+        <input type="hidden" name="ReturnUrl" value="@Request.QueryString["ReturnUrl"]" />
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <br />
+        <br />
+        <div id="dvMessage" style="display:none" class="alert alert-danger">
+            <strong>Error!</strong>
+            <span>@ViewBag.Message</span>
+        </div>
+    </div>
+}

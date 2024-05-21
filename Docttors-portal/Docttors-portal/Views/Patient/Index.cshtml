@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+@*<h2>Index</h2>*@
+
+<div class="row g-3">
+    <h4 class="mt-4 mb-2" style="position: inherit; text-align: left;color:#000;text-align:center; margin-top: -3px; margin-bottom: -24px;">WELCOME ATHARVA RAPTE</h4>
+    <div class="col-lg-12 d-flex justify-content-evenly">
+        <div class="col-md-6 col-xl-3 px-1" style="margin-top: 25px;">
+            <div class="card">
+                <img class="card-img-top" src="../assets/images/plus.png">
+                <div class="card-body">
+                    <a href="Search/s_index.html" class="btn btn-primary waves-effect waves-light w-100">Add Provider</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3 px-1" style="margin-top: 25px;">
+            <div class="card">
+                <img class="card-img-top" src="../assets/images/medical-team.png">
+                <div class="card-body">
+                    <a href="My_Provider/provider_index.html" class="btn btn-primary waves-effect waves-light w-100">Seek Online Visit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header" style="background-color: #1434A4;">
+                <h4 class="card-title" style="color: #fff;">
+                    ONLINE VISIT SCHEDULE
+                    <div class="btn-group float-end" role="group" aria-label="Basic radio toggle button group" style="color: #fff;">
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" checked="">
+                        <label style="color: #fff;" class="btn btn-sm btn-outline-primary" for="btnradio4">Messages</label>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
+                        <label style="color: #fff;" class="btn btn-sm btn-outline-primary" for="btnradio5">Invites</label>
+                    </div>
+                </h4>
+            </div>
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-editable table-nowrap align-middle table-edits" id="">
+                        <thead align="center">
+                            <tr style="cursor: pointer;">
+                                <th>Status</th>
+                                <th>Provider</th>
+                                <th>Type of Service</th>
+                                <th>Symptoms</th>
+                                <th>Date/Time Requested</th>
+                                <th>Appointment Time</th>
+                                <th>Date Treated</th>
+                                <th>Amount</th>
+                                <th>CCR</th>
+                            </tr>
+                        </thead>
+                        <tbody align="center">
+                            <tr data-id="1" style="cursor: pointer;">
+                                <td data-field="id" style="width: 80px"><button type="button" class="btn btn-success waves-effect btn-label waves-light"><i class="bx bx-check-double label-icon"></i> Treated</button></td>
+                                <td data-field="name">DoctorS Second, ANP</td>
+                                <td data-field="age"><a href="">Video Email Visit</a></td>
+                                <td data-field="gender">Low Blood Pressure</td>
+                                <td>12/31/2022 01:18:53 PM CST</td>
+                                <td>12/31/2022 05:18:53 PM CST</td>
+                                <td>01/27/2023 04:41:06 AM</td>
+                                <td>$0.00</td>
+                                <td style="width: 100px">
+                                    <a class="btn btn-outline-secondary btn-sm edit" title="Edit">CCR</a>
+                                </td>
+                            </tr>
+                            <tr data-id="1" style="cursor: pointer;">
+                                <td data-field="id" style="width: 80px"><button type="button" class="btn btn-warning waves-effect btn-label waves-light"><i class="bx bx-loader label-icon"></i> Pending</button></td>
+                                <td data-field="name">DoctorS Second, ANP</td>
+                                <td data-field="age"><a href="">Video Email Visit</a></td>
+                                <td data-field="gender">Low Blood Pressure</td>
+                                <td>12/31/2022 01:18:53 PM CST</td>
+                                <td>12/31/2022 05:18:53 PM CST</td>
+                                <td>01/27/2023 04:41:06 AM</td>
+                                <td>$0.00</td>
+                                <td style="width: 100px">
+                                    <a class="btn btn-outline-secondary btn-sm edit" title="Edit">CCR</a>
+                                </td>
+                            </tr>
+                            <tr data-id="1" style="cursor: pointer;">
+                                <td data-field="id" style="width: 80px"><button type="button" class="btn btn-warning waves-effect btn-label waves-light"><i class="bx bx-loader label-icon"></i> Pending</button></td>
+                                <td data-field="name">DoctorS Second, ANP</td>
+                                <td data-field="age"><a href="">Video Email Visit</a></td>
+                                <td data-field="gender">Low Blood Pressure</td>
+                                <td>12/31/2022 01:18:53 PM CST</td>
+                                <td>12/31/2022 05:18:53 PM CST</td>
+                                <td>01/27/2023 04:41:06 AM</td>
+                                <td>$0.00</td>
+                                <td style="width: 100px">
+                                    <a class="btn btn-outline-secondary btn-sm edit" title="Edit">CCR</a>
+                                </td>
+                            </tr>
+                            <tr data-id="1" style="cursor: pointer;">
+                                <td data-field="id" style="width: 80px"><button type="button" class="btn btn-warning waves-effect btn-label waves-light"><i class="bx bx-loader label-icon"></i> Pending</button></td>
+                                <td data-field="name">DoctorS Second, ANP</td>
+                                <td data-field="age"><a href="">Video Email Visit</a></td>
+                                <td data-field="gender">Low Blood Pressure</td>
+                                <td>12/31/2022 01:18:53 PM CST</td>
+                                <td>12/31/2022 05:18:53 PM CST</td>
+                                <td>01/27/2023 04:41:06 AM</td>
+                                <td>$0.00</td>
+                                <td style="width: 100px">
+                                    <a class="btn btn-outline-secondary btn-sm edit" title="Edit">CCR</a>
+                                </td>
+                            </tr>
+                            <tr data-id="1" style="cursor: pointer;">
+                                <td data-field="id" style="width: 80px"><button type="button" class="btn btn-warning waves-effect btn-label waves-light"><i class="bx bx-loader label-icon"></i> Pending</button></td>
+                                <td data-field="name">DoctorS Second, ANP</td>
+                                <td data-field="age"><a href="">Video Email Visit</a></td>
+                                <td data-field="gender">Low Blood Pressure</td>
+                                <td>12/31/2022 01:18:53 PM CST</td>
+                                <td>12/31/2022 05:18:53 PM CST</td>
+                                <td>01/27/2023 04:41:06 AM</td>
+                                <td>$0.00</td>
+                                <td style="width: 100px">
+                                    <a class="btn btn-outline-secondary btn-sm edit" title="Edit">CCR</a>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    <a href="homepage2.html" class="btn btn-primary waves-effect waves-light w-35 mb-2" style="left: 50%;">More</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

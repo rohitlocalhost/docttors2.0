@@ -1,0 +1,12 @@
+D:\My_Development\Docttors-portal\Docttors-portal.Common\bin\Debug\Docttors-portal.Common.dll
+D:\My_Development\Docttors-portal\Docttors-portal.Common\bin\Debug\Docttors-portal.Common.pdb
+D:\My_Development\Docttors-portal\Docttors-portal.Common\obj\Debug\Docttors-portal.Common.csproj.CoreCompileInputs.cache
+D:\My_Development\Docttors-portal\Docttors-portal.Common\obj\Debug\Docttors-portal.Common.dll
+D:\My_Development\Docttors-portal\Docttors-portal.Common\obj\Debug\Docttors-portal.Common.pdb
+D:\My_Development\Docttors-portal\Docttors-portal.Common\obj\Debug\Docttors-portal.Common.csproj.AssemblyReference.cache
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Common\bin\Debug\Docttors-portal.Common.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Common\bin\Debug\Docttors-portal.Common.pdb
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Common\obj\Debug\Docttors-portal.Common.csproj.AssemblyReference.cache
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Common\obj\Debug\Docttors-portal.Common.csproj.CoreCompileInputs.cache
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Common\obj\Debug\Docttors-portal.Common.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Common\obj\Debug\Docttors-portal.Common.pdb

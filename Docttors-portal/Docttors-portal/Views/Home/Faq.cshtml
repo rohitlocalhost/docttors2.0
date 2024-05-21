@@ -1,0 +1,1091 @@
+﻿
+@{
+    ViewBag.Title = "FAQ's";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>@ViewBag.Title</h2>
+@*<h3>@ViewBag.Message</h3>*@
+<style>
+    /*******************************
+    * Does not work properly if "in" is added after "collapse".
+    *******************************/
+    .panel-group .panel {
+        border-radius: 0;
+        box-shadow: none;
+        border-color: #EEEEEE;
+    }
+
+    .panel-default > .panel-heading {
+        padding: 0;
+        border-radius: 0;
+        color: #212121;
+        background-color: #FAFAFA;
+        border-color: #EEEEEE;
+    }
+
+    .panel-title {
+        font-size: 14px;
+    }
+
+        .panel-title > a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+        }
+
+    .more-less {
+        float: right;
+        color: #212121;
+    }
+
+    .panel-default > .panel-heading + .panel-collapse > .panel-body {
+        border-top-color: #EEEEEE;
+    }
+
+    /* ----- v CAN BE DELETED v ----- */
+    /*    body {
+            background-color: #26a69a;
+        }
+
+        .demo {
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }*/
+</style>
+<div class="container demo">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading1">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT IS TELEHEALTH/TELEMEDICINE?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
+                <div class="panel-body">
+                    The federal Health Resources and Services Administration (HRSA) defines telehealth as: The use of electronic information and telecommunications technologies to support long-distance clinical health care, patient and professional health-related education, public health and health administration. Telemedicine is used when referring to traditional clinical diagnosis and monitoring that is delivered by technology. It is not intended to replace in-person care but is instead used to optimize the use of provider resources in order to increase patient access to care. Physicians and other healthcare providers practicing telemedicine are held to the same legal guidelines as when providing in-person care.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading2">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT IS REMOTE PATIENT MONITORING?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
+                <div class="panel-body">
+                    Remote patient monitoring (RPM) uses technical equipment to collect medical and other health data from patients. It is then delivered electronically to a practitioner for review.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading3">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT IS ONLINE CONSULTATION ?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading3">
+                <div class="panel-body">
+                    Online Consultation (one type of a “store and forward” visit) allows physicians to communicate with patients when they pose a clinical question, or request a clinical consultation. When conducting an Online Visit, Docttors.com guides you through an interactive interview process appropriate for your specific symptoms, and then builds a succinct message to the doctor based upon the answers you provide. Online Consultation complies with national liability carrier (eRisk) guidelines, often used by the insurance companies to enhance their performance through better risk and capital management and proposed HIPAA standards.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading4">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT IS A SYNCHRONOUS VISIT?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+                <div class="panel-body">
+                    Remote patient monitoring (RPM) uses technical equipment to collect medical and other health data from patients. It is then delivered electronically to a practitioner for review.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading5">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT IS ASYNCHRONOUS VISIT (STORE-AND-FORWARD)?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+                <div class="panel-body">
+                    Online Consultation (one type of a “store and forward” visit) allows physicians to communicate with patients when they pose a clinical question, or request a clinical consultation. When conducting an Online Visit, Docttors.com guides you through an interactive interview process appropriate for your specific symptoms, and then builds a succinct message to the doctor based upon the answers you provide. Online Consultation complies with national liability carrier (eRisk) guidelines, often used by the insurance companies to enhance their performance through better risk and capital management and proposed HIPAA standards.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading6">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT IS MHEALTH?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading6">
+                <div class="panel-body">
+                    Remote patient monitoring (RPM) uses technical equipment to collect medical and other health data from patients. It is then delivered electronically to a practitioner for review.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading7">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse7" aria-expanded="false" aria-controls="collapse7">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT ARE THE REGULATIONS?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse7" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading7">
+                <div class="panel-body">
+                    Online Consultation (one type of a “store and forward” visit) allows physicians to communicate with patients when they pose a clinical question, or request a clinical consultation. When conducting an Online Visit, Docttors.com guides you through an interactive interview process appropriate for your specific symptoms, and then builds a succinct message to the doctor based upon the answers you provide. Online Consultation complies with national liability carrier (eRisk) guidelines, often used by the insurance companies to enhance their performance through better risk and capital management and proposed HIPAA standards.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading8">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse8" aria-expanded="false" aria-controls="collapse8">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHO CAN PROVIDE CARE VIA TELEMEDICINE?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse8" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading8">
+                <div class="panel-body">
+                    Physicians, Clinical Nurse Specialists, Nurse Practitioners, Physicians Assistants, Certified Nurse Midwifes, Licensed Professional Counselors, Licensed Marriage and Family Therapists, Licensed Clinical Social Workers, Psychologists, Licensed Psychological Associates, Provisionally Licensed Psychologists, and Licensed Dieticians. If doctors are providing remote care to patients through the new Medicare Chronic Care Management Program, additional providers like Registered Nurses and MAs may also provide care.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading9">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse9" aria-expanded="false" aria-controls="collapse9">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT IS DOCTTORS?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse9" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading9">
+                <div class="panel-body">
+                    Docttors.com offers the next generation Private Label solution for on-demand healthcare. Our cloud based, HIPAA compliant, Virtual Visit software makes it possible for medical professionals to connect with patients and share clinical data, such as patients'; medical records, lab results, hand-held medical devices(for real-time risk assessments), wellness advice, diagnosis and treatment. It increases access to healthcare, provides value, and improves health outcomes.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading10">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse10" aria-expanded="false" aria-controls="collapse10">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT ARE THE FEATURES?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse10" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading10">
+                <div class="panel-body">
+                    Docttors.com is a Virtual Exam Room, web-based service that is HIPAA and eRisk compliant. The Telehealth Software is designed to see and treat non-urgent, follow-up and chronic patients with the use of virtual visit software and/or with the use of integrated digital diagnostic equipment. It offers five basic services: (1) Ask a Doctor, (2) Video Email, (3) Video Chat, (4) Follow Ups, and (5) Rx refills. All modalities have built-in clinical templates and questionnaires.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading11">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse11" aria-expanded="false" aria-controls="collapse11">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        IS DOCTTORS AVAILABLE AS A PRIVATE LABEL?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse11" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading11">
+                <div class="panel-body">
+                    Yes, Docttors.com is available to doctors as a Private Label, exclusively for their brand.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading12">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse12" aria-expanded="false" aria-controls="collapse12">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHERE IS DOCTTORS AVAILABLE ?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse12" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading12">
+                <div class="panel-body">
+                    Docttors.com is available through your doctor's office anywhere in the United States. Doctors can enroll in the program based on the state where they are located. We make sure that each doctor is fully licensed to practice medicine in your state. It is available 24 hours a day, 7 days a week, and 365 days a year, even on holidays. Use Docttors anytime you have a non-emergency medical condition, are unable to see your primary care provider, or when you simply prefer a convenient, cost effective alternative to the emergency room, urgent care center, or clinic.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading13">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse13" aria-expanded="false" aria-controls="collapse13">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        HOW DO I SIGN UP FOR DOCTTORS OR ACTIVATE MY ACCOUNT ?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse13" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading13">
+                <div class="panel-body">
+                    You can sign up or activate your account through your doctor. Ask if your doctor if (s)he offers offers Online Patient Care.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading14">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse14" aria-expanded="false" aria-controls="collapse14">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        CAN DOCTTORS BE ACCESSED ON MOBILE DEVICES?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse14" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading14">
+                <div class="panel-body">
+                    Yes, Docttors.com can be accessed on most mobile devices, with an Internet connection.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading15">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse15" aria-expanded="false" aria-controls="collapse15">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        HOW IS DOCTTORS DIFFERENT THAN REGULAR E-MAIL?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse15" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading15">
+                <div class="panel-body">
+                    Docttors.com messages differ from regular e-mail messages because they are securely and confidentially transmitted, and structured to the specific needs of doctor-patient interaction. Unlike e-mail, which relies on multiple file servers distributed across the Internet. Neighbors Telehealth uses a single, centrally managed, secure database, which ensures that messages cannot be intercepted, deleted, copied, or altered in any way. Docttors.com provides for the creation of templates physicians can use for frequently asked administrative and health-related questions. This allows physicians to add links directing patients to Docttors.com’s Medical Library of National Institute of Health.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading16">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse16" aria-expanded="false" aria-controls="collapse16">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        HOW DOES THE PORTAL HELP PROVIDERS CARE FOR PATIENTS?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse16" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading16">
+                <div class="panel-body">
+                    Docttors.com is the premier physician practice-patient communications nerk on the Internet. It provides secure communications and integrated Web-based services for the physician’s practice. Features of the portal allow for 1) secure messaging (text, picture, and video) 2) live video chat encounters 3) medical templates 4) e-prescribe using SureScripts and 5) Scheduling.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading17">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse17" aria-expanded="false" aria-controls="collapse17">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT IS MY BENEFIT?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse17" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading17">
+                <div class="panel-body">
+                    Docttors.com offers consumers a secure access to their physicians. For doctors it provides access to new patients, provides better service to their existing patients and new revenue stream.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading18">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse18" aria-expanded="false" aria-controls="collapse18">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        IS DOCTTORS APPROPRIATE FOR EVERY MEDICAL CONDITION?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse18" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+                <div class="panel-body">
+                    No. Docttors.com is designed to handle non-emergency medical issues. You should not use Docttors.com if you are experiencing a medical emergency. In case of a medical life threatening emergency, you should dial 911 immediately. While Docttors.com is not intended to replace your primary care doctor for common or chronic conditions, a virtual doctor’s appointment can sometimes substitute a doctor’s office, urgent care, or an emergency room visit.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading19">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse19" aria-expanded="false" aria-controls="collapse19">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        DOES IT REPLACE MY PHYSICIAN?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse19" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading19">
+                <div class="panel-body">
+                    No. Docttors.com is designed to keep you within your medical home. Efficient and quality healthcare requires the involvement of your healthcare provider. Docttors.com is a tool your doctor can use to improve the care delivered to you.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading20">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse20" aria-expanded="false" aria-controls="collapse20">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        HOW CAN CARE BE DELIVERED BY PHONE OR WEBCAM, WITHOUT SEEING THE PATIENT IN PERSON?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse20" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading20">
+                <div class="panel-body">
+                    Many people associate a doctor's care with a doctor's touch, but the fact is that most common ailments and issues don't require touch at all. They do require clinical excellence, great communication skills and personal attention. Docttors.com at home excels at all . Providers are rigorously trained to deliver care outside the traditional clinic setting and spend as much time as necessary with a patient to ensure they deliver the most appropriate and thorough care available.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading21">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse21" aria-expanded="false" aria-controls="collapse21">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        IS THERE A MINIMUM AGE REQUIREMENT?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse21" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading21">
+                <div class="panel-body">
+                    Yes. Patients must be at least 18 years of age. Dependents can be minors, however a guardian must conduct the medical consultation on behalf of an underage dependent that has an account.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading22">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse22" aria-expanded="false" aria-controls="collapse222">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        CAN DOCTORS PROVIDE TELEMEDICINE SERVICES TO NEW PATIENTS?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse22" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading22">
+                <div class="panel-body">
+                    On May 27; 2017, Governor Abbott signed into law SB-1107 allowing any doctor to see and treat any patient remotely in the State of Texas. Each state has its own legislation that governs the use of telemedicine.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading23">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse23" aria-expanded="false" aria-controls="collapse23">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        IS THE STANDARD OF CARE THE SAME FOR TELEHEALTH CARE AS IT IS FOR IN-PERSON CARE?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse23" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading23">
+                <div class="panel-body">
+                    Yes, the Texas Medical Board holds providers to the same standard of care for remote consultations as it does for in-person visits.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading24">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse24" aria-expanded="false" aria-controls="collapse24">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        HOW IS NEIGHBORS TELEHEALTH APPROACH DIFFERENT THAN OTHER TELEHEALTH PROVIDERS?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse24" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading24">
+                <div class="panel-body">
+                    We pride ourselves on understanding your needs and customizing a portal to accomplish your goals. We start with a face to face needs assessment to understand your workflow and gather all data to make sure we understand your objectives. We implement your requirements methodically and with great detail. We provide comprehensive training to all staff. We furnish you with a policy and procedure manual, as well as a go-live manual. We also provide technical support for a period of time, after your go-live date, to ensure a smooth implementation.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading25">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse25" aria-expanded="false" aria-controls="collapse25">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT IS A MEDICAL CONDITIONS LIBRARY?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse25" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading25">
+                <div class="panel-body">
+                    The most authoritative source for the information that you are looking for is your own primary care physician. Docttors.com maintains a library of healthcare information brought to you by the nation's leading medical libraries, and the National Institutes of Health (NIH) which can be accessed by going to www.Docttors.com. However, these articles are not intended to be a substitute for professional medical advice, diagnosis or treatment. If you wish to locate a physician in your area who is using the Docttors.com Service, please visit our Physician Finder at Docttors.com/Find Doctor.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading26">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse26" aria-expanded="false" aria-controls="collapse26">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        IS DOCTTORS SERVICES SECURE?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse26" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading26">
+                <div class="panel-body">
+                    Docttors.com is HIPAA compliant. With highly secure, built-in 128-bit, secure-socket layer encryption technology, Docttors.com protects the privacy and confidentiality of personal information transmitted through its doctor-patient messaging service.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading27">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse27" aria-expanded="false" aria-controls="collapse27">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        IS PATIENT PRIVACY PROTECTED ON THE WEB?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse27" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading27">
+                <div class="panel-body">
+                    Yes, we employ sophisticated hardware and software technology to keep your healthcare data safe and secure and do not share individually identifiable information exchanged or stored with third parties.
+                    Embedded Secure Sockets Layer (SSL) technology, a protocol that delivers server authentication, data encryption, and message integrity ensures that messages can only be read by the registered doctor, the doctor's authorized staff, and the patient through secure login ID and password. We meet all current CMS (Centers for Medicare and Medicaid Services) Internet Security requirements, and employ a dedicated HIPAA officer to monitor changes in and enforcement of the pending HIPAA regulations.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading28">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse28" aria-expanded="false" aria-controls="collapse28">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        IS THE PORTAL HIPAA COMPLIANT?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse28" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading28">
+                <div class="panel-body">
+                    With highly secure, built-in 128-bit, secure-socket layer encryption technology, Neighbors Telehealth protects the privacy and confidentiality of personal information transmitted through its doctor-patient messaging service.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading29">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse29" aria-expanded="false" aria-controls="collapse29">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT IS A PRIVATE LABEL?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse29" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading29">
+                <div class="panel-body">
+                    Private label is the Physician’s Practice Name (or whatever domain name the doctor(s) select) to provide Online Patient Care. It provides a license to use the intellectual property software created by Neighbors Telehealth. The URL used on the private label will be whatever you chose (Your URL can be http://your current website or your LastName-FirstName.com).
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading30">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse30" aria-expanded="false" aria-controls="collapse30">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        HOW WILL HEALTHCARE INSTITUTIONS, PROVIDERS, AND PATIENTS BENEFIT FROM NEIGBHORS TELEHEALTH?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse30" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading30">
+                <div class="panel-body">
+                    Neighbors Telehealth can help grow and optimize and grow any healthcare practice in a value based care or fee for service model. Our complete understanding of healthcare and telehealth will allow you to optimize your workflow, decrease uncompensated effort, capture unrecognized revenue, obtain patients at minimal cost of acquisition, and keep in touch with your current patients while minimizing complications and liability.
+                </div>s
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading31">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse31" aria-expanded="false" aria-controls="collapse31">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        DO ALL THE DOCTORS LISTED IN YOUR "FIND DOCTORS" HAVE A CYBER-OFFICE/WEBSITE FOR US TO COMMUNICATE?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse31" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading31">
+                <div class="panel-body">
+                    No. Give us your doctor's name and we'll request for them to join Docttors.com We'll notify you via e-mail when your doctor has registered with us.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading32">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse32" aria-expanded="false" aria-controls="collapse32">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT IF MY DOCTOR IS NOT AT DOCTTORS?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse32" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading32">
+                <div class="panel-body">
+                    Select a doctor and send us their name, address, phone, fax and email and we will add him/her to the list.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading33">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse33" aria-expanded="false" aria-controls="collapse33">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT IF I WANT TO CHANGE MY DOCTOR?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse33" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading33">
+                <div class="panel-body">
+                    You can discontinue your Docttors membership at any time. Once your membership is terminated, all information is stored in your account up to the termination date. A "snapshot" of the information remains accessible to your doctor, but you will no longer be able to communicate with your physician through Docttors (or vice versa). All previous messages sent or received for this patient is stored in the Docttors account.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading34">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse34" aria-expanded="false" aria-controls="collapse34">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        HOW SHOULD DOCTORS LET PATIENT KNOW THEY ARE AVAILABLE ONLINE?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse34" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading34">
+                <div class="panel-body">
+                    The most powerful tool is educating your patients about your online services when they visit the office. Doctors should place posters/flyers on the walls to encourage patients to ask questions, or sign up, during their visit to the office.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading35">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse35" aria-expanded="false" aria-controls="collapse35">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        CAN DOCTORS COMMUNICATE WITH COLLEAGUES USING THIS SERVICE?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse35" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading35">
+                <div class="panel-body">
+                    Yes. As a Docttors member, any doctor may securely message members of their own medical group, as well as any other Docttors user. The doctor can also use the Docttors online referral service to send an electronic referral to any desired specialist — regardless of whether they are a Docttors member.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading36">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse36" aria-expanded="false" aria-controls="collapse36">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHAT IF THE DOCTOR'S COLLEAGUES OR REFERRALS HAVEN'T SIGNED UP FOR THIS SERVICE?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse36" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading36">
+                <div class="panel-body">
+                    The doctor can send secure referral messages (password protected) to any provider — regardless of whether they're registered with Docttors.com. We'll send referrals to any non-Docttors.com providers, who the doctor specifies, notifying them of a waiting message. For unregistered providers, we automatically create a 'guest account', enabling the recipient to retrieve, respond to, and print the referral message using Docttors.com.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading37">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse37" aria-expanded="false" aria-controls="collapse37">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHEN WOULD I USE DOCTTORS.COM INSTEAD OF MY OWN DOCTORS?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse37" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading37">
+                <div class="panel-body">
+                    According to experts, 70% of visits to the doctor’s office or ER are considered unnecessary or preventable. While care may be necessary; the time for travel, time away from work, and long visit waits can be avoided. You can choose to use telehealth services for a more convenient and cost-effective alternative to the high cost of a visit to a doctor’s office, urgent care facility or the emergency room.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading38">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse38" aria-expanded="false" aria-controls="collapse38">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        WHEN TO USE DOCTTORS.COM?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse38" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading38">
+                <div class="panel-body">
+                    If you're considering visiting an ER or urgent care center for a non-emergency medical issue. If your primary care physician is not available. To request prescriptions or get refills. If you are traveling and in need of medical care, or after normal business hours; nights, weekends and even holidays.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading39">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse39" aria-expanded="false" aria-controls="collapse39">
+                        <i class="more-less glyphicon glyphicon-plus"></i>
+                        HOW DO I SEND A CONSULT WITH MY DOCTOR USING DOCTTORS.COM?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse39" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading39">
+                <div class="panel-body">
+                    Once you successfully register with Docttors.com, and your doctor agrees to communicate with you through the service, easy-to-use, structured templates allow you to consult your doctor about specific health symptoms, request a prescription refill, request appointments, receive lab or test results, ask a simple question, or access health education information - depending on the types of Docttors.com services your doctor offers.
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading40">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse40" aria-expanded="false" aria-controls="collapse40">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            HOW LONG IS EACH CONSULTATION?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse40" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading40">
+                    <div class="panel-body">
+                        Standard medical consultations with a physician take approximately five minutes and most visits are completed within one to  hours.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading41">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse41" aria-expanded="false" aria-controls="collapse41">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            DO DOCTORS HAVE ACCESS TO MY HEALTH INFORMATION?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse41" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading41">
+                    <div class="panel-body">
+                        If you have provided your health history or other health information, you can make this information available to the attending provider. Having access to health information is important to providers and helps them provide timely, informed care. When you allow your provider to view your health information, he or she can provide informed medical advice tailored to your specific health needs.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading42">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse42" aria-expanded="false" aria-controls="collapse42">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            WHO ELSE HAS ACCESS TO MY DOCTTORS.COM HEALTH RECORD? WHO CAN CHANGE MY HEALTH RECORD?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse42" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading42">
+                    <div class="panel-body">
+                        Only you, your doctor, and your doctor's authorized staff have access to your Docttors.com Health Record. Your doctor may use this information to help diagnose your symptoms, or to forward relevant preventive care and educational information to you. Your doctor can modify your Health Record to reflect a recent diagnosis or a new medication.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading43">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse43" aria-expanded="false" aria-controls="collapse43">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            WHO CAN VIEW THE MESSAGES I SEND USING DOCTTORS?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse43" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading43">
+                    <div class="panel-body">
+                        Only you, your doctor, and your doctor's authorized staff can view your Docttors.com messages (members of your doctor's staff like a nurse or receptionist may be qualified to respond, or prepare responses, just as they would during an office visit or telephone call). Messages are never stored anywhere but on the secure Docttors.com server, and they cannot be read en-route, deleted, copied, or altered in any way.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading44">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse44" aria-expanded="false" aria-controls="collapse44">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            HOW DO I KNOW THE MESSAGE I GET BACK IS FROM MY DOCTOR?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse44" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading44">
+                    <div class="panel-body">
+                        All members of Docttors.com, doctors included, are required to create and enter a secure Log In name and password to access the service. In addition, Docttors.com requires doctors to submit their medical credentials for verification. When your doctor replies to your message, their name will appear in the "Sender" field of the message. Should a member of your doctor's authorized staff respond to your message, that person's name as well as the doctor's name — will appear in the "Sender" field of the message you receive. These are just some of the ways we guarantee your privacy and security.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading45">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse45" aria-expanded="false" aria-controls="collapse45">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            DOES DOCTTORS INTEROPERATE WITH ELECTRONIC HEALTH RECORD (EHR) AND PRACTICE MANAGEMENT SYSTEMS?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse45" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading45">
+                    <div class="panel-body">
+                        Absolutely. Our proven Interoperability Solution, which combines powerful Interoperability Toolkit technology with seasoned Professional Services expertise, enables seamless data sharing between the Docttors.com service and any commercial or custom-built EHR. In as little as four to six weeks, any doctor will be able to import, link, and store secure Docttors.com messages in patients' electronic health records — without ever leaving the EHR system. For an initial consultation or to request the Docttors.com Interoperability Toolkit Implementation Guide, contact us at info@NeighborsTelehealth.com.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading46">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse46" aria-expanded="false" aria-controls="collapse46">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            DO I HAVE TO ENTER MY HEALTH INFORMATION IN THE PERSONAL HEALTH RECORD SECTION OF DOCTTORS?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse46" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading46">
+                    <div class="panel-body">
+                        Completing a Docttors.com Health Record is not required. However, keeping accurate records of your health habits, medications, allergies, and medical conditions alerts your doctor to helpful information regarding you. Your doctor may use this information to help diagnose your symptoms, or to forward relevant preventive care and educational information to you.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading47">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse47" aria-expanded="false" aria-controls="collapse47">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            WILL I HAVE A RECORD OF MY ONLINE CARE VISIT?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse47" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading47">
+                    <div class="panel-body">
+                        Yes, we maintain a complete record of your online visit, which is available to you for review at your leisure. You can also share your visit record with anyone you wish to, such as your primary care provider.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading48">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse48" aria-expanded="false" aria-controls="collapse48">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            WHAT PHARMACIES PARTICIPATE WITH DOCTTORS?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse48" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading48">
+                    <div class="panel-body">
+                        With our e-Prescribing module (RCOPIA), any eligible prescription can be sent electronically to any pharmacy that participates in e- . Nearly all major pharmacy chains participate in e-prescribe.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading49">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse49" aria-expanded="false" aria-controls="collapse49">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            ARE INSURANCE COMPANIES ONBOARD?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse49" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading49">
+                    <div class="panel-body">
+                        Insurers are embracing telehealth as a way to expand access, increase convenience for patients and reduce costs. In addition to improving health outcomes by making follow-up care easier for patients, it also reduces the number of patients in waiting rooms, where contagious illnesses can spread. Healthier and happier customers are good news for insurers.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading50">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse50" aria-expanded="false" aria-controls="collapse50">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            CAN MEDICARE & MEDICAID PATIENTS BE TREATED VIA TELEMEDICINE?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse50" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading50">
+                    <div class="panel-body">
+                        Currently, Centers for Medicare & Medicaid Services (CMS) does not reimburse for telemedicine if the patient is at home unless a patient is being seen through the new Medicare Chronic Care Management Program. Patients must be at the following locations in order for physicians to receive reimbursement: (a) Established Medical Site, (b) State Mental Health Facility, (c) State-Supported Living Center.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading51">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse51" aria-expanded="false" aria-controls="collapse51">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            INSURANCE CODE: TITLE 8. HEALTH INSURANCE AND OTHER HEALTH COVERAGES: SUBTITLE F. PHYSICIANS AND HEALTH CARE PROVIDERS: CHAPTER 1455. TELEMEDICINE AND TELEHEALTH SEC. 1455.004.COVERAGE FOR TELEMEDICINE MEDICAL SERVICES AND TELEHEALTH SERVICES.
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse51" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading51">
+                    <div class="panel-body">
+                        (a) A health benefit plan may not exclude a telemedicine medical service or a telehealth service from coverage under the plan solely because the service is not provided through a face-to-face consultation, (b) A health benefit plan may require a deductible, a copayment, or coinsurance for a telemedicine medical service or a telehealth service. The amount of the deductible, copayment, or coinsurance may not exceed the amount of the deductible, copayment, or coinsurance required for a comparable medical service provided through a face-to-face consultation: (1) "Health professional" means: (A) a physician; (B) an individual who is: (i) licensed or certified in this state to perform health care services; and (ii) authorized to assist a physician in providing telemedicine medical services that are delegated and supervised by the physician; or (C) a licensed or certified health professional acting within the scope of the license or certification who does not perform a telemedicine medical service. (2) "Physician" means a person licensed to practice medicine in this state under Subtitle B, Title 3, Occupations Code. (3) "Telehealth service" and "telemedicine medical service" have the meanings assigned by Section 57.042, Utilities Code.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading52">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse52" aria-expanded="false" aria-controls="collapse52">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            IS DOCTTORS.COM SUITABLE FOR GLOBAL RATES BY THE INSURANCE COMPANIES?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse52" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading52">
+                    <div class="panel-body">
+                        Yes. Reimbursement may be bundled into a global rate for a particular service. For example, if a payer pays a global rate for a surgical procedure, then any post-operative instructions related to the procedure provided by the physician to a patient would likely be included in a global rate for the procedure and not separately reimbursable by the payer. Therefore, even if a payer agrees to pay for services provided via online communications, the physician should review his or her contract to determine if such services are part of a global rate, and not reimbursable separately.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading53">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse53" aria-expanded="false" aria-controls="collapse53">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            WHAT IS PRIVATE PAYER REIMBURSEMENT BY STATE?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse53" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading53">
+                    <div class="panel-body">
+                        At present, 33 states and the District of Columbia have parity laws that mandate private payer telemedicine reimbursement. Eight more have similar laws that are proposed or pending. While the laws vary, all states with parity laws mandate telemedicine reimbursement for real-time video visits. A few also cover the store-and-forward approach. Look for the term “real-time” to determine if store-and-forward is excluded.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading54">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse54" aria-expanded="false" aria-controls="collapse54">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            ARE THERE ANY REIMBURSABLE TELEHEALTH SERVICES I CAN PROVIDE TO TRADITIONAL MEDICARE PATIENTS?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse54" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading54">
+                    <div class="panel-body">
+                        Yes! The Medicare Chronic Care Management (CCM) program reimburses providers $42 per month for delivering remote care to patients with  or more chronic conditions.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading55">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse55" aria-expanded="false" aria-controls="collapse55">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            HOW WILL PHYSICIANS BE PAID/REIMBURSED FOR ONLINE CONSULTATION?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse55" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading55">
+                    <div class="panel-body">
+                        There are four methods of reimbursement for doctors: (1) credit card (physicians set their own fee per visit (example PCP may charge $35 dollars for online visit and Cardiologist $55 dollars), (2) billing to insurance companies (using CPT code 99441-99444, 99213-99214, and 99490; approximately $44/consult), (3) Medicare Chronic Care Management (CCM) program pays $42/online consult/month, (4) Medicaid pays the same amount as for in-person visit, roughly $45/online consult.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading56">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse56" aria-expanded="false" aria-controls="collapse56">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            ARE PRIVATE PAYERS REQUIRED TO REIMBURSE FOR TELEMEDICINE?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse56" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading56">
+                    <div class="panel-body">
+                        Yes, the CPT code that insurance companies use is 99441 thru 99444, 99201 thru 99215, 99487 thru 99490
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading57">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse57" aria-expanded="false" aria-controls="collapse57">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            WHAT ARE THE REQUIREMENTS TO RECEIVE REIMBURSEMENT?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse57" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading57">
+                    <div class="panel-body">
+                        There are, of course, a few requirements that must be met in order to be fully reimbursable by either CMS or private payers. (a) real-time video and audio must be included, (b) HIPAA standards must be met, (c) audio and video quality must be similar to in-person.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading58">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse58" aria-expanded="false" aria-controls="collapse58">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            WILL DOCTORS BE REIMBURSED THE SAME AMOUNT FOR TELEMEDICINE SERVICES AS SERVICES DELIVERED IN-PERSON?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse58" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading58">
+                    <div class="panel-body">
+                        Yes, Parity laws have been in effect in Texas since 1997 and most states in the USA have parity Laws in effect or proposed. Parity Laws require an insurance company to reimburse for approved services at the same rate as an in office visit. The list of CPT codes eligible for telemedicine reimbursement keep growing and CMS recognizes the importance of telehealth technology in maintaining a healthy population.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading59">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse59" aria-expanded="false" aria-controls="collapse59">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            WHAT IS THE CHARGE FOR AN ONLINE CONSULTATION?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse59" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading59">
+                    <div class="panel-body">
+                        Docttors.com does not charge you to access or use the Docttors.com service. Your doctor may charge a fee for online consultation as a copay ranging from $25 to $65 dollars depending on the type of request. Most health plans now cover the Online Visit as a member benefit.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading60">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse60" aria-expanded="false" aria-controls="collapse60">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            WHAT IS INSURANCE REIMBURSEMENT FOR ONLINE PATIENT CARE?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse60" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading60">
+                    <div class="panel-body">
+                        Whether commercial payers will reimburse a physician for online communications will be governed by the physician's contractual arrangement with the payer. The physician should review each payer contract to determine whether online communications are "covered services" under the contract. There are four methods of reimbursement for doctors: (1) credit card (physicians set their own fee per visit (example PCP may charge $35 dollars for online visit and Cardiologist $55 dollars), (2) billing to insurance companies (using CPT code 99441-99444, 99213-99214, and 99490; approximately $44/consult). Medicare will approve the CPT code only if the service was accurately described when delivered via telehealth, and whether the use of telemedicine showed clinical benefit to the patient (example, the GT modifier should indicate that the service was delivered “via interactive audio and video telecommunications systems.” (3) Medicare Chronic Care Management (CCM) Program, which went into effect in 2015, reimburses $42 dollars per month to see and treat patients with  or more chronic conditions, and (4) Medicaid reimburses physicians the same rate of in-person visit. There is no reimbursement for care provided by email, phone or fax.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading61">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse61" aria-expanded="false" aria-controls="collapse61">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            WHAT BROWSERS ARE SUPPORTED BY DOCTTORS.COM?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse61" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading61">
+                    <div class="panel-body">
+                        Docttors.com product works most effectively with Internet Explorer, Google Chrome, Mozilla Firefox, and Safari. All of the browsers support the security encryption level required to use and access all features of our product.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading62">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse62" aria-expanded="false" aria-controls="collapse62">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            DO I NEED WIFI TO USE YOUR SERVICE?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse62" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+                    <div class="panel-body">
+                        Although we do recommend you use WIFI for the best possible experience, it is not required to use our service. As long as your connection is 4G or LTE, then you should be fine. If you do experience connection issues, you can simply switch to audio-only, when connected to a doctor, and your connection will improve.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading63">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse63" aria-expanded="false" aria-controls="collapse63">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            WHAT ARE THE TECHNICAL REQUIREMENTS TO USE THIS SERVICE?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse63" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+                    <div class="panel-body">
+                        Docttors.com requires only a connection to the Internet and a Web browser. Docttors.com supports: Microsoft Internet Explorer 8 or higher on Windows XP and higher; Firefox 2.x on Windows XP and higher; Safari 2.x on Mac OS 10.4 and higher.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading64">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse64" aria-expanded="false" aria-controls="collapse64">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            WHAT IF I FORGET MY PASSWORD?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse64" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading64">
+                    <div class="panel-body">
+                        If you register for Docttors.com and forget your password, you can simply click the "Forgot your user Name or Password?" If you know either your sign in name or your password, we can provide you with the missing piece of information immediately. If you have forgotten both your sign in name and your password, you'll be directed to Docttors.com Customer Support for assistance.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading65">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse65" aria-expanded="false" aria-controls="collapse65">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            DOES DOCTTORS INTEROPERATE WITH ELECTRONIC HEALTH RECORD (EHR) AND PRACTICE MANAGEMENT SYSTEMS ?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse65" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading65">
+                    <div class="panel-body">
+                        Absolutely. Our proven Interoperability Solution, which combines powerful Interoperability Toolkit technology with seasoned Professional Services expertise, enables seamless data sharing between the Docttors.com service and any commercial or custom-built EHR. In as little as four to six weeks, any doctor will be able to import, link, and store secure Docttors.com messages in patients' electronic health records — without ever leaving the EHR system. For an initial consultation or to request the Docttors.com Interoperability Toolkit Implementation Guide, contact us at info@NeighborsTelehealth.com.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading66">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse66" aria-expanded="false" aria-controls="collapse66">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            CONTACT CUSTOMER SUPPORT:
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse66" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+                    <div class="panel-body">
+                        E-mail us at info@NeighborsTelehealth.com.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading67">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse67" aria-expanded="false" aria-controls="collapse67">
+                            <i class="more-less glyphicon glyphicon-plus"></i>
+                            WHAT IF I NEED HELP?
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse67" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading67">
+                    <div class="panel-body">
+                        With Docttors.com, you can enjoy voice and e-mail support. For voice support, call (713)724-1719 and for email support, email us at info@NeighborsTelehealth.com.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- panel-group -->
+</div><!-- container -->
+@section scripts{
+    <script>
+        function toggleIcon(e) {
+            $(e.target)
+                .prev('.panel-heading')
+                .find(".more-less")
+                .toggleClass('glyphicon-plus glyphicon-minus');
+        }
+        $('.panel-group').on('hidden.bs.collapse', toggleIcon);
+        $('.panel-group').on('shown.bs.collapse', toggleIcon);
+    </script>
+}

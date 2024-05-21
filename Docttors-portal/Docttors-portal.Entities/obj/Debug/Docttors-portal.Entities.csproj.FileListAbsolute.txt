@@ -1,0 +1,24 @@
+D:\My_Development\Docttors-portal\Docttors-portal.Entities\bin\Debug\Docttors-portal.Entities.dll.config
+D:\My_Development\Docttors-portal\Docttors-portal.Entities\bin\Debug\Docttors-portal.Entities.dll
+D:\My_Development\Docttors-portal\Docttors-portal.Entities\bin\Debug\Docttors-portal.Entities.pdb
+D:\My_Development\Docttors-portal\Docttors-portal.Entities\bin\Debug\EntityFramework.dll
+D:\My_Development\Docttors-portal\Docttors-portal.Entities\bin\Debug\EntityFramework.SqlServer.dll
+D:\My_Development\Docttors-portal\Docttors-portal.Entities\bin\Debug\EntityFramework.xml
+D:\My_Development\Docttors-portal\Docttors-portal.Entities\bin\Debug\EntityFramework.SqlServer.xml
+D:\My_Development\Docttors-portal\Docttors-portal.Entities\obj\Debug\Docttors-portal.Entities.csproj.CoreCompileInputs.cache
+D:\My_Development\Docttors-portal\Docttors-portal.Entities\obj\Debug\Docttors-portal.Entities.csproj.CopyComplete
+D:\My_Development\Docttors-portal\Docttors-portal.Entities\obj\Debug\Docttors-portal.Entities.dll
+D:\My_Development\Docttors-portal\Docttors-portal.Entities\obj\Debug\Docttors-portal.Entities.pdb
+D:\My_Development\Docttors-portal\Docttors-portal.Entities\obj\Debug\Docttors-portal.Entities.csproj.AssemblyReference.cache
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Entities\bin\Debug\Docttors-portal.Entities.dll.config
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Entities\bin\Debug\Docttors-portal.Entities.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Entities\bin\Debug\Docttors-portal.Entities.pdb
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Entities\bin\Debug\EntityFramework.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Entities\bin\Debug\EntityFramework.SqlServer.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Entities\bin\Debug\EntityFramework.xml
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Entities\bin\Debug\EntityFramework.SqlServer.xml
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Entities\obj\Debug\Docttors-portal.Entities.csproj.AssemblyReference.cache
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Entities\obj\Debug\Docttors-portal.Entities.csproj.CoreCompileInputs.cache
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Entities\obj\Debug\Docttors-portal.Entities.csproj.CopyComplete
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Entities\obj\Debug\Docttors-portal.Entities.dll
+D:\My_Development\Docttors Updated\docttors2.0\Docttors-portal\Docttors-portal.Entities\obj\Debug\Docttors-portal.Entities.pdb

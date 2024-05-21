@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "Message";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<h2>Message</h2>
+
+<h4><a href="invites.html">INVITES</a>/ <a href="sent.html">SENT</a>/ <a href="inbox.html"><u>INBOX</u></a></h4>
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="datatable" class="table table-bordered dt-responsive nowrap w-100 dataTable no-footer dtr-inline mt-2" aria-describedby="datatable_info" style="width: 1189px;">
+                <thead align="center" style="background-color: #1434A4; color: #fff;">
+                    <tr>
+                        <th class="sorting sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 190.2px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">FROM</th>
+                        <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 284.2px;" aria-label="Position: activate to sort column ascending">TYPE OF SERVICE</th>
+                        <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 67.2px;" aria-label="Age: activate to sort column ascending">REASON</th>
+                        <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 138.2px;" aria-label="Office: activate to sort column ascending">Date/Time Rec’d</th>
+                        <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 132.2px;" aria-label="Start date: activate to sort column ascending">CCR</th>
+                        <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 138.2px;" aria-label="Office: activate to sort column ascending">ATTACHMENT</th>
+                    </tr>
+                </thead>
+                <tbody align="center">
+                    <tr class="odd">
+                        <td class="dtr-control sorting_1" tabindex="0">Local Airi, MD</td>
+                        <td>Follow Up</td>
+                        <td>Low Blood Pressure</td>
+                        <td>1/27/2023 7:56:01 PM CST</td>
+                        <td>1234</td>
+                        <td>
+                            <input id='fileid' type='file' hidden />
+                            <button type="button" id="buttonid" class="btn btn-primary waves-effect waves-effect">Upload File</button>
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="dtr-control sorting_1" tabindex="0">DoctorS Second, ANP</td>
+                        <td><i class="fa fa-paperclip" aria-hidden="true"></i> Video Email Visit</td>
+                        <td>Nausea</td>
+                        <td>1/27/2023 7:56:01 PM CST</td>
+                        <td>1234</td>
+                        <td>
+                            <input id='fileid' type='file' hidden />
+                            <button type="button" id="buttonid" class="btn btn-primary waves-effect waves-effect">Upload File</button>
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="dtr-control sorting_1" tabindex="0">DoctorS Second, ANP</td>
+                        <td><i class="fa fa-paperclip" aria-hidden="true"></i> Video Email Visit</td>
+                        <td>Migraine</td>
+                        <td>1/27/2023 7:56:01 PM CST</td>
+                        <td>1234</td>
+                        <td>
+                            <input id='fileid' type='file' hidden />
+                            <button type="button" id="buttonid" class="btn btn-primary waves-effect waves-effect">Upload File</button>
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="dtr-control sorting_1" tabindex="0">Local Airi, MD</td>
+                        <td>Follow Up</td>
+                        <td>Stomache</td>
+                        <td>1/27/2023 7:56:01 PM CST</td>
+                        <td>1234</td>
+                        <td>
+                            <input id='fileid' type='file' hidden />
+                            <button type="button" id="buttonid" class="btn btn-primary waves-effect waves-effect">Upload File</button>
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="dtr-control sorting_1" tabindex="0">DoctorS Second, ANP</td>
+                        <td><i class="fa fa-paperclip" aria-hidden="true"></i> Online Face to Face Visit</td>
+                        <td>Sprain</td>
+                        <td>1/27/2023 7:56:01 PM CST</td>
+                        <td>1234</td>
+                        <td>
+                            <input id='fileid' type='file' hidden />
+                            <button type="button" id="buttonid" class="btn btn-primary waves-effect waves-effect">Upload File</button>
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="dtr-control sorting_1" tabindex="0">DoctorS Second, ANP</td>
+                        <td>Follow Up</td>
+                        <td>Low Blood Pressure</td>
+                        <td>1/27/2023 7:56:01 PM CST</td>
+                        <td>1234</td>
+                        <td>
+                            <input id='fileid' type='file' hidden />
+                            <button type="button" id="buttonid" class="btn btn-primary waves-effect waves-effect">Upload File</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 col-md-5">
+        <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
+            Showing 1 to 10 of 57 entries
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-7">
+        <div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
+            <ul class="pagination">
+                <li class="paginate_button page-item previous disabled" id="datatable_previous">
+                    <a href="#" aria-controls="datatable" data-dt-idx="previous" tabindex="0" class="page-link">Previous</a>
+                </li>
+                <li class="paginate_button page-item active">
+                    <a href="#" aria-controls="datatable" data-dt-idx="0" tabindex="0" class="page-link">1</a>
+                </li>
+                <li class="paginate_button page-item ">
+                    <a href="#" aria-controls="datatable" data-dt-idx="1" tabindex="0" class="page-link">2</a>
+                </li>
+                <li class="paginate_button page-item ">
+                    <a href="#" aria-controls="datatable" data-dt-idx="2" tabindex="0" class="page-link">3</a>
+                </li>
+                <li class="paginate_button page-item ">
+                    <a href="#" aria-controls="datatable" data-dt-idx="3" tabindex="0" class="page-link">4</a>
+                </li>
+                <li class="paginate_button page-item ">
+                    <a href="#" aria-controls="datatable" data-dt-idx="4" tabindex="0" class="page-link">5</a>
+                </li>
+                <li class="paginate_button page-item ">
+                    <a href="#" aria-controls="datatable" data-dt-idx="5" tabindex="0" class="page-link">6</a>
+                </li>
+                <li class="paginate_button page-item next" id="datatable_next">
+                    <a href="#" aria-controls="datatable" data-dt-idx="next" tabindex="0" class="page-link">Next</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "MyProvider";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<h2>MyProvider</h2>
+
+<div>
+    <h3>YOU HAVE 9 PROVIDER(S) AS YOUR FAVORITE</h3>
+    <div class="form-check mb-3">
+        <h5>
+            <input class="form-check-input" type="checkbox" id="formCheck1" style="margin-top: 2px;">
+            <label class="form-check-label" for="formCheck1" style="color: #1434A4;">
+                First Available Doctor/Provider
+            </label>
+        </h5>
+    </div>
+    <h6>To add more doctors click <a href="../Search/s_index2.html">Search</a> and add to your favorite list.</h6>
+    <div class="col-lg-12 mt-4">
+        <div class="card">
+            <div class="card-header border-bottom d-flex justify-content-between text-white" style="background-color: #1434A4;">
+                <h3 class="card-title">Dr. Athrava</h3>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Is Primary Doctor
+                    </label>
+                </div>
+                <button class="btn text-white" fdprocessedid="qzetod"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="card-body">
+                <!-- <blockquote class="card-blockquote" style="height: 284px;"> -->
+                <div class="row justify-content-evenly">
+                    <div class="row">
+                        <p class="mt-sm-2">
+                            The Appointment times (which are shown after clicking on Video Chat button) are for Face-to-Face Video Chat with your favorite doctor.You don’t need an appointment for Video e-mail, ask as doctor and prescription refills.
+                        </p>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <img class="img-fluid" src="../../assets/images/doctoricon.png">
+                        </div>
+                        <div class="col-lg-7 d-flex flex-column justify-content-center">
+                            <p>
+                                <b>Address</b> : 102, dsjdhsdj, AK-23232 <br>
+                                <b>Phone</b> : 9855084749 <br>
+                                <b>Email</b> : <a href="mailto: atharva18@gmail.com">atharva18@gmail.com</a>
+                            </p><div id="enable3" style="display:none;">
+                                <label style="color:#1434A4;">Select Appointment Date</label>
+                                <input type="date">
+                            </div>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="row" style="background: lightgray;">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-4 d-flex">
+                            <button class="btn btn-sm" onclick="Show3()" fdprocessedid="xy0p0q"><img class="img-fluid" src="../../assets/images/video-chat.png"><br>$ 0.00</button>
+                            <button class="btn btn-sm" onclick="VideoEmail()" fdprocessedid="beb64a"><img class="img-fluid" src="../../assets/images/video-call.png"><br>$ 0.00</button>
+                            <button class="btn btn-sm" onclick="askdr()" fdprocessedid="zzgge"><img class="img-fluid" src="../../assets/images/askdr.png"><br>$ 0.00</button>
+                            <button class="btn btn-sm" onclick="prescription()" fdprocessedid="ej3xbi"><img class="img-fluid" src="../../assets/images/online-pharmacy.png"><br>$ 0.00</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- </blockquote> -->
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 mt-4">
+        <div class="card">
+            <div class="card-header border-bottom" style="background-color: #1434A4;">
+                <a href="../Doctor/D_Home.aspx?id=5" target="_blank" style="float: left; color: #fff;">Dr. Atharva</a>
+                <span class="clschkIsPrimaryDoctor" data-id="5" style="right: 18px; position: absolute; color: #fff;"><input id="" type="checkbox" name=""><label>&nbsp; Is Primary Doctor</label></span>
+            </div>
+            <div class="card-body">
+                <!-- <blockquote class="card-blockquote" style="height: 284px;"> -->
+                <div class="row justify-content-evenly">
+                    <div class="col-lg-3">
+                        <img class="img-fluid" src="../../assets/images/doctoricon.png">
+                    </div>
+                    <div class="col-lg-7">
+                        <p class="mt-sm-2">
+                            The Appointment times (which are shown after clicking on Video Chat button) are for Face-to-Face Video Chat with your favorite doctor. <br>
+                            You don’t need an appointment for Video e-mail, ask as doctor and prescription refills.
+                        </p>
+                        <p>
+                            <b>Address</b> : 102, dsjdhsdj, AK-23232 <br>
+                            <b>Phone</b> : 9855084749 <br>
+                            <b>Email</b> : <a href="mailto: atharva18@gmail.com">atharva18@gmail.com</a>
+                        </p><div id="enable4" style="display:none;">
+                            <label style="color:#1434A4;">Select Appointment Date</label>
+                            <input type="date">
+                        </div>
+                        <p></p>
+                        <div class="col-lg-12 d-flex">
+                            <button class="btn btn-sm" onclick="Show4()" fdprocessedid="80y85s"><img class="img-fluid" src="../../assets/images/video-chat.png"><br>$ 0.00</button>
+                            <button class="btn btn-sm" onclick="VideoEmail()" fdprocessedid="x2sslk"><img class="img-fluid" src="../../assets/images/video-call.png"><br>$ 0.00</button>
+                            <button class="btn btn-sm" onclick="askdr()" fdprocessedid="rch0wu"><img class="img-fluid" src="../../assets/images/askdr.png"><br>$ 0.00</button>
+                            <button class="btn btn-sm" onclick="prescription()" fdprocessedid="dz10sr"><img class="img-fluid" src="../../assets/images/online-pharmacy.png"><br>$ 0.00</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- </blockquote> -->
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 mt-4">
+        <div class="card">
+            <div class="card-header border-bottom" style="background-color: #1434A4;">
+                <a href="../Doctor/D_Home.aspx?id=5" target="_blank" style="float: left; color: #fff;">Dr. Atharva</a>
+                <span class="clschkIsPrimaryDoctor" data-id="5" style="right: 18px; position: absolute; color: #fff;"><input id="" type="checkbox" name=""><label>&nbsp; Is Primary Doctor</label></span>
+            </div>
+            <div class="card-body">
+                <!-- <blockquote class="card-blockquote" style="height: 284px;"> -->
+                <div class="row justify-content-evenly">
+                    <div class="col-lg-3">
+                        <img class="img-fluid" src="../../assets/images/doctoricon.png">
+                    </div>
+                    <div class="col-lg-7">
+                        <p class="mt-sm-2">
+                            The Appointment times (which are shown after clicking on Video Chat button) are for Face-to-Face Video Chat with your favorite doctor. <br>
+                            You don’t need an appointment for Video e-mail, ask as doctor and prescription refills.
+                        </p>
+                        <p>
+                            <b>Address</b> : 102, dsjdhsdj, AK-23232 <br>
+                            <b>Phone</b> : 9855084749 <br>
+                            <b>Email</b> : <a href="mailto: atharva18@gmail.com">atharva18@gmail.com</a>
+                        </p><div id="enable5" style="display:none;">
+                            <label style="color:#1434A4;">Select Appointment Date</label>
+                            <input type="date">
+                        </div>
+                        <p></p>
+                        <div class="col-lg-12 d-flex">
+                            <button class="btn btn-sm" onclick="Show5()" fdprocessedid="2chcn6"><img class="img-fluid" src="../../assets/images/video-chat.png"><br>$ 0.00</button>
+                            <button class="btn btn-sm" onclick="VideoEmail()" fdprocessedid="tr0lll"><img class="img-fluid" src="../../assets/images/video-call.png"><br>$ 0.00</button>
+                            <button class="btn btn-sm" onclick="askdr()" fdprocessedid="0e5pr"><img class="img-fluid" src="../../assets/images/askdr.png"><br>$ 0.00</button>
+                            <button class="btn btn-sm" onclick="prescription()" fdprocessedid="isw3ji"><img class="img-fluid" src="../../assets/images/online-pharmacy.png"><br>$ 0.00</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- </blockquote> -->
+            </div>
+        </div>
+    </div>
+</div>
