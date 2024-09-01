@@ -5,7 +5,7 @@ namespace Docttors_portal.Common.Models
 {
     public class UserRegistrationModel
     {
-        public long RegistrationID { get; set; }
+        public int DoctorId { get; set; }
         [Required(ErrorMessage ="FirstName is required")]
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -49,12 +49,11 @@ namespace Docttors_portal.Common.Models
         public string PracticeName { get; set; }
         public string PracticeLogo { get; set; }
         #endregion
-        public DateTime RegisterDate { get; set; }
-        public int DoctorId { get; set; }
         [Required(ErrorMessage = "Insurance is required")]
         public int[] SelectedInsurance { get; set; }
         [Range(typeof(bool), "true", "true", ErrorMessage = "You must accepted terms")]
         public bool TermsAndConditions { get; set; }
+        public bool IsDoctor { get; set; }
         public List<NameIdModel> StateList { get; set; }
         public List<NameIdModel> AllInsaurance { get; set; }
         public List<NameIdModel> AllSpecialty { get; set; }
@@ -100,5 +99,23 @@ namespace Docttors_portal.Common.Models
 
         public string CaptchaImageText { get; set; }
         public bool RememberMe { get; set; }
+    }
+    public class PatientRegisterationModel
+    {
+        public int PatientId { get; set; }
+        [Required(ErrorMessage = "FirstName is required")]
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        [Required(ErrorMessage = "LastName is required")]
+        public string LastName { get; set; }
+        [Required(ErrorMessage = "Email is required")]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" + @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" + @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Email is not valid")]
+        public string EmailAddress { get; set; }
+        [Required(ErrorMessage = "Password is required")]
+        public string Password { get; set; }
+        [Required(ErrorMessage = "Confirm password is required")]
+        public string CPassword { get; set; }
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You must accepted terms")]
+        public bool TermsAndConditions { get; set; }
     }
 }

@@ -22,6 +22,8 @@ namespace Docttors_portal.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            Session.Clear();
+            Session.Abandon();
             return View();
         }
         [HttpPost]
@@ -37,6 +39,7 @@ namespace Docttors_portal.Controllers
                     //RedirectToAction("Index", "Patient");
                     Session["UserName"] = userDetails.EmailId;
                     Session["UserId"] = loginId;
+                    ViewBag.Message = string.Empty;
                     if (userDetails.UserRoleId == (int)RoleEnum.Patient)
                     {
                         return RedirectToAction("Index", "Patient");
@@ -46,6 +49,7 @@ namespace Docttors_portal.Controllers
                         return RedirectToAction("Index", "Doctor");
                     }
                 }
+                ViewBag.Message = "UserName or Password are Incorrect!";
             }
 
             return View(objUserLogOnModel);

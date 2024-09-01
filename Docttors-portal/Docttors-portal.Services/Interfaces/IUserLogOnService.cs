@@ -20,5 +20,8 @@ namespace Docttors_portal.Services.Interfaces
         int AddNewUser(UserRegistrationModel userRegistrationModel);
 
         #endregion
+        #region Password
+        bool ChangePassword(ChangePasswordModel changePasswordModel);
+        #endregion
     }
 }

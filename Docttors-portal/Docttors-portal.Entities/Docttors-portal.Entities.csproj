@@ -52,6 +52,7 @@
     <Compile Include="Classes\AppUser.cs" />
     <Compile Include="Classes\BaseClass.cs" />
     <Compile Include="Classes\DoctorSpecialty.cs" />
+    <Compile Include="Classes\PatientPersonal.cs" />
     <Compile Include="Classes\Role.cs" />
     <Compile Include="Classes\SpecialistInsurance.cs" />
     <Compile Include="Classes\State.cs" />

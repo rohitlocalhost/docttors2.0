@@ -23,17 +23,19 @@
         <div>
             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "error" })
         </div>
-        <div class="checkbox" >
+        <div class="checkbox">
             @Html.CheckBoxFor(m => m.RememberMe)
             @Html.Label("Remember Me", new { @for = "RememberMe" })
         </div>
-        <input type="hidden" name="ReturnUrl" value="@Request.QueryString["ReturnUrl"]" />
         <input type="submit" value="Submit" class="btn btn-primary" />
         <br />
         <br />
-        <div id="dvMessage" style="display:none" class="alert alert-danger">
-            <strong>Error!</strong>
-            <span>@ViewBag.Message</span>
-        </div>
+        @if (ViewBag.Message!=null && ViewBag.Message != "")
+        {
+            <div class="alert alert-danger">
+                <strong>Error!</strong>
+                <span>@ViewBag.Message</span>
+            </div>
+        }
     </div>
 }

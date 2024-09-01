@@ -4,8 +4,82 @@
     Layout = "~/Views/Shared/_DoctorLayout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    this is doctor index page
-</p>
+<article class="box post" id="pagecontainer_main">
+    <h3 class="text-center">Welcome <b><span id="ctl00_ContentPlaceHolder1_spnfullname">@Session["UserName"]</span></b></h3>
+    <p id="ctl00_ContentPlaceHolder1_doctorIntro" class="text-justify mt-5">
+        This is your Online Medical Practice Portal to connect with patients online. You can also use this portal to advertise the clinical services you provide, attach articles and blog/post information. You can Edit your Admin page anytime with option for logos, text, and images, etc. Keep your website/portal updated at all times.
+    </p>
+    <div id="ctl00_ContentPlaceHolder1_buttonRow" class="row mt-4 justify-content-lg-center justify-content-start">
+        <div class="col-auto col-lg-auto">
+            <input type="submit" name="ctl00$ContentPlaceHolder1$sendInviteBtn" value="Invite Specialist" id="ctl00_ContentPlaceHolder1_sendInviteBtn" class="btn btn-sm btn-lg text-white" style="background-color: #1434A4;">
+        </div>
+        <div class="col-auto col-lg-auto" style="margin-left:10px">
+            <input type="submit" name="ctl00$ContentPlaceHolder1$sendPatientInviteBtn" value="Invite Patient" id="ctl00_ContentPlaceHolder1_sendPatientInviteBtn" class="btn btn-sm btn-lg text-white" style="background-color: #1434A4;">
+        </div>
+        <div class="col-auto col-lg-auto" style="margin-left:10px">
+            <input type="submit" name="ctl00$ContentPlaceHolder1$followupBtn" value="Follow Up" id="ctl00_ContentPlaceHolder1_followupBtn" class="btn btn-sm btn-lg text-white" style="background-color: #1434A4;">
+        </div>
+        <div class="col-auto col-lg-auto" style="margin-left:10px">
+            <input type="submit" name="ctl00$ContentPlaceHolder1$btnCcm" value="CCM" id="ctl00_ContentPlaceHolder1_btnCcm" class="btn btn-sm btn-lg text-white" style="background-color: #1434A4;">
+        </div>
+    </div>
+    <div id="ctl00_ContentPlaceHolder1_gridRow" class="card mt-2">
+        <div class="card-header" style="background-color: #1434A4;">
+            <h4 class="card-title">
+                <a href="#" id="ctl00_ContentPlaceHolder1_onlinePatientLabel" class="text-white">Online Patient Schedule</a>
+                <table id="ctl00_ContentPlaceHolder1_rdMails" class="btn-group float-end" border="0" style="color: #fff;">
+                    <tbody>
+                        <tr>
+                            <td><input id="ctl00_ContentPlaceHolder1_rdMails_0" type="radio" name="ctl00$ContentPlaceHolder1$rdMails" value="0" checked="checked" class="btn-check"><label for="ctl00_ContentPlaceHolder1_rdMails_0" class="btn btn-sm btn-outline-primary" style="color: rgb(255, 255, 255);">Messages</label></td>
+                            <td><input id="ctl00_ContentPlaceHolder1_rdMails_1" type="radio" name="ctl00$ContentPlaceHolder1$rdMails" value="2" onclick="javascript:setTimeout('__doPostBack(\'ctl00$ContentPlaceHolder1$rdMails$1\',\'\')', 0)" class="btn-check"><label for="ctl00_ContentPlaceHolder1_rdMails_1" class="btn btn-sm btn-outline-primary" style="color: rgb(255, 255, 255);">Invites</label></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </h4>
+        </div>
+        <div class="card-body ">
+            @*<p id="ctl00_ContentPlaceHolder1_WelcomeControl1_apptInfo">
+                <b>This is your appointment schedule for today:</b>
+            </p>*@
+            <div class="table-responsive">
+                <div class="table-responsive hidden-xs">
+                    <div id="ctl00_ContentPlaceHolder1_WelcomeControl1_doctable">
+                        <table id="tblList" class="table table-responsive hover">
+                            <thead>
+                                <tr>
+                                    <th>Col 1</th>
+                                    <th>Col 2</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                <tr>
+                                    <td>Col 1 Data</td>
+                                    <td>Col 20 Data</td>
+                                </tr>
+                                <tr>
+                                    <td>Col 10 Data</td>
+                                    <td>Col 15 Data</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+@section Scripts
+{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblList').DataTable({
+                responsive: true,
+                "lengthMenu": [50, 75, 100],
+                "pageLength": 50
+            });
+        });
+    </script>
+}
