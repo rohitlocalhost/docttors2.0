@@ -21,5 +21,6 @@ namespace Docttors_portal.DataAccess.EntityModel
         public DbSet<State> States { get; set; }
         public DbSet<SpecialistInsurance> specialistInsurances { get; set; }
         public DbSet<DoctorSpecialty> doctorSpecialties { get; set; }
+        public DbSet<PatientPersonal> patientPersonals { get; set; }
     }
 }

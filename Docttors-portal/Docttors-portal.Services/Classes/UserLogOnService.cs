@@ -45,13 +45,8 @@ namespace Docttors_portal.Services.Classes
                 string userPwd = string.Empty;
                 if (!string.IsNullOrEmpty(objUser.Password))
                 {
-                    userPwd = Utilities.EncryptPassword(objUser.Password);
-                }
-                else
-                {
                     userPwd = Utilities.EncryptPassword(password);
                 }
-                userPwd = Utilities.EncryptPassword(password + objUser.Password);
                 if (IsPasswordMatching(objUser.Password, userPwd))
                 {
                     return objUser.Id;
@@ -87,13 +82,13 @@ namespace Docttors_portal.Services.Classes
                     city = userRegistrationModel.City,
                     CreatedBy = 0,
                     CreatedOn = DateTime.Now,
-                    ModifiedBy=0,
-                    ModifiedOn=DateTime.Now,
+                    ModifiedBy = 0,
+                    ModifiedOn = DateTime.Now,
                     Dea = userRegistrationModel.DEA,
                     EmailId = userRegistrationModel.EmailAddress,
                     Fax = userRegistrationModel.Fax,
                     FirstName = userRegistrationModel.FirstName,
-                    InsuranceId = userRegistrationModel.SelectedInsurance[0],
+                    InsuranceId = userRegistrationModel.IsDoctor ? userRegistrationModel.SelectedInsurance[0] : 0,
                     LastName = userRegistrationModel.LastName,
                     MiddileName = userRegistrationModel.MiddleName,
                     NPI = userRegistrationModel.NPI,
@@ -104,10 +99,10 @@ namespace Docttors_portal.Services.Classes
                     Position = userRegistrationModel.Position,
                     PracticeName = userRegistrationModel.PracticeName,
                     SecondaryLicense = userRegistrationModel.SecLicense,
-                    specialityId = userRegistrationModel.SpecialtyId,
-                    State = userRegistrationModel.StateId,
+                    specialityId = userRegistrationModel.IsDoctor ? userRegistrationModel.SpecialtyId : 0,
+                    State = userRegistrationModel.IsDoctor ? userRegistrationModel.StateId : 0,
                     StateLicense = userRegistrationModel.License,
-                    UserRoleId = (int)RoleEnum.Doctor,
+                    UserRoleId = userRegistrationModel.IsDoctor ? (int)RoleEnum.Doctor : (int)RoleEnum.Patient,
                     ZipCode = userRegistrationModel.ZipCode
 
                 };
@@ -121,7 +116,30 @@ namespace Docttors_portal.Services.Classes
             }
         }
         #endregion
+        #region Password
+        public bool ChangePassword(ChangePasswordModel changePasswordModel)
+        {
+            var loggedInUserDetails = GetUserDetailsByUserId(changePasswordModel.UserId);
+            if (loggedInUserDetails != null)
+            {
+                var oldPassword = Utilities.EncryptPassword(changePasswordModel.Oldpassword);
+                if (IsPasswordMatching(oldPassword, loggedInUserDetails.Password))
+                {
 
+                    loggedInUserDetails.Password = Utilities.EncryptPassword(changePasswordModel.CPassword);
+                    _userRepository.Update(loggedInUserDetails);
+
+                }
+                else
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+        #endregion
+        #region private method
         private bool IsPasswordMatching(string oPwd, string dbPwd)
         {
             if (string.Compare(oPwd, dbPwd) == 0)
@@ -129,6 +147,8 @@ namespace Docttors_portal.Services.Classes
             else
                 return false;
         }
+        #endregion
+
 
     }
 }

@@ -33,5 +33,9 @@ namespace Docttors_portal.Controllers
         {
             return View();
         }
+        public ActionResult PersonalDetails()
+        {
+            return View();
+        }
     }
 }
