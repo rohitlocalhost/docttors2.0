@@ -1,4 +1,4 @@
-﻿
+﻿@model Docttors_portal.Common.Models.PatientPersonalModel
 @{
     ViewBag.Title = "PersonalDetails";
     Layout = "~/Views/Shared/_PatientLayout.cshtml";
@@ -10,7 +10,9 @@
         <h1 class="card-title" style="color: #fff;">PERSONAL DATA</h1>
     </div>
     <div id="page-wrapper" class="card-body">
-        <form name="formValidation" ng-submit="submitForm(formValidation.$valid)" novalidate>
+        @using (Html.BeginForm("PatientPersonalDetails", "Patient", FormMethod.Post))
+        {
+            @*<form name="formValidation" ng-submit="submitForm(formValidation.$valid)" novalidate>*@
             <span id="lblMessage" runat="server"></span>
             <div class="card">
                 <div class="card-header">
@@ -20,218 +22,231 @@
                     </h2>
                 </div>
                 <div class="card-body">
-                    <div class="row g-2">
-                        <div class="col-md-2">
-                            <label class="form-label">First Name <span style="color: red;">*</span></label>
-                            <asp:TextBox ID="txtFirstname" CssClass="form-control" placeholder="First Name" runat="server"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" ValidationGroup="personal"
-                                                        Display="Dynamic" ControlToValidate="txtFirstname" runat="server" ErrorMessage="Please enter First Name"></asp:RequiredFieldValidator>
-                            <asp:RegularExpressionValidator ID="RegularExpressionValidator5" runat="server" ControlToValidate="txtFirstname"
-                                                            ValidationGroup="personal" ForeColor="Red" Display="Dynamic" ErrorMessage="Must be Alphabetic"
-                                                            ValidationExpression="([a-zA-Z]\s*)+"></asp:RegularExpressionValidator>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Middle Name</label>
-                            <asp:TextBox ID="txtMiddleName" CssClass="form-control" placeholder="Middle Name"
-                                         runat="server"></asp:TextBox>
-                            <asp:RegularExpressionValidator ID="RegularExpressionValidator9" runat="server" ControlToValidate="txtMiddleName"
-                                                            ValidationGroup="personal" ForeColor="Red" Display="Dynamic" ErrorMessage="Must be Alphabetic"
-                                                            ValidationExpression="([a-zA-Z]\s*)+"></asp:RegularExpressionValidator>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Last Name <span style="color: red">*</span></label>
-                            <asp:TextBox ID="txtLastName" CssClass="form-control" placeholder="Last Name" runat="server"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ValidationGroup="personal"
-                                                        Display="Dynamic" ControlToValidate="txtLastName" runat="server" ErrorMessage="Please enter Last Name"></asp:RequiredFieldValidator>
-                            <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="txtLastName"
-                                                            ValidationGroup="personal" ForeColor="Red" Display="Dynamic" ErrorMessage="Must be Alphabetic"
-                                                            ValidationExpression="([a-zA-Z]\s*)+"></asp:RegularExpressionValidator>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Date of Birth <span style="color: red">*</span></label>
-                            <div class='input-group date' id='div_txtDOB'>
-                                <asp:TextBox ID="txtDOB" CssClass="form-control" placeholder="MM/DD/YYYY" runat="server"></asp:TextBox>
-                                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.FirstName)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                             </div>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" ValidationGroup="personal"
-                                                        Display="Dynamic" ControlToValidate="txtDOB" runat="server" ErrorMessage="Please enter Date of Birth"></asp:RequiredFieldValidator>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MiddleName)
+                                @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.LastName)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.DOB)
+                                @Html.EditorFor(m => m.DOB, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Gender <span style="color: red">*</span></label>
-                            <asp:DropDownList ID="ddlGender" runat="server" CssClass="form-select"></asp:DropDownList>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator5" ValidationGroup="personal" InitialValue="0"
-                                                        Display="Dynamic" ControlToValidate="ddlGender" runat="server" ErrorMessage="Please select Gender"></asp:RequiredFieldValidator>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                @Html.DropDownListFor(model => model.GenderId, new SelectList(Model.GenderList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                @*<select name="Gender" class="form-control">
+                                        <option value="1">Male</option>
+                                        <option value="2">Female</option>
+                                    </select>*@
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">
-                                SSN (Last 4 digits)<span style="color: red">*</span>
-                            </label>
-                            <asp:TextBox ID="txtSSN" MaxLength="4" class="form-control" runat="server"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator9" ValidationGroup="personal" Display="Dynamic" ControlToValidate="txtSSN" runat="server" ErrorMessage="Please enter SSN"></asp:RequiredFieldValidator>
-                            <asp:RegularExpressionValidator ID="RegularExpressionValidator7" runat="server" ControlToValidate="txtSSN"
-                                                            ValidationExpression="[0-9]{4}$" ErrorMessage="Enter Valid SSN" ValidationGroup="personal" />
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>SSN (Last 4 digits)</label>
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.SSN, new { @class = "form-control" })
+                            </div>
                         </div>
-                        <div class="col-md-2" id="maritalDiv" runat="server">
-                            <label class="form-label">
-                                Marital Status
-                            </label>
-                            <select class="form-select" runat="server" id="ddlMaritalStatus">
-                            </select>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Marital Status</label>
+                                <span class="mandatory">*</span>
+                                @Html.DropDownListFor(model => model.MaritalId, new SelectList(Model.MaritalMasterList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.MaritalId, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="col-md-2" id="educationDiv" runat="server">
-                            <label class="form-label">
-                                Education
-                            </label>
-                            <select class="form-select" runat="server" id="ddlEducation">
-                            </select>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Education</label>
+                                <span class="mandatory">*</span>
+                                @Html.DropDownListFor(model => model.EducationId, new SelectList(Model.EducationMasterList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.EducationId, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">
-                                MR#
-                            </label>
-                            <asp:TextBox ID="txtMRN" class="form-control" runat="server"></asp:TextBox>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>MR#</label>
+                                @Html.TextBoxFor(m => m.MRN, new { @class = "form-control" })
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">
-                                Height <span style="color: red">*</span>
-                            </label>
-                            <asp:DropDownList ID="ddlHeight" runat="server" CssClass="form-control">
-                                <asp:ListItem Value="0">Select</asp:ListItem>
-                                <asp:ListItem Value="1">4 ft</asp:ListItem>
-                                <asp:ListItem Value="2">4 ft 1 in</asp:ListItem>
-                                <asp:ListItem Value="3">4 ft 2 in</asp:ListItem>
-                                <asp:ListItem Value="4">4 ft 3 in</asp:ListItem>
-                                <asp:ListItem Value="5">4 ft 4 in</asp:ListItem>
-                                <asp:ListItem Value="6">4 ft 5 in</asp:ListItem>
-                                <asp:ListItem Value="7">4 ft 6 in</asp:ListItem>
-                                <asp:ListItem Value="8">4 ft 7 in</asp:ListItem>
-                                <asp:ListItem Value="9">4 ft 8 in</asp:ListItem>
-                                <asp:ListItem Value="10">4 ft 9 in</asp:ListItem>
-                                <asp:ListItem Value="11">4 ft 10 in</asp:ListItem>
-                                <asp:ListItem Value="12">4 ft 11 in</asp:ListItem>
-                                <asp:ListItem Value="13">5 ft</asp:ListItem>
-                                <asp:ListItem Value="14">5 ft 1 in</asp:ListItem>
-                                <asp:ListItem Value="15">5 ft 2 in</asp:ListItem>
-                                <asp:ListItem Value="16">5 ft 3 in</asp:ListItem>
-                                <asp:ListItem Value="17">5 ft 4 in</asp:ListItem>
-                                <asp:ListItem Value="18">5 ft 5 in</asp:ListItem>
-                                <asp:ListItem Value="19">5 ft 6 in</asp:ListItem>
-                                <asp:ListItem Value="20">5 ft 7 in</asp:ListItem>
-                                <asp:ListItem Value="21">5 ft 8 in</asp:ListItem>
-                                <asp:ListItem Value="22">5 ft 9 in</asp:ListItem>
-                                <asp:ListItem Value="23">5 ft 10 in</asp:ListItem>
-                                <asp:ListItem Value="24">5 ft 11 in</asp:ListItem>
-                                <asp:ListItem Value="25">6 ft</asp:ListItem>
-                                <asp:ListItem Value="26">6 ft 1 in</asp:ListItem>
-                                <asp:ListItem Value="27">6 ft 2 in</asp:ListItem>
-                                <asp:ListItem Value="28">6 ft 3 in</asp:ListItem>
-                                <asp:ListItem Value="29">6 ft 4 in</asp:ListItem>
-                                <asp:ListItem Value="30">6 ft 5 in</asp:ListItem>
-                                <asp:ListItem Value="31">6 ft 6 in</asp:ListItem>
-                                <asp:ListItem Value="32">6 ft 7 in</asp:ListItem>
-                                <asp:ListItem Value="33">6 ft 8 in</asp:ListItem>
-                                <asp:ListItem Value="34">6 ft 9 in</asp:ListItem>
-                                <asp:ListItem Value="35">6 ft 10 in</asp:ListItem>
-                                <asp:ListItem Value="36">6 ft 11 in</asp:ListItem>
-                                <asp:ListItem Value="37">7 ft</asp:ListItem>
-                            </asp:DropDownList>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator8" ValidationGroup="personal" InitialValue="0"
-                                                        Display="Dynamic" ControlToValidate="ddlHeight" runat="server" ErrorMessage="Please select Height"></asp:RequiredFieldValidator>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Height)
+                                <select name="Height" class="form-control">
+                                    <option value="0">Select</option>
+                                    <option value="1">4 ft</option>
+                                    <option value="2">4 ft 1 in</option>
+                                    <option Value="3">4 ft 2 in</option>
+                                    <option Value="4">4 ft 3 in</option>
+                                    <option Value="5">4 ft 4 in</option>
+                                    <option Value="6">4 ft 5 in</option>
+                                    <option Value="7">4 ft 6 in</option>
+                                    <option Value="8">4 ft 7 in</option>
+                                    <option Value="9">4 ft 8 in</option>
+                                    <option Value="10">4 ft 9 in</option>
+                                    <option Value="11">4 ft 10 in</option>
+                                    <option Value="12">4 ft 11 in</option>
+                                    <option Value="13">5 ft</option>
+                                    <option Value="14">5 ft 1 in</option>
+                                    <option Value="15">5 ft 2 in</option>
+                                    <option Value="16">5 ft 3 in</option>
+                                    <option Value="17">5 ft 4 in</option>
+                                    <option Value="18">5 ft 5 in</option>
+                                    <option Value="19">5 ft 6 in</option>
+                                    <option Value="20">5 ft 7 in</option>
+                                    <option Value="21">5 ft 8 in</option>
+                                    <option Value="22">5 ft 9 in</option>
+                                    <option Value="23">5 ft 10 in</option>
+                                    <option Value="24">5 ft 11 in</option>
+                                    <option Value="25">6 ft</option>
+                                    <option Value="26">6 ft 1 in</option>
+                                    <option Value="27">6 ft 2 in</option>
+                                    <option Value="28">6 ft 3 in</option>
+                                    <option Value="29">6 ft 4 in</option>
+                                    <option Value="30">6 ft 5 in</option>
+                                    <option Value="31">6 ft 6 in</option>
+                                    <option Value="32">6 ft 7 in</option>
+                                    <option Value="33">6 ft 8 in</option>
+                                    <option Value="34">6 ft 9 in</option>
+                                    <option Value="35">6 ft 10 in</option>
+                                    <option Value="36">6 ft 11 in</option>
+                                    <option Value="37">7 ft</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.Height, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Weight (lbs) <span style="color: red">*</span></label>
-                            <asp:TextBox ID="txtWeight" CssClass="form-control" MaxLength="5" placeholder="Weight"
-                                         runat="server" requiredrunat="server"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="personal"
-                                                        Display="Dynamic" ControlToValidate="txtWeight" ErrorMessage="Please enter Weight"></asp:RequiredFieldValidator>
-                            <asp:RegularExpressionValidator ID="RegularExpressionValidator8" runat="server"
-                                                            ControlToValidate="txtWeight" ErrorMessage="Please enter a valid number" ValidationExpression="^[0-9.]*$" ValidationGroup="NumericValidate"></asp:RegularExpressionValidator>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Weight (lbs)</label>
+                                @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">
-                                Ethnicity <span style="color: red">*</span>
-                            </label>
-                            <asp:DropDownList ID="ddlrace" runat="server" CssClass="form-select"></asp:DropDownList>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="personal" InitialValue="0"
-                                                        Display="Dynamic" ControlToValidate="ddlrace" runat="server" ErrorMessage="Please select Ethnicity"></asp:RequiredFieldValidator>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Ethnicity</label>
+                                <select name="Ethnicity" class="form-control">
+                                    <option value="0">Select</option>
+                                    <option value="1">New</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label">Address 1 <span style="color: red">*</span></label>
-                            <asp:TextBox ID="txtAddress1" class="form-control" placeholder="Address 1" runat="server"></asp:TextBox>
-                            <asp:RegularExpressionValidator ID="regexEmailValid" runat="server" ValidationExpression="^[a-zA-z0-9-/' ']*$" ControlToValidate="txtAddress1" ErrorMessage="Please enter valid address"></asp:RegularExpressionValidator>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator10" ValidationGroup="personal" Display="Dynamic" ControlToValidate="txtAddress1" runat="server" ErrorMessage="Please enter Address"></asp:RequiredFieldValidator>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Address1)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.Address1, new { @class = "form-control" })
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label">
-                                Address 2
-                            </label>
-                            <asp:TextBox ID="txtAddress2" class="form-control" placeholder="Address 2" runat="server"></asp:TextBox>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Address2)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.Address2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Address2, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">
-                                City <span style="color: red">*</span>
-                            </label>
-                            <asp:TextBox ID="txtCity" class="form-control" placeholder="City" runat="server"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator11" ValidationGroup="personal" Display="Dynamic" ControlToValidate="txtCity" runat="server" ErrorMessage="Please enter City"></asp:RequiredFieldValidator>
-                            <asp:RegularExpressionValidator ID="RegularExpressionValidator6" runat="server" ControlToValidate="txtCity"
-                                                            ValidationExpression="[a-zA-Z ]*$" ErrorMessage="Enter Valid City" ValidationGroup="personal" />
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.City)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">
-                                State <span style="color: red">*</span>
-                            </label>
-                            <asp:DropDownList ID="ddlState" runat="server" CssClass="form-select"></asp:DropDownList>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator14" ValidationGroup="personal" InitialValue="0"
-                                                        Display="Dynamic" ControlToValidate="ddlState" runat="server" ErrorMessage="Please select State"></asp:RequiredFieldValidator>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.StateId)
+                                <span class="mandatory">*</span>
+                                @Html.DropDownListFor(model => model.StateId, new SelectList(Model.StateList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">
-                                Zip Code <span style="color: red">*</span>
-                            </label>
-                            <asp:TextBox ID="txtZipCode" MinLength="5" MaxLength="5" class="form-control" placeholder="ZipCode" runat="server"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator12" ValidationGroup="personal" Display="Dynamic" ControlToValidate="txtZipCode" runat="server" ErrorMessage="Please enter Zip Code"></asp:RequiredFieldValidator>
-                            <asp:RegularExpressionValidator ID="regexpcontactZipCode" runat="server" ControlToValidate="txtZipCode"
-                                                            ForeColor="Red" Display="Dynamic" ErrorMessage="Only 5 digit Numeric Values" ValidationGroup="personal" ValidationExpression="^[0-9]{5}(?:-[0-9]{4})?$"></asp:RegularExpressionValidator>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.ZipCode)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">
-                                Country <span style="color: red">*</span>
-                            </label>
-                            <asp:DropDownList ID="ddlCountry" runat="server" CssClass="form-select"></asp:DropDownList>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator15" ValidationGroup="personal" InitialValue="0"
-                                                        Display="Dynamic" ControlToValidate="ddlCountry" runat="server" ErrorMessage="Please select Country"></asp:RequiredFieldValidator>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.CountryId)
+                                <span class="mandatory">*</span>
+                                @Html.DropDownListFor(model => model.CountryId, new SelectList(Model.CountryList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">
-                                Cell Phone <span style="color: red">*</span>
-                            </label>
-                            <asp:TextBox ID="txtCellPhone" class="form-control" placeholder="ex.7137891234" CssClass="form-control" MaxLength="13"
-                                         ng-minlength="10" runat="server"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator13" ValidationGroup="personal"
-                                                        Display="Dynamic" ControlToValidate="txtCellPhone" runat="server" ErrorMessage="Please enter Cell Number"></asp:RequiredFieldValidator>
-                            <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" ControlToValidate="txtCellPhone"
-                                                            ValidationExpression="^[0-9]{10}$" ErrorMessage="Cell Phone must be numeric & 10 digits in length." Display="Dynamic" ValidationGroup="personal" />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.CellPhone)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.CellPhone, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CellPhone, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label">
-                                Work Phone
-                            </label>
-                            <asp:TextBox ID="txtWorkPhone" class="form-control" placeholder="ex.7137891234" CssClass="form-control" MaxLength="13"
-                                         ng-minlength="10" runat="server"></asp:TextBox>
-                            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtWorkPhone"
-                                                            ValidationExpression="^\d{10}(\d{3})?$" ErrorMessage="Work Phone must be numeric & 10 digits in length." Display="Dynamic" ValidationGroup="personal" />
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.WorkPhone)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.WorkPhone, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.WorkPhone, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label">
-                                Email <span style="color: red">*</span>
-                            </label>
-                            <asp:TextBox ID="txtEmail" class="form-control" placeholder="Email ID" runat="server"
-                                         ReadOnly></asp:TextBox>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <span class="mandatory">*</span>
+                                @*@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
             <div class="card mt-4 mb-4">
                 <div class="card-header">
                     <h3 class="card-title" style="color: #1434A4;">Patient/Parent/Guardian</h3>
@@ -251,7 +266,7 @@
                     </div>
                     <div class="col-md-12">
                         <label class="form-label">Reason for Guardianship (Minor Child, Parent, etc )</label>
-                        <asp:TextBox ID="txtReasonGuardianship" CssClass="form-control" MaxLength="100" runat="server"></asp:TextBox>
+                        @Html.TextBoxFor(m => m.ReasonForGuardianship, new { @class = "form-control" })
                     </div>
                 </div>
             </div>
@@ -264,11 +279,15 @@
                     <a href="phr_index.html">
                         <asp:LinkButton ID="btnCancel" class="btn btn-rounded btn-warning btn-wave" runat="server" OnClick="btnCancel_Click"><i class="fa fa-arrow-left" aria-hidden="true"></i>Back</asp:LinkButton>
                 </div>
-                <div class="col-md-2">
-                    <asp:Button ID="btnSave" class="btn btn-rounded btn-success btn-wave" runat="server" Text="Next" OnClick="btnSave_Click" ValidationGroup="personal" />
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
                 </div>
             </div>
-        </form>
-
+            @*</form>*@
+        }
     </div>
 </div>

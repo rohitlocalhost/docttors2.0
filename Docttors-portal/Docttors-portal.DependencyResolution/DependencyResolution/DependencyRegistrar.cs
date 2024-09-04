@@ -53,6 +53,7 @@ namespace Docttors_portal.DependencyResolution.DependencyResolution
                 For<IUserLogOnService>().Use<UserLogOnService>();
                 For<ICommonUtilityService>().Use<CommonUtilityService>();
                 For<IDoctorServices>().Use<DoctorServices>();
+                For<IPatientPersonalServices>().Use<PatientPersonalServices>();
                 //For<IExpenseService>().Use<ExpenseService>();
                 //For<IProjectService>().Use<ProjectServices>();
                 //For<IInvoiceService>().Use<InvoiceService>();

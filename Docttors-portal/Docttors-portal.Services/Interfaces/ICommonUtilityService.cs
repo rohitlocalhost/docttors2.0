@@ -1,9 +1,5 @@
 ﻿using Docttors_portal.Common.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Docttors_portal.Services.Interfaces
 {
@@ -18,6 +14,14 @@ namespace Docttors_portal.Services.Interfaces
         #endregion
         #region Speciality List
         List<NameIdModel> GetAllSpeciality();
+        #endregion
+
+        #region Country List
+        List<NameIdModel> GetAllCountry();
+        #endregion
+
+        #region Type List
+        List<NameIdModel> GetTypeCategoryByCategoryId(int TypeCategoryId);
         #endregion
     }
 }
