@@ -1,16 +1,21 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Docttors_portal.Entities.Classes
+namespace Docttors_portal.Common.Models
 {
-    [Table("PatientPersonal")]
-    public class PatientPersonal : BaseClass
+    public class PatientPersonalModel
     {
         public int PatientPersonalId { get; set; }
         public int UserId { get; set; }
-        //public int PatientId { get; set; }
+        [Required(ErrorMessage = "FirstName is required")]
         public string FirstName { get; set; }
+        [Required(ErrorMessage = "LastName is required")]
         public string LastName { get; set; }
+        public string Email { get; set; }
         public string MiddleName { get; set; }
         public string WorkPhone { get; set; }
         public string HomePhone { get; set; }
@@ -22,6 +27,7 @@ namespace Docttors_portal.Entities.Classes
         public string ZipCode { get; set; }
         public int CountryId { get; set; }
         public int GenderId { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DOB { get; set; }
         public string SSN { get; set; }
         public string Height { get; set; }
@@ -31,7 +37,7 @@ namespace Docttors_portal.Entities.Classes
 
         public int NoOfChildren { get; set; }
         public string SpousName { get; set; }
-        public string FatherLiving   { get; set; }
+        public string FatherLiving { get; set; }
         public string MotherLiving { get; set; }
         public string SisterLiving { get; set; }
         public string BrotherLiving { get; set; }
@@ -46,6 +52,12 @@ namespace Docttors_portal.Entities.Classes
         public string InsuranceCompany { get; set; }
         public int SelfPaid { get; set; }
         public string MRN { get; set; }
-        public string Profession { get; set; } 
+        public string Profession { get; set; }
+
+        public List<NameIdModel> MaritalMasterList { get; set; }
+        public List<NameIdModel> GenderList { get; set; }
+        public List<NameIdModel> StateList { get; set; }
+        public List<NameIdModel> CountryList { get; set; }
+        public List<NameIdModel> EducationMasterList { get; set; }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Docttors_portal.Common
 {
@@ -21,5 +17,14 @@ namespace Docttors_portal.Common
         DoctorLab,
         DoctorDiagnostics,
         DoctorReferal
+    }
+
+    public enum TypeCategory
+    {
+        [Description("Marital Status")]
+        MaritalStatus = 1,
+        [Description("Education Master")]
+        EducationMaster = 2,
+        Gender = 3,
     }
 }

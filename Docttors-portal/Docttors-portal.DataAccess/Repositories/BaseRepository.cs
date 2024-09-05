@@ -31,6 +31,26 @@ namespace Docttors_portal.DataAccess.Repositories
             return _dbset;
         }
 
+        public T GetEnumValue<T>(int intValue)
+        {
+            if (!typeof(T).IsEnum)
+            {
+                throw new Exception("T must be an Enumeration type.");
+            }
+            T val = ((T[])Enum.GetValues(typeof(T)))[0];
+
+            foreach (T enumValue in (T[])Enum.GetValues(typeof(T)))
+            {
+                if (Convert.ToInt32(enumValue).Equals(intValue))
+                {
+                    val = enumValue;
+                    break;
+                }
+            }
+            return val;
+        }
+
+
         /// <summary>
         /// Add
         /// </summary>

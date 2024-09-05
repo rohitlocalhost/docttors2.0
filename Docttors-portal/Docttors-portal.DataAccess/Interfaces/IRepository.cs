@@ -7,6 +7,7 @@
     public interface IRepository<T> where T : class
     {
         IQueryable<T> GetAll();
+        T GetEnumValue<T>(int intValue);
         void Add(T entity);
         void AddAll(IEnumerable<T> entity);
         void Delete(T entity);
