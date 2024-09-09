@@ -8,7 +8,7 @@ namespace Docttors_portal.Entities.Classes
     {
         [Key]
         public int TypeId { get; set; }
-        public TypeCategory TypeCategoryId { get; set; }
+        public int TypeCategoryId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
     }

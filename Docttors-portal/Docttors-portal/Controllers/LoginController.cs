@@ -39,6 +39,7 @@ namespace Docttors_portal.Controllers
                     //RedirectToAction("Index", "Patient");
                     Session["UserName"] = userDetails.EmailId;
                     Session["UserId"] = loginId;
+                    Session["UserRole"] = userDetails.UserRoleId;
                     ViewBag.Message = string.Empty;
                     if (userDetails.UserRoleId == (int)RoleEnum.Patient)
                     {

@@ -107,13 +107,11 @@ namespace Docttors_portal.Services.Classes
         public List<NameIdModel> GetTypeCategoryByCategoryId(int TypeCategoryId)
         {
             Common.TypeCategory typeCategory = _typeRepository.GetEnumValue<Common.TypeCategory>(TypeCategoryId);
-            string typeCategory1 = Enum.GetName(typeof(Common.TypeCategory), TypeCategoryId);
+            //string typeCategory1 = Enum.GetName(typeof(Common.TypeCategory), TypeCategoryId);
             try
             {
-                //var test = _typeRepository.GetAll(x => x.TypeCategoryId == typeCategory).Select(x => new NameIdModel() { Id = x.TypeId, Name = x.Name, Abbreviation = x.Description })
-                //    .ToList();
 
-                return _typeRepository.GetAll().Select(x => new NameIdModel() { Id = x.TypeId, Name = x.Name, Abbreviation = x.Description })
+                return _typeRepository.GetAll().Where(x=>x.TypeCategoryId==TypeCategoryId).Select(x => new NameIdModel() { Id = x.TypeId, Name = x.Name, Abbreviation = x.Description })
                     .ToList();
             }
             catch
