@@ -20,17 +20,23 @@
     <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="../assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
     <style>
-        *{
+        .mandatory {
+            color: red;
+        }
+        * {
             font-family: Poppins;
         }
+
         @@media only screen and (min-width: 992px) {
             .fixed {
-              width: inherit;
-              position: fixed;
-              top: 100px;
+                width: inherit;
+                position: fixed;
+                top: 100px;
             }
         }
+
         @@media only screen and (max-width: 768px) {
             .top-nav {
                 padding: 20px;
@@ -41,11 +47,12 @@
                 width: -webkit-fill-available;
             }
         }
-        @@media (min-width: 1200px){
-body[data-layout=horizontal] .container-fluid, body[data-layout=horizontal] .navbar-header {
-    max-width: 100%!important;
-}
-}
+
+        @@media (min-width: 1200px) {
+            body[data-layout=horizontal] .container-fluid, body[data-layout=horizontal] .navbar-header {
+                max-width: 100% !important;
+            }
+        }
     </style>
 </head>
 <body data-layout="horizontal">
@@ -199,6 +206,7 @@ body[data-layout=horizontal] .container-fluid, body[data-layout=horizontal] .nav
 
     <!-- JAVASCRIPT -->
     <script src="../assets/libs/jquery/jquery.min.js"></script>
+    @*@Scripts.Render("~/bundles/jqueryui")*@
     <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/libs/metismenu/metisMenu.min.js"></script>
     <script src="../assets/libs/simplebar/simplebar.min.js"></script>
@@ -224,5 +232,6 @@ body[data-layout=horizontal] .container-fluid, body[data-layout=horizontal] .nav
             }
         }
     </script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

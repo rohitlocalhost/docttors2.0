@@ -5,5 +5,7 @@ namespace Docttors_portal.Services.Interfaces
     public interface IPatientPersonalServices
     {
         int SavePatientDetails(PatientPersonalModel personalModel);
+        PatientPersonalModel LoadPersonalDetailsByUserId(int userId);
+        bool UpdatePatientDetails(PatientPersonalModel personalModel);
     }
 }
