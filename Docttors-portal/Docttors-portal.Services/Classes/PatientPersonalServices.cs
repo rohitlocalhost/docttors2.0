@@ -1,6 +1,5 @@
 ﻿using Docttors_portal.Common.Models;
 using Docttors_portal.DataAccess.Interfaces;
-using Docttors_portal.DataAccess.Repositories;
 using Docttors_portal.Entities.Classes;
 using Docttors_portal.Services.Interfaces;
 using System;
@@ -11,6 +10,8 @@ namespace Docttors_portal.Services.Classes
     {
         private IUnitOfWork _unitOfWork;
         private IRepository<PatientPersonalNew> _patientRepository;
+        private IRepository<PatientPhysicianDetailsNew> _PhysicianRepository;
+        private IRepository<PatientInsuranceNew> _insuranceRepository;
 
         public PatientPersonalServices(IUnitOfWork unitOfWork)
         {
@@ -18,6 +19,8 @@ namespace Docttors_portal.Services.Classes
             {
                 _unitOfWork = unitOfWork;
                 _patientRepository = _unitOfWork.GetRepository<PatientPersonalNew>();
+                _PhysicianRepository = _unitOfWork.GetRepository<PatientPhysicianDetailsNew>();
+                _insuranceRepository = _unitOfWork.GetRepository<PatientInsuranceNew>();
             }
         }
         public int SavePatientDetails(PatientPersonalModel personalModel)
@@ -65,36 +68,41 @@ namespace Docttors_portal.Services.Classes
 
         public PatientPersonalModel LoadPersonalDetailsByUserId(int userId)
         {
+            var ptData = new PatientPersonalModel();
             try
             {
                 var patientpersonalData = _patientRepository.GetSingle(x => x.UserId == userId);
-                var ptData = new PatientPersonalModel()
+                if (patientpersonalData != null)
                 {
-                    PatientPersonalId = patientpersonalData.PatientPersonalId,
-                    UserId = patientpersonalData.UserId,
-                    Address = patientpersonalData.Address,
-                    City = patientpersonalData.City,
-                    ContactNo = patientpersonalData.ContactNo,
-                    DOB = patientpersonalData.DOB.Date.ToString("yyyy-MM-dd"),
-                    EducationId = patientpersonalData.EducationId,
-                    EmailId = patientpersonalData.EmailId,
-                    FirstName = patientpersonalData.FirstName,
-                    LastName = patientpersonalData.LastName,
-                    EthnicityId = patientpersonalData.EthnicityId,
-                    GenderId = patientpersonalData.GenderId,
-                    GuardinshipReason = patientpersonalData.GuardinshipReason,
-                    HeightId = patientpersonalData.HeightId,
-                    IsGuardian = patientpersonalData.IsGuardian,
-                    Ispatient = patientpersonalData.Ispatient,
-                    MaritalStatusId = patientpersonalData.MaritalStatusId,
-                    StateId = patientpersonalData.StateId,
-                    MiddleName = patientpersonalData.MiddleName,
-                    MRN = patientpersonalData.MRN,
-                    SSN = patientpersonalData.SSN,
-                    Weight = patientpersonalData.Weight,
-                    WorkPhone = patientpersonalData.WorkPhone,
-                    ZipCode = patientpersonalData.ZipCode
-                };
+                    ptData.PatientPersonalId = patientpersonalData.PatientPersonalId;
+                    ptData.UserId = patientpersonalData.UserId;
+                    ptData.Address = patientpersonalData.Address;
+                    ptData.City = patientpersonalData.City;
+                    ptData.ContactNo = patientpersonalData.ContactNo;
+                    ptData.DOB = patientpersonalData.DOB.Date.ToString("yyyy-MM-dd");
+                    ptData.EducationId = patientpersonalData.EducationId;
+                    ptData.EmailId = patientpersonalData.EmailId;
+                    ptData.FirstName = patientpersonalData.FirstName;
+                    ptData.LastName = patientpersonalData.LastName;
+                    ptData.EthnicityId = patientpersonalData.EthnicityId;
+                    ptData.GenderId = patientpersonalData.GenderId;
+                    ptData.GuardinshipReason = patientpersonalData.GuardinshipReason;
+                    ptData.HeightId = patientpersonalData.HeightId;
+                    ptData.IsGuardian = patientpersonalData.IsGuardian;
+                    ptData.Ispatient = patientpersonalData.Ispatient;
+                    ptData.MaritalStatusId = patientpersonalData.MaritalStatusId;
+                    ptData.StateId = patientpersonalData.StateId;
+                    ptData.MiddleName = patientpersonalData.MiddleName;
+                    ptData.MRN = patientpersonalData.MRN;
+                    ptData.SSN = patientpersonalData.SSN;
+                    ptData.Weight = patientpersonalData.Weight;
+                    ptData.WorkPhone = patientpersonalData.WorkPhone;
+                    ptData.ZipCode = patientpersonalData.ZipCode;
+                }
+                else
+                {
+                    ptData = new PatientPersonalModel();
+                }
                 return ptData;
 
             }
@@ -148,5 +156,117 @@ namespace Docttors_portal.Services.Classes
             }
         }
 
+        #region Insurance
+        public int SavePatientInsuranceDetails(PatientInsuranceModel insurancelData)
+        {
+            try
+            {
+                var insurance = new PatientInsuranceNew()
+                {
+                    PatientInsuranceId = insurancelData.PatientInsuranceId,
+                    UserId = insurancelData.UserId,
+                    NameOfInsured = insurancelData.NameOfInsured,
+                    RelationshipToPatient = insurancelData.RelationshipToPatient,
+                    InsuranceIdNumber = insurancelData.InsuranceIdNumber,
+                    InsuranceGroupId = insurancelData.InsuranceGroupId,
+                    InsuranceCompanyName = insurancelData.InsuranceCompanyName,
+                    InsuranceCompanyWebsite = insurancelData.InsuranceCompanyWebsite,
+                    InsuranceCompanyAddress = insurancelData.InsuranceCompanyAddress,
+                    InsuranceCompanyCity = insurancelData.InsuranceCompanyCity,
+                    InsuranceCompanyStateId = insurancelData.InsuranceCompanyStateId,
+                    InsuranceCompanyCountryId = insurancelData.InsuranceCompanyCountryId,
+                    InsuranceCompanyZipcode = insurancelData.InsuranceCompanyZipcode,
+                    InsuranceCompanyPhone = insurancelData.InsuranceCompanyPhone,
+                    InsuranceCompanyFax = insurancelData.InsuranceCompanyFax,
+                    EligibilityStartDate = Convert.ToDateTime(insurancelData.EligibilityStartDate),
+                    EligibilityEndDate = Convert.ToDateTime(insurancelData.EligibilityEndDate),
+                };
+                _insuranceRepository.Add(insurance);
+                return insurance.PatientInsuranceId;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public PatientInsuranceModel LoadInsuranceDetailsByUserId(int userId)
+        {
+            var ptData = new PatientInsuranceModel();
+            try
+            {
+                var insurancelData = _insuranceRepository.GetSingle(x => x.UserId == userId);
+                if (insurancelData != null)
+                {
+                    ptData.PatientInsuranceId = insurancelData.PatientInsuranceId;
+                    ptData.UserId = insurancelData.UserId;
+                    ptData.NameOfInsured = insurancelData.NameOfInsured;
+                    ptData.RelationshipToPatient = insurancelData.RelationshipToPatient;
+                    ptData.InsuranceIdNumber = insurancelData.InsuranceIdNumber;
+                    ptData.InsuranceGroupId = insurancelData.InsuranceGroupId;
+                    ptData.InsuranceCompanyName = insurancelData.InsuranceCompanyName;
+                    ptData.InsuranceCompanyWebsite = insurancelData.InsuranceCompanyWebsite;
+                    ptData.InsuranceCompanyAddress = insurancelData.InsuranceCompanyAddress;
+                    ptData.InsuranceCompanyCity = insurancelData.InsuranceCompanyCity;
+                    ptData.InsuranceCompanyStateId = insurancelData.InsuranceCompanyStateId;
+                    ptData.InsuranceCompanyCountryId = insurancelData.InsuranceCompanyCountryId;
+                    ptData.InsuranceCompanyZipcode = insurancelData.InsuranceCompanyZipcode;
+                    ptData.InsuranceCompanyPhone = insurancelData.InsuranceCompanyPhone;
+                    ptData.InsuranceCompanyFax = insurancelData.InsuranceCompanyFax;
+                    ptData.EligibilityStartDate = insurancelData.EligibilityStartDate.Date.ToString("yyyy-MM-dd");
+                    ptData.EligibilityEndDate = insurancelData.EligibilityEndDate.Date.ToString("yyyy-MM-dd");
+                }
+                else
+                {
+                    ptData = new PatientInsuranceModel();
+                }
+                return ptData;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public bool UpdateInsuranceDetails(PatientInsuranceModel insurancelData)
+        {
+            try
+            {
+                var patientInsurance = _insuranceRepository.GetSingle(x => x.PatientInsuranceId == insurancelData.PatientInsuranceId);
+                if (patientInsurance != null)
+                {
+                    patientInsurance.PatientInsuranceId = insurancelData.PatientInsuranceId;
+                    patientInsurance.UserId = insurancelData.UserId;
+                    patientInsurance.NameOfInsured = insurancelData.NameOfInsured;
+                    patientInsurance.RelationshipToPatient = insurancelData.RelationshipToPatient;
+                    patientInsurance.InsuranceIdNumber = insurancelData.InsuranceIdNumber;
+                    patientInsurance.InsuranceGroupId = insurancelData.InsuranceGroupId;
+                    patientInsurance.InsuranceCompanyName = insurancelData.InsuranceCompanyName;
+                    patientInsurance.InsuranceCompanyWebsite = insurancelData.InsuranceCompanyWebsite;
+                    patientInsurance.InsuranceCompanyAddress = insurancelData.InsuranceCompanyAddress;
+                    patientInsurance.InsuranceCompanyCity = insurancelData.InsuranceCompanyCity;
+                    patientInsurance.InsuranceCompanyStateId = insurancelData.InsuranceCompanyStateId;
+                    patientInsurance.InsuranceCompanyCountryId = insurancelData.InsuranceCompanyCountryId;
+                    patientInsurance.InsuranceCompanyZipcode = insurancelData.InsuranceCompanyZipcode;
+                    patientInsurance.InsuranceCompanyPhone = insurancelData.InsuranceCompanyPhone;
+                    patientInsurance.InsuranceCompanyFax = insurancelData.InsuranceCompanyFax;
+                    patientInsurance.EligibilityStartDate = Convert.ToDateTime(insurancelData.EligibilityStartDate);
+                    patientInsurance.EligibilityEndDate = Convert.ToDateTime(insurancelData.EligibilityEndDate);
+                    patientInsurance.ModifiedBy = insurancelData.UserId;
+                    patientInsurance.ModifiedOn = DateTime.Now;
+                    _insuranceRepository.Update(patientInsurance);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
     }
 }

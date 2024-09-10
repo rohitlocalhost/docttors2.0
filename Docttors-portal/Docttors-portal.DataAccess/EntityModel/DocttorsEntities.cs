@@ -25,5 +25,7 @@ namespace Docttors_portal.DataAccess.EntityModel
         public DbSet<Country> countries { get; set; }
         public DbSet<Type> types { get; set; }
         public DbSet<TypeCategory> typeCategories { get; set; }
+        public DbSet<PatientPhysicianDetailsNew> patientPhysicianDetails { get; set; }
+        public DbSet<PatientInsuranceNew> patientInsuranceNew { get; set; }
     }
 }

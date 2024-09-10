@@ -23,5 +23,9 @@ namespace Docttors_portal.Services.Interfaces
         #region Type List
         List<NameIdModel> GetTypeCategoryByCategoryId(int TypeCategoryId);
         #endregion
+
+        #region SpecialistTypes List
+        List<NameIdModel> GetAllSpecialistTypes();
+        #endregion
     }
 }

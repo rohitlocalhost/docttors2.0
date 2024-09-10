@@ -48,7 +48,9 @@
     <Compile Include="Enum.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\NameIdModel.cs" />
+    <Compile Include="Models\PatientInsuranceModel.cs" />
     <Compile Include="Models\PatientPersonalModel.cs" />
+    <Compile Include="Models\PatientPhysicianModel.cs" />
     <Compile Include="Models\PatientSearchModel.cs" />
     <Compile Include="Models\UserRegistrationModel.cs" />
     <Compile Include="procedureModels\GetDoctorPatients.cs" />

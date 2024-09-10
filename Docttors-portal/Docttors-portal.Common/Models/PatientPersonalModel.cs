@@ -32,7 +32,7 @@ namespace Docttors_portal.Common.Models
         [Required(ErrorMessage = "State is required")]
         public int StateId { get; set; }
         [Display(Name = "Zip Code")]
-        public string ZipCode { get; set; }
+        public int ZipCode { get; set; }
         public int CountryId { get; set; }
         [Display(Name = "Gender")]
         [Required(ErrorMessage = "Gender is required")]

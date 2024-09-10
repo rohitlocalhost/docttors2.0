@@ -27,6 +27,7 @@ namespace Docttors_portal.Common
         MaritalStatus=3,
         Education=4,
         Height=5,
-        Ethnicity=6
+        Ethnicity=6,
+        Specialty = 7
     }
 }
