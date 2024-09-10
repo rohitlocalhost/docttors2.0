@@ -7,5 +7,12 @@ namespace Docttors_portal.Services.Interfaces
         int SavePatientDetails(PatientPersonalModel personalModel);
         PatientPersonalModel LoadPersonalDetailsByUserId(int userId);
         bool UpdatePatientDetails(PatientPersonalModel personalModel);
+
+        #region Insurance
+        int SavePatientInsuranceDetails(PatientInsuranceModel insuranceModel);
+        PatientInsuranceModel LoadInsuranceDetailsByUserId(int userId);
+        bool UpdateInsuranceDetails(PatientInsuranceModel insuranceModel);
+
+        #endregion
     }
 }

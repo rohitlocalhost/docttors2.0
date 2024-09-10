@@ -453,6 +453,8 @@
     <Content Include="Views\Doctor\Appointment.cshtml" />
     <Content Include="Views\Doctor\ManageWebsite.cshtml" />
     <Content Include="Views\Patient\PersonalDetails.cshtml" />
+    <Content Include="Views\Patient\PhysicianDetails.cshtml" />
+    <Content Include="Views\Patient\Insurance.cshtml" />
     <Content Include="Views\Shared\PatientError.cshtml" />
   </ItemGroup>
   <ItemGroup>

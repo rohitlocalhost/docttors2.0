@@ -1,0 +1,174 @@
+﻿@model Docttors_portal.Common.Models.PatientPhysicianModel
+
+@{
+    ViewBag.Title = "PhysicianDetails";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<div id="wrapper" class="card">
+    <div class="card-header" style="background-color: #1434A4;">
+        <h1 class="card-title" style="color: #fff;">Physician Information</h1>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("PatientPhysicianDetails", "Patient", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.PatientPhysicianId)
+            <span id="lblMessage" runat="server"></span>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title" style="color: #1434A4;">
+                        List all physicians involved in your care
+                        <span style="font-size: 12px;"><a style="color: red;" id="help" onclick="helpclick(this)" href="#">Help?</a></span>
+                        <br />
+                        <br />
+                        <span>@ViewBag.Message</span>
+                        <span class="mandatory">@ViewBag.Error</span>
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.IsNone, new { @id = "isNone" })
+                                @Html.LabelFor(m => m.IsNone)
+                            </div>
+                        </div>
+                    </div>
+                    <div id="disabledAll">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.PhysicianSpecialtyId)
+                                    <span class="mandatory">*</span>
+                                    @Html.DropDownListFor(model => model.PhysicianSpecialtyId, new SelectList(Model.SpecialistTypesList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PhysicianSpecialtyId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.PhysicianFName)
+                                    <span class="mandatory">*</span>
+                                    @Html.TextBoxFor(m => m.PhysicianFName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PhysicianFName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.PhysicianLName)
+                                    <span class="mandatory">*</span>
+                                    @Html.TextBoxFor(m => m.PhysicianLName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PhysicianLName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.PracticeName)
+                                    @Html.TextBoxFor(m => m.PracticeName, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Address1)
+                                    @Html.TextBoxFor(m => m.Address1, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Address2)
+                                    @Html.TextBoxFor(m => m.Address2, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.City)
+                                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.StateId)
+                                    @Html.DropDownListFor(model => model.StateId, new SelectList(Model.StateList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.ZipCode)
+                                    @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Phone)
+                                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-3 mt-1 mb-1 d-print-none justify-content-lg-end">
+                <div class="col-md-4"></div>
+                <div class="col-md-3">
+                    <a href="Javascript:void(0)" class="btn btn-rounded btn-secondary btn-wave"><i class="fa fa-print" aria-hidden="true"></i>Print This Page</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="@Url.Action("MyHealthRecord")" class="btn btn-rounded btn-warning btn-wave"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-rounded btn-success btn-wave"><i class="fas fa-save"></i> Save</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts
+{
+
+    <script>
+        $('#isNone').change(function () {
+            debugger
+            var isNone = $('#isNone').is(':checked');
+            if (isNone) {                
+                    $('#PhysicianFName').val('N/A')
+                    $('#PhysicianLName').val('N/A')
+                    $('#PracticeName').val('N/A')
+                    $('#Address1').val('N/A')
+                    $('#Address2').val('N/A')
+                    $('#City').val('N/A')                        
+                    $('#ZipCode').val(null)
+                    $('#Phone').val(null)
+                    $('#StateId').val('')
+                $('#PhysicianSpecialtyId').val('')
+                $("#disabledAll *").attr("disabled", "disabled").off('click');
+            }
+            else {
+                $('#PhysicianFName').val('')
+                $('#PhysicianLName').val('')
+                $('#PracticeName').val('')
+                $('#Address1').val('')
+                $('#Address2').val('')
+                $('#City').val('')
+                $('#ZipCode').val('')
+                $('#Phone').val('')
+                $('#StateId').val('')
+                $('#PhysicianSpecialtyId').val('')
+                $("#disabledAll *").attr("disabled", "disabled").off('click');
+            }
+        });
+    </script>
+}
+
+

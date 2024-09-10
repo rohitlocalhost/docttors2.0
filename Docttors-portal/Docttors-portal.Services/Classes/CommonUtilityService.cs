@@ -19,6 +19,7 @@ namespace Docttors_portal.Services.Classes
         private IRepository<SpecialistInsurance> _insuranceRepository;
         private IRepository<DoctorSpecialty> _specialtyRepository;
         private IRepository<Entities.Classes.Type> _typeRepository;
+        private IRepository<SpecialistTypes> _specialistTypesRepository;
         public CommonUtilityService(IUnitOfWork unitOfWork)
         {
             if (unitOfWork != null)
@@ -29,8 +30,10 @@ namespace Docttors_portal.Services.Classes
                 _insuranceRepository = _unitOfWork.GetRepository<SpecialistInsurance>();
                 _specialtyRepository = _unitOfWork.GetRepository<DoctorSpecialty>();
                 _typeRepository = _unitOfWork.GetRepository<Entities.Classes.Type>();
+                _specialistTypesRepository = _unitOfWork.GetRepository<SpecialistTypes>();
             }
         }
+
         #region States List
         public List<NameIdModel> GetAllStates()
         {
@@ -124,5 +127,25 @@ namespace Docttors_portal.Services.Classes
             }
         }
         #endregion
+
+        #region SpecialistTypes List
+        public List<NameIdModel> GetAllSpecialistTypes()
+        {
+            try
+            {
+                var a = _specialistTypesRepository.GetAll().Select(x => new NameIdModel() { Id = x.Id, Name = x.SpecialistType, Abbreviation = x.SpecialistType }).ToList();
+                return a;
+            }
+            catch
+            {
+                return new List<NameIdModel>();
+            }
+            finally
+            {
+
+            }
+        }
+        #endregion
+
     }
 }

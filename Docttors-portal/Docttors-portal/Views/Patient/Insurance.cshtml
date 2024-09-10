@@ -1,0 +1,178 @@
+﻿@model Docttors_portal.Common.Models.PatientInsuranceModel
+@{
+    ViewBag.Title = "Insurance";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<div id="wrapper" class="card">
+    <div class="card-header" style="background-color: #1434A4;">
+        <h1 class="card-title" style="color: #fff;">Insurance Details</h1>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("InsuranceDetails", "Patient", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.PatientInsuranceId)
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title" style="color: #1434A4;">
+                        Insurance Details
+                        <span style="font-size: 12px;"><a style="color: red;" id="help" onclick="helpclick(this)" href="#">Help?</a></span>
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.IsNone, new { @id = "isNone" })
+                                @Html.LabelFor(m => m.IsNone)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.NameOfInsured)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.NameOfInsured, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.NameOfInsured, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.RelationshipToPatient)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.RelationshipToPatient, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.RelationshipToPatient, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.InsuranceIdNumber)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.InsuranceIdNumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.InsuranceIdNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.InsuranceGroupId)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.InsuranceGroupId, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.InsuranceGroupId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card mt-4 mb-4">
+                <div class="card-body row g-3">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.InsuranceCompanyName)
+                            <span class="mandatory">*</span>
+                            @Html.TextBoxFor(m => m.InsuranceCompanyName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.InsuranceCompanyName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.InsuranceCompanyAddress)
+                            @Html.TextBoxFor(m => m.InsuranceCompanyAddress, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.InsuranceCompanyWebsite)
+                            <span class="mandatory">*</span>
+                            @Html.TextBoxFor(m => m.InsuranceCompanyWebsite, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.InsuranceCompanyWebsite, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.InsuranceCompanyCity)
+                            <span class="mandatory">*</span>
+                            @Html.TextBoxFor(m => m.InsuranceCompanyCity, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.InsuranceCompanyCity, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.InsuranceCompanyStateId)
+                            <span class="mandatory">*</span>
+                            @Html.DropDownListFor(model => model.InsuranceCompanyStateId, new SelectList(Model.StateList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.InsuranceCompanyStateId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.InsuranceCompanyZipcode)
+                            @Html.TextBoxFor(m => m.InsuranceCompanyZipcode, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.InsuranceCompanyCountryId)
+                            <span class="mandatory">*</span>
+                            @Html.DropDownListFor(model => model.InsuranceCompanyCountryId, new SelectList(Model.CountryList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.InsuranceCompanyCountryId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.InsuranceCompanyPhone)
+                            @Html.TextBoxFor(m => m.InsuranceCompanyPhone, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.InsuranceCompanyFax)
+                            @Html.TextBoxFor(m => m.InsuranceCompanyFax, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card mt-4 mb-4">
+                <div class="card-body row g-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EligibilityStartDate)
+                            <span class="mandatory">*</span>
+                            @Html.TextBoxFor(model => model.EligibilityStartDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                            @Html.ValidationMessageFor(model => model.EligibilityStartDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EligibilityEndDate)
+                            <span class="mandatory">*</span>
+                            @Html.TextBoxFor(model => model.EligibilityEndDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                            @Html.ValidationMessageFor(model => model.EligibilityEndDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-3 mt-1 mb-1 d-print-none justify-content-lg-end">
+                <div class="col-md-4"></div>
+                <div class="col-md-3">
+                    <a href="Javascript:void(0)" class="btn btn-rounded btn-secondary btn-wave"><i class="fa fa-print" aria-hidden="true"></i>Print This Page</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="@Url.Action("MyHealthRecord")" class="btn btn-rounded btn-warning btn-wave"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-rounded btn-success btn-wave"><i class="fas fa-save"></i> Save</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
