@@ -27,5 +27,8 @@ namespace Docttors_portal.DataAccess.EntityModel
         public DbSet<TypeCategory> typeCategories { get; set; }
         public DbSet<PatientPhysicianDetailsNew> patientPhysicianDetails { get; set; }
         public DbSet<PatientInsuranceNew> patientInsuranceNew { get; set; }
+        public DbSet<PatientAllergiesNew> patientAllergiesNew { get; set; }
+        public DbSet<PatientHospitalDetailsNew> patientHospitalDetailsNews { get; set; }
+        public DbSet<PatientPharmacyDetailsNew> patientPharmacyDetailsNews { get; set; }
     }
 }

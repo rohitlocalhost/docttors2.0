@@ -456,6 +456,10 @@
     <Content Include="Views\Patient\PhysicianDetails.cshtml" />
     <Content Include="Views\Patient\Insurance.cshtml" />
     <Content Include="Views\Shared\PatientError.cshtml" />
+    <Content Include="Views\Patient\PatientAllergies.cshtml" />
+    <Content Include="Views\Patient\HospitalDetails.cshtml" />
+    <Content Include="Views\Patient\PharmacyDetails.cshtml" />
+    <Content Include="Views\Patient\MedicationDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

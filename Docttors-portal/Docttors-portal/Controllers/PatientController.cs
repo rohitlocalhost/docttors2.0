@@ -92,7 +92,6 @@ namespace Docttors_portal.Controllers
                 throw ex;
             }
         }
-
         private PatientPersonalModel LoadlistData(PatientPersonalModel patientPersonalModel)
         {
 
@@ -173,7 +172,7 @@ namespace Docttors_portal.Controllers
             insuranceModel.CountryList = _commonUtilityService.GetAllCountry();
             return insuranceModel;
         }
-     
+
         [HttpPost]
         public ActionResult InsuranceDetails(PatientInsuranceModel patientInsuranceModel)
         {
@@ -202,7 +201,197 @@ namespace Docttors_portal.Controllers
                         ViewBag.Message = "Data Saved Successfully";
                     }
                 }
-                return PersonalDetails();
+                return Insurance();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
+
+        #region Patient Allergies
+        public ActionResult PatientAllergies()
+        {
+            var allergiesModel = _personalServices.LoadAllergiesDetailsByUserId(Convert.ToInt32(Session["UserId"]));
+            return View(allergiesModel);
+        }
+        [HttpPost]
+        public ActionResult PatientAllergiesDetails(PatientAllergiesModel allergiesModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    allergiesModel.UserId = Convert.ToInt32(Session["UserId"]);
+                    if (allergiesModel.PatientAllergyId > 0)
+                    {
+                        //Update Allergies Details
+                        if (_personalServices.UpdateAllergiesDetails(allergiesModel))
+                        {
+                            ViewBag.Message = "Data Updated Successfully";
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Some issue occured, Data Not saved";
+                        }
+                    }
+                    else
+                    {
+                        //Add new Allergies Details
+                        int patientAllergyId = _personalServices.SaveAllergiesDetails(allergiesModel);
+                        allergiesModel.PatientAllergyId = patientAllergyId;
+                        ViewBag.Message = "Data Saved Successfully";
+                    }
+                }
+                return PatientAllergies();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region Hospital Details
+        public ActionResult HospitalDetails()
+        {
+            var hospitalModel = _personalServices.LoadHospitalDetailsByUserId(Convert.ToInt32(Session["UserId"]));
+            hospitalModel = LoadListHospitalData(hospitalModel);
+            return View(hospitalModel);
+        }
+        private PatientHospitalModel LoadListHospitalData(PatientHospitalModel hospitalModel)
+        {
+            hospitalModel.StateList = _commonUtilityService.GetAllStates();
+            return hospitalModel;
+        }
+
+        [HttpPost]
+        public ActionResult HospitalDetails(PatientHospitalModel hospitalModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    hospitalModel.UserId = Convert.ToInt32(Session["UserId"]);
+                    if (hospitalModel.PatientHospitalId > 0)
+                    {
+                        //Update Allergies Details
+                        if (_personalServices.UpdateHospitalDetails(hospitalModel))
+                        {
+                            ViewBag.Message = "Data Updated Successfully";
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Some issue occured, Data Not saved";
+                        }
+                    }
+                    else
+                    {
+                        //Add new Allergies Details
+                        int patientAllergyId = _personalServices.SaveHospitalDetails(hospitalModel);
+                        hospitalModel.PatientHospitalId = patientAllergyId;
+                        ViewBag.Message = "Data Saved Successfully";
+                    }
+                }
+                return HospitalDetails();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
+
+        #region Pharmacy Details
+        public ActionResult PharmacyDetails()
+        {
+            var pharmacyModel = _personalServices.LoadPharmacyDetailsByUserId(Convert.ToInt32(Session["UserId"]));
+            pharmacyModel = LoadListPharmacyData(pharmacyModel);
+            return View(pharmacyModel);
+        }
+        private PatientPharmacyModel LoadListPharmacyData(PatientPharmacyModel pharmacyModel)
+        {
+            pharmacyModel.StateList = _commonUtilityService.GetAllStates();
+            return pharmacyModel;
+        }
+
+        [HttpPost]
+        public ActionResult PharmacyDetails(PatientPharmacyModel pharmacyModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    pharmacyModel.UserId = Convert.ToInt32(Session["UserId"]);
+                    if (pharmacyModel.PatientPharmacyId > 0)
+                    {
+                        //Update Pharmacy Details
+                        if (_personalServices.UpdatePharmacyDetails(pharmacyModel))
+                        {
+                            ViewBag.Message = "Data Updated Successfully";
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Some issue occured, Data Not saved";
+                        }
+                    }
+                    else
+                    {
+                        //Add new Pharmacy Details
+                        int patientPharmacyId = _personalServices.SavePharmacyDetails(pharmacyModel);
+                        pharmacyModel.PatientPharmacyId = patientPharmacyId;
+                        ViewBag.Message = "Data Saved Successfully";
+                    }
+                }
+                return PharmacyDetails();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
+
+        #region Mediacation Details
+        public ActionResult MedicationDetails()
+        {
+            var medicationModel = _personalServices.LoadMedicationDetailsByUserId(Convert.ToInt32(Session["UserId"]));
+            return View(medicationModel);
+        }
+
+        [HttpPost]
+        public ActionResult MedicationDetails(PatientMedicationModel medicationModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    medicationModel.UserId = Convert.ToInt32(Session["UserId"]);
+                    if (medicationModel.PatientMedicationId > 0)
+                    {
+                        //Update Pharmacy Details
+                        if (_personalServices.UpdateMedicationDetails(medicationModel))
+                        {
+                            ViewBag.Message = "Data Updated Successfully";
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Some issue occured, Data Not saved";
+                        }
+                    }
+                    else
+                    {
+                        //Add new Pharmacy Details
+                        int PatientMedicationId = _personalServices.SaveMedicationDetails(medicationModel);
+                        medicationModel.PatientMedicationId = PatientMedicationId;
+                        ViewBag.Message = "Data Saved Successfully";
+                    }
+                }
+                return MedicationDetails();
             }
             catch (Exception ex)
             {

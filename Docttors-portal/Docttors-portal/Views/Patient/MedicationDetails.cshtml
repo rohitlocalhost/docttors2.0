@@ -1,0 +1,62 @@
+﻿@model Docttors_portal.Common.Models.PatientMedicationModel
+@{
+    ViewBag.Title = "MedicationDetails";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<div id="wrapper" class="card">
+    <div class="card-header" style="background-color: #1434A4;">
+        <h1 class="card-title" style="color: #fff;">Current Medications</h1>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("PharmacyDetails", "Patient", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.PatientMedicationId)
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title" style="color: #1434A4;">
+                        List all current medications you are taking (prescription & non-prescription)
+                        <span style="font-size: 12px;"><a style="color: red;" id="help" onclick="helpclick(this)" href="#">Help?</a></span>
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.IsNone, new { @id = "isNone" })
+                                @Html.LabelFor(m => m.IsNone)
+                                <p>Provide the names of all health care facilities you sought care during the last 12 months (Hospital/Urgent Care/Free Standing ER, etc)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.CurrentMedication, new { @id = "IsPrimary" })
+                                @Html.LabelFor(m => m.CurrentMedication)
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="row g-3 mt-1 mb-1 d-print-none justify-content-lg-end">
+                <div class="col-md-4"></div>
+                <div class="col-md-3">
+                    <a href="Javascript:void(0)" class="btn btn-rounded btn-secondary btn-wave"><i class="fa fa-print" aria-hidden="true"></i>Print This Page</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="@Url.Action("MyHealthRecord")" class="btn btn-rounded btn-warning btn-wave"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-rounded btn-success btn-wave"><i class="fas fa-save"></i> Save</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
