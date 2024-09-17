@@ -5,7 +5,11 @@ using System.ComponentModel.DataAnnotations;
 namespace Docttors_portal.Common.Models
 {
     public class PatientPhysicianModel
-    {        
+    {
+        public PatientPhysicianModel()
+        {
+            patientPhysicianData = new List<PatientPhysicianModel>();
+        }
         public int PatientPhysicianId { get; set; }
         public int UserId { get; set; }
         [DisplayName("First Name")]
@@ -22,7 +26,7 @@ namespace Docttors_portal.Common.Models
         public string Address2 { get; set; }
         public string City { get; set; }
         [DisplayName("State")]
-        public int StateId { get; set; }
+        public int? StateId { get; set; }
         [DisplayName("Zip Code")]
         public string ZipCode { get; set; }
         public string Phone { get; set; }
@@ -31,5 +35,8 @@ namespace Docttors_portal.Common.Models
 
         public List<NameIdModel> StateList { get; set; }
         public List<NameIdModel> SpecialistTypesList { get; set; }
+
+        public List<PatientPhysicianModel> patientPhysicianData { get; set; }
     }
+
 }

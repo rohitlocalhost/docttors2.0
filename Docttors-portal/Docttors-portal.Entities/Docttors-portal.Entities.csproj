@@ -53,7 +53,10 @@
     <Compile Include="Classes\BaseClass.cs" />
     <Compile Include="Classes\Country.cs" />
     <Compile Include="Classes\DoctorSpecialty.cs" />
+    <Compile Include="Classes\ErrorLog.cs" />
+    <Compile Include="Classes\PatientEmergencyNew.cs" />
     <Compile Include="Classes\PatientInsuranceNew.cs" />
+    <Compile Include="Classes\PatientObservationNew.cs" />
     <Compile Include="Classes\PatientPhysicianDetailsNew.cs" />
     <Compile Include="Classes\PatientPersonalNew.cs" />
     <Compile Include="Classes\Role.cs" />

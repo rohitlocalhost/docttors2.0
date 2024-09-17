@@ -3,7 +3,7 @@
     ViewBag.Title = "PersonalDetails";
     Layout = "~/Views/Shared/_PatientLayout.cshtml";
 }
-<div id="wrapper" class="card">
+<div class="card">
     <div class="card-header" style="background-color: #1434A4;">
         <h1 class="card-title" style="color: #fff;">PERSONAL DATA</h1>
     </div>
@@ -17,7 +17,7 @@
                 <div class="card-header">
                     <h2 class="card-title" style="color: #1434A4;">
                         Personal Details
-                        <span style="font-size: 12px;"><a style="color: red;" id="help" onclick="helpclick(this)" href="#">Help?</a></span>
+                       @* <span style="font-size: 12px;"><a style="color: red;" id="help" onclick="helpclick(this)" href="#">Help?</a></span>*@
                         <br />
                         <br />
                         <span>@ViewBag.Message</span>
@@ -78,7 +78,6 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Marital Status</label>
-                                @*@Html.DropDownListFor(model => model.MaritalStatusId, new SelectList(Model.MaritalMasterList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })*@
                                 @Html.DropDownListFor(model => model.MaritalStatusId, new SelectList(Model.MaritalMasterList, "Id", "Name"), "Select", new { @class = "form-control" })
 
                             </div>

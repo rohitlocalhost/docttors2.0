@@ -16,9 +16,10 @@ namespace Docttors_portal.Entities.Classes
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }
-        public int StateId { get; set; }
+        public int? StateId { get; set; }
         public string ZipCode { get; set; }
         public string Phone { get; set; }
+        public bool IsNoneSelected { get; set; }
 
     }
 }

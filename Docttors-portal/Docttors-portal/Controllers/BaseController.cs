@@ -1,6 +1,8 @@
-﻿using Docttors_portal.DataAccess.EntityModel;
+﻿using Docttors_portal.Common;
+using Docttors_portal.DataAccess.EntityModel;
 using Docttors_portal.DataAccess.Interfaces;
 using Docttors_portal.DataAccess.Repositories;
+using Docttors_portal.Entities.Classes;
 using Docttors_portal.Helper;
 using Docttors_portal.Services.Classes;
 using System;
@@ -143,26 +145,30 @@ namespace Docttors_portal.Controllers
             {
                 System.Diagnostics.StackTrace objTrace = new System.Diagnostics.StackTrace(objException, true);
                 String FileName = objTrace.GetFrame(0).GetFileName();
-                //ErrorLog errolog = new ErrorLog();
-                //errolog.EventDateTime = DateTime.UtcNow;
-                //errolog.UserName = SessionVariables.LoggedInUser.Name;
-                //errolog.MachineName = Request.ServerVariables["REMOTE_ADDR"];
-                //errolog.EventMessage = CustomMessage;
-                //errolog.ErrorSource = objException.Source;
-                //errolog.ErrorClass = (FileName == null ? "" : FileName.Substring(FileName.LastIndexOf("\\") + 1));
-                //errolog.ErrorMethod = objTrace.GetFrame(0).GetMethod().Name;
-                //errolog.ErrorMessage = ErrorMessage;
-                //errolog.InnerErrorMessage = Convert.ToString(objException.InnerException);
-                //errRepo.ErrorLogs.Add(errolog);
-                //errRepo.SaveChanges();
+                ErrorLog errolog = new ErrorLog();
+                errolog.EventDateTime = DateTime.UtcNow;
+                errolog.UserName = SessionVariables.LoggedInUser.Name;
+                errolog.MachineName = "";//Request.ServerVariables["REMOTE_ADDR"];
+                errolog.EventMessage = CustomMessage;
+                errolog.ErrorSource = objException.Source;
+                errolog.ErrorClass = (FileName == null ? "" : FileName.Substring(FileName.LastIndexOf("\\") + 1));
+                errolog.ErrorMethod = objTrace.GetFrame(0).GetMethod().Name;
+                errolog.ErrorMessage = ErrorMessage;
+                errolog.InnerErrorMessage = Convert.ToString(objException.InnerException);
+                errolog.CreatedBy = SessionVariables.LoggedInUser.UserId;
+                errolog.CreatedOn = DateTime.Now;
+                errolog.ModifiedBy = SessionVariables.LoggedInUser.UserId;
+                errolog.ModifiedOn = DateTime.Now;
+                errRepo.ErrorLogs.Add(errolog);
+                errRepo.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
             finally
             {
-                //errRepo.Dispose();
+                errRepo.Dispose();
             }
         }
 

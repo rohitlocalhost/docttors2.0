@@ -1,0 +1,84 @@
+﻿@model Docttors_portal.Common.Models.PatientObservationModel
+@{
+    ViewBag.Title = "ObservationDetails";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header" style="background-color: #1434A4;">
+        <h1 class="card-title" style="color: #fff;">MY HEALTH DIARY - (OBSERVATIONS OF DAILY LIVING)</h1>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("ObservationDetails", "Patient", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.PatientObservationId)
+            <div class="card">
+                <div class="card-header">
+                    <p>You can now own and control all of your health information. It is your complete health story on a single timeline that evolves with you from medications, life events, nutrition, exercise, emotions, lifestyle and more.</p>
+                    <span>@ViewBag.Message</span>
+                    <span class="mandatory">@ViewBag.Error</span>
+                </div>
+                <div class="card-body row g-3">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ObservationDate)
+                            <span class="mandatory">*</span>
+                            @Html.TextBoxFor(model => model.ObservationDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                            @Html.ValidationMessageFor(model => model.ObservationDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group timepicker">
+                            @Html.LabelFor(m => m.ObservationTime)
+                            <span class="mandatory">*</span>
+                            @Html.TextBoxFor(m => m.ObservationTime, new { @class = "form-control", id = "timerId", type = "time" })
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                            @Html.ValidationMessageFor(model => model.ObservationTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ObservationNote)
+                            <span class="mandatory">*</span>
+                            @Html.TextAreaFor(m => m.ObservationNote, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ObservationNote, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 mt-1 mb-1 d-print-none justify-content-lg-end">
+                <div class="col-md-4"></div>
+                <div class="col-md-3">
+                    <a href="Javascript:void(0)" class="btn btn-rounded btn-secondary btn-wave"><i class="fa fa-print" aria-hidden="true"></i>Print This Page</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="@Url.Action("MyHealthRecord")" class="btn btn-rounded btn-warning btn-wave"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-rounded btn-success btn-wave"><i class="fas fa-save"></i> Save</button>
+                </div>
+            </div>
+        }
+    <div class="row mt-3">
+        @{
+            foreach (var item in Model.ObservationData)
+            {
+                <div class="col-md-4 pe-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Date & Time:</strong> @item.ObservationDate @item.ObservationTime
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                @item.ObservationNote
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    </div>
+</div>

@@ -23,8 +23,8 @@ namespace Docttors_portal.Entities.Classes
         public int InsuranceCompanyCountryId { get; set; }
         public string InsuranceCompanyPhone { get; set; }
         public string InsuranceCompanyFax { get; set; }
-        public DateTime EligibilityStartDate { get; set; }
-        public DateTime EligibilityEndDate { get; set; }
+        public DateTime? EligibilityStartDate { get; set; }
+        public DateTime? EligibilityEndDate { get; set; }
 
        }
 }

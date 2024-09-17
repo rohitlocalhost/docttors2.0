@@ -1,4 +1,4 @@
-﻿
+﻿@model Docttors_portal.Common.procedureModels.GetMHRDataInfo
 @{
     ViewBag.Title = "MyHealthRecord";
     Layout = "~/Views/Shared/_PatientLayout.cshtml";
@@ -25,21 +25,21 @@
             <tbody>
                 <tr>
                     <td><a href="@Url.Action("PersonalDetails","Patient")">Personal Data</a></td>
-                    <td>06-Oct-2022</td>
-                    <td>12-Feb-2023</td>
-                    <td>12:22:03 PM</td>
+                    <td>@Model.PersonalDetailsCreated</td>
+                    <td>@Model.PersonalDetailsModified</td>
+                    <td>@Model.LastpersonalDetailsModifiedTime</td>
                 </tr>
                 <tr>
-                    <td><a href="EmergencyContacts.html">Parent/Guardin</a></td>
-                    <td>06-Oct-2022</td>
-                    <td>12-Feb-2023</td>
-                    <td>12:22:03 PM</td>
+                    <td><a href="@Url.Action("EmergencyContacts","Patient")">Parent/Guardin/Other</a></td>
+                    <td>@Model.EmergencyContactCreated</td>
+                    <td>@Model.EmergencyContactModified</td>
+                    <td>@Model.LastEmergencyContactModifiedTime</td>
                 </tr>
                 <tr>
                     <td><a href="@Url.Action("Insurance","Patient")">Insurance</a></td>
-                    <td>06-Oct-2022</td>
-                    <td>12-Feb-2023</td>
-                    <td>12:22:03 PM</td>
+                    <td>@Model.InsuranceCreated</td>
+                    <td>@Model.InsuranceModified</td>
+                    <td>@Model.InsuranceModifiedTime</td>
                 </tr>
                 <tr>
                     <td><a href="Allergy.html">Allergy</a></td>
@@ -48,22 +48,16 @@
                     <td>12:22:03 PM</td>
                 </tr>
                 <tr>
-                    <td><a href="HospitalDetails.html">Hospital Admissions</a></td>
+                    <td><a href="HospitalDetails.html">Hospital</a></td>
                     <td>06-Oct-2022</td>
                     <td>12-Feb-2023</td>
                     <td>12:22:03 PM</td>
                 </tr>
                 <tr>
                     <td><a href="@Url.Action("PhysicianDetails","Patient")">Physicians</a></td>
-                    <td>06-Oct-2022</td>
-                    <td>12-Feb-2023</td>
-                    <td>12:22:03 PM</td>
-                </tr>
-                <tr>
-                    <td><a href="doc-visit.html">Doctor Office Visits</a></td>
-                    <td>06-Oct-2022</td>
-                    <td>12-Feb-2023</td>
-                    <td>12:22:03 PM</td>
+                    <td>@Model.PhysicianDetailCreated</td>
+                    <td>@Model.PhysicianDetailModified</td>
+                    <td>@Model.LastPhysicianDetailModifiedTime</td>
                 </tr>
                 <tr>
                     <td><a href="medication.html">Current Medication</a></td>
@@ -90,16 +84,10 @@
                     <td>12:22:03 PM</td>
                 </tr>
                 <tr>
-                    <td><a href="diary.html">My Health Diary</td>
-                    <td>06-Oct-2022</td>
-                    <td>12-Feb-2023</td>
-                    <td>12:22:03 PM</td>
-                </tr>
-                <tr>
-                    <td><a href="ccr.html">CCR</td>
-                    <td>06-Oct-2022</td>
-                    <td>12-Feb-2023</td>
-                    <td>12:22:03 PM</td>
+                    <td><a href="@Url.Action("ObservationDetails","Patient")">My Health Diary</td>
+                    <td>@Model.ObservationCreated</td>
+                    <td>@Model.ObservationModified</td>
+                    <td>@Model.ObservationModifiedTime</td>
                 </tr>
             </tbody>
         </table>

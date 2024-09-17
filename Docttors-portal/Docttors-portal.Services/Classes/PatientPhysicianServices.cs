@@ -3,6 +3,9 @@ using Docttors_portal.DataAccess.Interfaces;
 using Docttors_portal.Entities.Classes;
 using Docttors_portal.Services.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace Docttors_portal.Services.Classes
 {
@@ -25,26 +28,24 @@ namespace Docttors_portal.Services.Classes
             var ptData = new PatientPhysicianModel();
             try
             {
-                var patientPhysicianData = _PhysicianRepository.GetSingle(x => x.UserId == userId);
-                if (patientPhysicianData != null)
-                {
-                    ptData.PatientPhysicianId = patientPhysicianData.PatientPhysicianId;
-                    ptData.UserId = patientPhysicianData.UserId;
-                    ptData.Address1 = patientPhysicianData.Address1;
-                    ptData.Address2 = patientPhysicianData.Address2;
-                    ptData.City = patientPhysicianData.City;
-                    ptData.Phone = patientPhysicianData.Phone;
-                    ptData.PhysicianFName = patientPhysicianData.PhysicianFirstName;
-                    ptData.PhysicianLName = patientPhysicianData.PhysicianLastName;
-                    ptData.PracticeName = patientPhysicianData.PracticeName;
-                    ptData.PhysicianSpecialtyId = patientPhysicianData.PhysicianSpecialtyId;
-                    ptData.StateId = patientPhysicianData.StateId;
-                   ptData.ZipCode = patientPhysicianData.ZipCode;
-                }
-                else
-                {
-                    ptData = new PatientPhysicianModel();
-                }
+                ptData.patientPhysicianData = _PhysicianRepository.GetAll(x => x.UserId == userId).Select(x =>
+                    new PatientPhysicianModel()
+                    {
+                        PatientPhysicianId = x.PatientPhysicianId,
+                        UserId = x.UserId,
+                        Address1 = x.Address1,
+                        Address2 = x.Address2,
+                        City = x.City,
+                        Phone = x.Phone,
+                        PhysicianFName = x.PhysicianFirstName,
+                        PhysicianLName = x.PhysicianLastName,
+                        PracticeName = x.PracticeName,
+                        PhysicianSpecialtyId = x.PhysicianSpecialtyId,
+                        StateId = x.StateId,
+                        ZipCode = x.ZipCode,
+                        IsNone = x.IsNoneSelected
+                    }
+                    ).ToList();
                 return ptData;
 
             }
@@ -70,6 +71,7 @@ namespace Docttors_portal.Services.Classes
                     City = physicianModel.City,
                     StateId = physicianModel.StateId,
                     ZipCode = physicianModel.ZipCode,
+                    IsNoneSelected = physicianModel.IsNone,
                     UserId = physicianModel.UserId,
                     CreatedBy = physicianModel.UserId,
                     CreatedOn = DateTime.Now,
@@ -84,7 +86,6 @@ namespace Docttors_portal.Services.Classes
                 throw;
             }
         }
-
         public bool UpdatePatientPhysicianDetails(PatientPhysicianModel physicianModel)
         {
             try
@@ -103,6 +104,7 @@ namespace Docttors_portal.Services.Classes
                     physicianDetails.ZipCode = physicianModel.ZipCode;
                     physicianDetails.PhysicianSpecialtyId = physicianModel.PhysicianSpecialtyId;
                     physicianDetails.UserId = physicianModel.UserId;
+                    physicianDetails.IsNoneSelected = physicianModel.IsNone;
                     physicianDetails.ModifiedBy = physicianModel.UserId;
                     physicianDetails.ModifiedOn = DateTime.Now;
                     _PhysicianRepository.Update(physicianDetails);
@@ -113,6 +115,52 @@ namespace Docttors_portal.Services.Classes
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+        public bool DeletePatientPhysicianDetails(int patientPhysicianId)
+        {
+            try
+            {
+                var physicianDetails = _PhysicianRepository.GetSingle(x => x.PatientPhysicianId == patientPhysicianId);
+                if (physicianDetails != null)
+                {
+                    _PhysicianRepository.Delete(physicianDetails);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public PatientPhysicianModel LoadPhysicianDetailsByPhysicianId(int physicianId, int userId)
+        {
+            try
+            {
+                var AllpatientPhysicianData = LoadPhysicianDetailsByUserId(userId);
+                var patientPhysicianData = _PhysicianRepository.GetSingle(x => x.PatientPhysicianId == physicianId);
+                if (patientPhysicianData != null)
+                {
+                    AllpatientPhysicianData.PatientPhysicianId = patientPhysicianData.PatientPhysicianId;
+                    AllpatientPhysicianData.UserId = patientPhysicianData.UserId;
+                    AllpatientPhysicianData.Address1 = patientPhysicianData.Address1;
+                    AllpatientPhysicianData.Address2 = patientPhysicianData.Address2;
+                    AllpatientPhysicianData.City = patientPhysicianData.City;
+                    AllpatientPhysicianData.Phone = patientPhysicianData.Phone;
+                    AllpatientPhysicianData.PhysicianFName = patientPhysicianData.PhysicianFirstName;
+                    AllpatientPhysicianData.PhysicianLName = patientPhysicianData.PhysicianLastName;
+                    AllpatientPhysicianData.PracticeName = patientPhysicianData.PracticeName;
+                    AllpatientPhysicianData.PhysicianSpecialtyId = patientPhysicianData.PhysicianSpecialtyId;
+                    AllpatientPhysicianData.StateId = patientPhysicianData.StateId;
+                    AllpatientPhysicianData.ZipCode = patientPhysicianData.ZipCode;
+                }
+                return AllpatientPhysicianData;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
 

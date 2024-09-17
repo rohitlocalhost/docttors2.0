@@ -1,5 +1,6 @@
 ﻿using Docttors_portal.Common;
 using Docttors_portal.Common.Models;
+using Docttors_portal.Common.procedureModels;
 using Docttors_portal.Filter;
 using Docttors_portal.Services.Interfaces;
 using System;
@@ -22,37 +23,26 @@ namespace Docttors_portal.Controllers
             _personalServices = personalServices;
             _commonUtilityService = commonUtilityService;
             _physicianServices = physicianServices;
-            //_userId = Convert.ToInt64(Session["UserId"]);
         }
         // GET: Patient
         public ActionResult Index()
         {
             return View();
         }
+        #region MHR Section
+        #region MHR Load
         public ActionResult MyHealthRecord()
         {
-            return View();
+            var mhrDataInfo = _personalServices.GetMHRData(SessionVariables.LoggedInUser.UserId);
+            return View(mhrDataInfo);
         }
-        public ActionResult Message()
-        {
-            return View();
-        }
-        public ActionResult MyProvider()
-        {
-            return View();
-        }
-        public ActionResult Search()
-        {
-            return View();
-        }
-        public ActionResult SystemCheck()
-        {
-            return View();
-        }
+        #endregion
+
+        #region Personal Details
         public ActionResult PersonalDetails()
         {
             var patientPersonalModel = new PatientPersonalModel();
-            patientPersonalModel = _personalServices.LoadPersonalDetailsByUserId(Convert.ToInt32(Session["UserId"]));
+            patientPersonalModel = _personalServices.LoadPersonalDetailsByUserId(SessionVariables.LoggedInUser.UserId);
             patientPersonalModel = LoadlistData(patientPersonalModel);
             return View(patientPersonalModel);
         }
@@ -64,7 +54,7 @@ namespace Docttors_portal.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    patientRegisterationModel.UserId = Convert.ToInt32(Session["UserId"]);
+                    patientRegisterationModel.UserId = SessionVariables.LoggedInUser.UserId;
                     if (patientRegisterationModel.PatientPersonalId > 0)
                     {
                         //Update personDetails
@@ -92,44 +82,72 @@ namespace Docttors_portal.Controllers
                 throw ex;
             }
         }
+        #endregion
 
-        private PatientPersonalModel LoadlistData(PatientPersonalModel patientPersonalModel)
+        #region EmergencyContacts
+
+        public ActionResult EmergencyContacts()
         {
-
-            patientPersonalModel.StateList = _commonUtilityService.GetAllStates();
-            patientPersonalModel.CountryList = _commonUtilityService.GetAllCountry();
-            patientPersonalModel.GenderList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Gender);
-            patientPersonalModel.MaritalMasterList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.MaritalStatus);
-            patientPersonalModel.EducationMasterList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Education);
-            patientPersonalModel.EthnicityList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Ethnicity);
-            patientPersonalModel.HeightList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Height);
-            return patientPersonalModel;
+            var patientEmergencyModel = new PatientEmergencyModel();
+            patientEmergencyModel = _personalServices.LoadPatientEmergencyByUserId(SessionVariables.LoggedInUser.UserId);
+            patientEmergencyModel.StateList = _commonUtilityService.GetAllStates();
+            patientEmergencyModel.CountryList = _commonUtilityService.GetAllCountry();
+            return View(patientEmergencyModel);
         }
-
-        #region Physician details
-        public ActionResult PhysicianDetails()
-        {
-            var physicanData = _physicianServices.LoadPhysicianDetailsByUserId(Convert.ToInt32(Session["UserId"]));
-            physicanData = LoadlistPhysicianData(physicanData);
-            return View(physicanData);
-        }
-
-        private PatientPhysicianModel LoadlistPhysicianData(PatientPhysicianModel physicianModel)
-        {
-
-            physicianModel.StateList = _commonUtilityService.GetAllStates();
-            physicianModel.SpecialistTypesList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Specialty);
-            return physicianModel;
-        }
-
         [HttpPost]
-        public ActionResult PatientPhysicianDetails(PatientPhysicianModel patientRegisterationModel)
+        public ActionResult EmergencyContacts(PatientEmergencyModel patientEmergencyModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    patientRegisterationModel.UserId = Convert.ToInt32(Session["UserId"]);
+                    patientEmergencyModel.UserId = SessionVariables.LoggedInUser.UserId;
+                    if (patientEmergencyModel.PatientEmergencyId > 0)
+                    {
+                        //Update personDetails
+                        if (_personalServices.UpdatePatientEmergency(patientEmergencyModel))
+                        {
+                            ViewBag.Message = "Data Updated Successfully";
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Some issue occured, Data Not saved";
+                        }
+                    }
+                    else
+                    {
+                        //Add new personDetails
+                        int PatientemergencyId = _personalServices.SavePatientEmergency(patientEmergencyModel);
+                        patientEmergencyModel.PatientEmergencyId = PatientemergencyId;
+                        ViewBag.Message = "Data Saved Successfully";
+                    }
+                }
+                return EmergencyContacts();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
+
+        #region Physician details
+        public ActionResult PhysicianDetails()
+        {
+            var physicanData = _physicianServices.LoadPhysicianDetailsByUserId(SessionVariables.LoggedInUser.UserId);
+            physicanData = LoadlistPhysicianData(physicanData);
+            return View(physicanData);
+        }
+
+        [HttpPost]
+        public ActionResult PhysicianDetails(PatientPhysicianModel patientRegisterationModel)
+        {
+            try
+            {
+                if (ModelState.IsValid || patientRegisterationModel.IsNone)
+                {
+                    patientRegisterationModel.UserId = SessionVariables.LoggedInUser.UserId;
                     if (patientRegisterationModel.PatientPhysicianId > 0)
                     {
                         //Update Physician Details
@@ -157,31 +175,68 @@ namespace Docttors_portal.Controllers
                 throw ex;
             }
         }
+
+        private PatientPhysicianModel LoadlistPhysicianData(PatientPhysicianModel physicianModel)
+        {
+
+            physicianModel.StateList = _commonUtilityService.GetAllStates();
+            physicianModel.SpecialistTypesList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Specialty);
+            return physicianModel;
+        }
+
+        public ActionResult DeletePhysicianDetails(int patientPhysicianId)
+        {
+            try
+            {
+                if (patientPhysicianId > 0)
+                {
+                    if (_physicianServices.DeletePatientPhysicianDetails(patientPhysicianId))
+                    {
+                        ViewBag.Message = "Physician Details Delete Successfully";
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Some issue occured, Data Not saved";
+                    }
+                }
+                var physicanData = _physicianServices.LoadPhysicianDetailsByUserId(SessionVariables.LoggedInUser.UserId);
+                physicanData = LoadlistPhysicianData(physicanData);
+                ModelState.Clear();
+                return View("PhysicianDetails", LoadlistPhysicianData(physicanData));
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public ActionResult LoadPhysicianDetails(int patientPhysicianId)
+        {
+            var physicanData = _physicianServices.LoadPhysicianDetailsByPhysicianId(patientPhysicianId, SessionVariables.LoggedInUser.UserId);
+            physicanData = LoadlistPhysicianData(physicanData);
+            return View("PhysicianDetails", physicanData);
+        }
+
         #endregion
 
         #region Insuarance
         public ActionResult Insurance()
         {
-            var insuranceModel = _personalServices.LoadInsuranceDetailsByUserId(Convert.ToInt32(Session["UserId"]));
+            var insuranceModel = _personalServices.LoadInsuranceDetailsByUserId(SessionVariables.LoggedInUser.UserId);
             insuranceModel = LoadListInsuranceData(insuranceModel);
             return View(insuranceModel);
         }
-        private PatientInsuranceModel LoadListInsuranceData(PatientInsuranceModel insuranceModel)
-        {
 
-            insuranceModel.StateList = _commonUtilityService.GetAllStates();
-            insuranceModel.CountryList = _commonUtilityService.GetAllCountry();
-            return insuranceModel;
-        }
-     
+
         [HttpPost]
-        public ActionResult InsuranceDetails(PatientInsuranceModel patientInsuranceModel)
+        public ActionResult Insurance(PatientInsuranceModel patientInsuranceModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    patientInsuranceModel.UserId = Convert.ToInt32(Session["UserId"]);
+                    patientInsuranceModel.UserId = SessionVariables.LoggedInUser.UserId;
                     if (patientInsuranceModel.PatientInsuranceId > 0)
                     {
                         //Update patientInsurance Details
@@ -202,7 +257,7 @@ namespace Docttors_portal.Controllers
                         ViewBag.Message = "Data Saved Successfully";
                     }
                 }
-                return PersonalDetails();
+                return Insurance();
             }
             catch (Exception ex)
             {
@@ -210,6 +265,95 @@ namespace Docttors_portal.Controllers
             }
         }
 
+        #endregion
+
+        #region patient Observation
+        public ActionResult ObservationDetails()
+        {
+            var patientObservationModel = new PatientObservationModel();
+            patientObservationModel = _personalServices.LoadObservationByUserId(SessionVariables.LoggedInUser.UserId);
+            return View(patientObservationModel);
+        }
+        [HttpPost]
+        public ActionResult ObservationDetails(PatientObservationModel patientObservationModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    patientObservationModel.UserId = SessionVariables.LoggedInUser.UserId;
+                    if (patientObservationModel.PatientObservationId > 0)
+                    {
+                        //Update personDetails
+                        if (_personalServices.UpdateObservationDetails(patientObservationModel))
+                        {
+                            ViewBag.Message = "Data Updated Successfully";
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Some issue occured, Data Not saved";
+                        }
+                    }
+                    else
+                    {
+                        //Add new personDetails
+                        int observationId = _personalServices.SaveObservationDetails(patientObservationModel);
+                        patientObservationModel.PatientObservationId = observationId;
+                        ViewBag.Message = "Data Saved Successfully";
+                    }
+                }
+                return ObservationDetails();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult LoadObservationDetails(int patientObservationId)
+        {
+            var obserVationData = _personalServices.LoadObservationDataByObservationId(patientObservationId, SessionVariables.LoggedInUser.UserId);
+            return View("ObservationDetails", obserVationData);
+        }
+        #endregion
+        #endregion
+
+        public ActionResult Message()
+        {
+            return View();
+        }
+        public ActionResult MyProvider()
+        {
+            return View();
+        }
+        public ActionResult Search()
+        {
+            return View();
+        }
+        public ActionResult SystemCheck()
+        {
+            return View();
+        }
+        #region private Methods
+        private PatientPersonalModel LoadlistData(PatientPersonalModel patientPersonalModel)
+        {
+
+            patientPersonalModel.StateList = _commonUtilityService.GetAllStates();
+            patientPersonalModel.CountryList = _commonUtilityService.GetAllCountry();
+            patientPersonalModel.GenderList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Gender);
+            patientPersonalModel.MaritalMasterList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.MaritalStatus);
+            patientPersonalModel.EducationMasterList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Education);
+            patientPersonalModel.EthnicityList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Ethnicity);
+            patientPersonalModel.HeightList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Height);
+            return patientPersonalModel;
+        }
+        private PatientInsuranceModel LoadListInsuranceData(PatientInsuranceModel insuranceModel)
+        {
+
+            insuranceModel.StateList = _commonUtilityService.GetAllStates();
+            insuranceModel.CountryList = _commonUtilityService.GetAllCountry();
+            return insuranceModel;
+        }
         #endregion
     }
 }

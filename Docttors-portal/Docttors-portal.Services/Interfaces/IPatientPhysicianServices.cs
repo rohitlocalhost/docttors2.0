@@ -12,5 +12,7 @@ namespace Docttors_portal.Services.Interfaces
         PatientPhysicianModel LoadPhysicianDetailsByUserId(int userId);
         int SavePatientPhysicianDetails(PatientPhysicianModel physicianModel);
         bool UpdatePatientPhysicianDetails(PatientPhysicianModel physicianModel);
+        bool DeletePatientPhysicianDetails(int patientPhysicianId);
+        PatientPhysicianModel LoadPhysicianDetailsByPhysicianId(int physicianId,int userId);
     }
 }

@@ -2,15 +2,14 @@
 
 @{
     ViewBag.Title = "PhysicianDetails";
-    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
 }
-
 <div id="wrapper" class="card">
     <div class="card-header" style="background-color: #1434A4;">
         <h1 class="card-title" style="color: #fff;">Physician Information</h1>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("PatientPhysicianDetails", "Patient", FormMethod.Post))
+        @using (Html.BeginForm("PhysicianDetails", "Patient", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
@@ -20,7 +19,7 @@
                 <div class="card-header">
                     <h2 class="card-title" style="color: #1434A4;">
                         List all physicians involved in your care
-                        <span style="font-size: 12px;"><a style="color: red;" id="help" onclick="helpclick(this)" href="#">Help?</a></span>
+                        @* <span style="font-size: 12px;"><a style="color: red;" id="help" onclick="helpclick(this)" href="#">Help?</a></span>*@
                         <br />
                         <br />
                         <span>@ViewBag.Message</span>
@@ -28,14 +27,14 @@
                     </h2>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                @Html.CheckBoxFor(m => m.IsNone, new { @id = "isNone" })
-                                @Html.LabelFor(m => m.IsNone)
+                    @*<div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    @Html.CheckBoxFor(m => m.IsNone, new { @id = "isNone" })
+                                    @Html.LabelFor(m => m.IsNone)
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </div>*@
                     <div id="disabledAll">
                         <div class="row">
                             <div class="col-lg-12">
@@ -130,31 +129,96 @@
                     <button type="submit" class="btn btn-rounded btn-success btn-wave"><i class="fas fa-save"></i> Save</button>
                 </div>
             </div>
+            <div class="row mt-3">
+                @{
+                    foreach (var item in Model.patientPhysicianData)
+                    {
+                        <div class="col-md-4 pe-2">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <span class="col-md-9">
+                                            <h2 class="card-title"><strong>@item.PhysicianFName</strong></h2>
+                                        </span>
+                                        <span class="col-md-3">
+                                            <a title="Click here to delete" class="divclose" href="@Url.Action("DeletePhysicianDetails", "Patient", new {@patientPhysicianId=item.PatientPhysicianId})">
+                                                <i class="bx bxs-trash float-end"></i>
+                                            </a>
+                                            <a title="Click here to Edit" class="divclose" href="@Url.Action("LoadPhysicianDetails", "Patient", new {@patientPhysicianId=item.PatientPhysicianId})">
+                                                <i class="bx bxs-edit float-end"></i>
+                                            </a>
+                                            @* @Html.ActionLink("Index", "Home", new { id = item.PatientPhysicianId },new { @id = "Delete", @class = "element", @data_toggle = "modal", @data_target = "#exampleModalCenter", @data_id = item.PatientPhysicianId })*@
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        <strong>Practice Name:&nbsp;&nbsp;</strong>@item.PracticeName<br>
+                                        <strong>Specialty:&nbsp;&nbsp;</strong>@(item.PhysicianSpecialtyId!=null?Model.SpecialistTypesList.FirstOrDefault(x => x.Id == item.PhysicianSpecialtyId).Name: string.Empty)<br>
+                                        <strong>Address:&nbsp;&nbsp;</strong>@item.Address1<br>
+                                        <strong>City:&nbsp;&nbsp;</strong>@item.City<br />
+                                        <strong>State:&nbsp;&nbsp;</strong>@(item.StateId!=null?@Model.StateList.FirstOrDefault(x => x.Id == item.StateId).Name:string.Empty)<br />
+                                        <strong>Zipcode:&nbsp;&nbsp;</strong>@item.ZipCode<br>
+                                        <strong>Phone:&nbsp;&nbsp;</strong>@item.Phone
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
         }
+    </div>
+</div>
+<div class="modal fade" id="exampleModalCenter" style=" margin-top: 149px;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button type="button" class="btnClose close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>Are you sure that you want to delete this?</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btnClose" id="btnClose" data-dismiss="modal">Close</button>
+                <button type="button" id="finalDelete" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
     </div>
 </div>
 
 @section Scripts
 {
-
-    <script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            const isNone = $('#isNone').is(":checked");
+            enableDisable(isNone, false);
+        })
         $('#isNone').change(function () {
-            debugger
             var isNone = $('#isNone').is(':checked');
-            if (isNone) {                
-                    $('#PhysicianFName').val('N/A')
-                    $('#PhysicianLName').val('N/A')
-                    $('#PracticeName').val('N/A')
-                    $('#Address1').val('N/A')
-                    $('#Address2').val('N/A')
-                    $('#City').val('N/A')                        
-                    $('#ZipCode').val(null)
-                    $('#Phone').val(null)
-                    $('#StateId').val('')
+            enableDisable(isNone, true);
+        });
+        function enableDisable(isNone, isClicked) {
+            if (isNone) {
+                $('#PhysicianFName').val('N/A')
+                $('#PhysicianLName').val('N/A')
+                $('#PracticeName').val('N/A')
+                $('#Address1').val('N/A')
+                $('#Address2').val('N/A')
+                $('#City').val('N/A')
+                $('#ZipCode').val(null)
+                $('#Phone').val(null)
+                $('#StateId').val('')
                 $('#PhysicianSpecialtyId').val('')
-                $("#disabledAll *").attr("disabled", "disabled").off('click');
+                $("#disabledAll input").prop('disabled', true);
+                $("#disabledAll select").prop('disabled', true);
+                $("#disabledAll span").hide();
             }
-            else {
+            else if (isClicked) {
                 $('#PhysicianFName').val('')
                 $('#PhysicianLName').val('')
                 $('#PracticeName').val('')
@@ -165,9 +229,25 @@
                 $('#Phone').val('')
                 $('#StateId').val('')
                 $('#PhysicianSpecialtyId').val('')
-                $("#disabledAll *").attr("disabled", "disabled").off('click');
+                $("#disabledAll input").prop('disabled', false);
+                $("#disabledAll select").prop('disabled', false);
             }
-        });
+        }
+                //$('#Delete').click(function () {
+                //    $("#exampleModalCenter").modal('show');
+                //});
+                //$('.btnClose').click(function () {
+                //    $("#exampleModalCenter").modal('hide');
+                //});
+                //$('#finalDelete').click(function () {
+                //    $.ajax({
+                //        url: ,
+                //        type: 'DELETE',
+                //        data: {patientPhysicianId: 4},
+                //        success: function (result) {
+                //        }
+                //    });
+                // });
     </script>
 }
 

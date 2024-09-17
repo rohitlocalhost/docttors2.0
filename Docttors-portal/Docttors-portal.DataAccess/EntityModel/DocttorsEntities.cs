@@ -19,13 +19,16 @@ namespace Docttors_portal.DataAccess.EntityModel
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<State> States { get; set; }
-        public DbSet<SpecialistInsurance> specialistInsurances { get; set; }
-        public DbSet<DoctorSpecialty> doctorSpecialties { get; set; }
-        public DbSet<PatientPersonalNew> patientPersonals { get; set; }
-        public DbSet<Country> countries { get; set; }
-        public DbSet<Type> types { get; set; }
-        public DbSet<TypeCategory> typeCategories { get; set; }
-        public DbSet<PatientPhysicianDetailsNew> patientPhysicianDetails { get; set; }
-        public DbSet<PatientInsuranceNew> patientInsuranceNew { get; set; }
+        public DbSet<SpecialistInsurance> SpecialistInsurances { get; set; }
+        public DbSet<DoctorSpecialty> DoctorSpecialties { get; set; }
+        public DbSet<PatientPersonalNew> PatientPersonals { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Type> Types { get; set; }
+        public DbSet<TypeCategory> TypeCategories { get; set; }
+        public DbSet<PatientPhysicianDetailsNew> PatientPhysicianDetails { get; set; }
+        public DbSet<PatientInsuranceNew> PatientInsuranceNew { get; set; }
+        public DbSet<ErrorLog> ErrorLogs { get; set; }
+        public DbSet<PatientEmergencyNew> PatientEmergencyNew { get; set; }
+        public DbSet<PatientObservationNew> PatientObservationNew { get; set; }
     }
 }

@@ -1,8 +1,18 @@
 ﻿using Docttors_portal.Common.Models;
+using Docttors_portal.Common.procedureModels;
 using Docttors_portal.DataAccess.Interfaces;
 using Docttors_portal.Entities.Classes;
 using Docttors_portal.Services.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Data;
+using System.Xml.Linq;
+using System.Net;
+using System.Reflection.Emit;
+using System.Linq;
+using System.Globalization;
 
 namespace Docttors_portal.Services.Classes
 {
@@ -12,6 +22,8 @@ namespace Docttors_portal.Services.Classes
         private IRepository<PatientPersonalNew> _patientRepository;
         private IRepository<PatientPhysicianDetailsNew> _PhysicianRepository;
         private IRepository<PatientInsuranceNew> _insuranceRepository;
+        private IRepository<PatientEmergencyNew> _emergencyRepository;
+        private IRepository<PatientObservationNew> _patientObservationRepository;
 
         public PatientPersonalServices(IUnitOfWork unitOfWork)
         {
@@ -21,8 +33,61 @@ namespace Docttors_portal.Services.Classes
                 _patientRepository = _unitOfWork.GetRepository<PatientPersonalNew>();
                 _PhysicianRepository = _unitOfWork.GetRepository<PatientPhysicianDetailsNew>();
                 _insuranceRepository = _unitOfWork.GetRepository<PatientInsuranceNew>();
+                _emergencyRepository = _unitOfWork.GetRepository<PatientEmergencyNew>();
+                _patientObservationRepository = _unitOfWork.GetRepository<PatientObservationNew>();
             }
         }
+        #region MHR Page Load Service
+        public GetMHRDataInfo GetMHRData(int UserId)
+        {
+            try
+            {
+                var mhrDataInfo = new GetMHRDataInfo();
+                string connectionString = ConfigurationManager.ConnectionStrings["DocttorsEntities"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_GetMHRDataInfo", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@UserId", SqlDbType.Int).Value = UserId;
+                        con.Open();
+                        SqlDataReader rdr = cmd.ExecuteReader();
+                        while (rdr.Read())
+                        {
+                            //Accessing the data using the string key as index
+                            mhrDataInfo.PersonalDetailsCreated = Convert.ToString(rdr["PersonalDetailsCreated"]);
+                            mhrDataInfo.PersonalDetailsModified = Convert.ToString(rdr["PersonalDetailsModified"]);
+                            mhrDataInfo.LastpersonalDetailsModifiedTime = Convert.ToString(rdr["LastpersonalDetailsModifiedTime"]);
+
+                            mhrDataInfo.EmergencyContactCreated = Convert.ToString(rdr["EmergencyContactCreated"]);
+                            mhrDataInfo.EmergencyContactModified = Convert.ToString(rdr["EmergencyContactModified"]);
+                            mhrDataInfo.LastEmergencyContactModifiedTime = Convert.ToString(rdr["LastEmergencyContactModifiedTime"]);
+
+                            mhrDataInfo.PhysicianDetailCreated = rdr["PhysicianDetailCreated"] != null ? Convert.ToString(rdr["PhysicianDetailCreated"]) : null;
+                            mhrDataInfo.PhysicianDetailModified = rdr["PhysicianDetailModified"] != null ? Convert.ToString(rdr["PhysicianDetailModified"]) : null;
+                            mhrDataInfo.LastPhysicianDetailModifiedTime = Convert.ToString(rdr["LastPhysicianDetailModifiedTime"]);
+                            mhrDataInfo.InsuranceCreated = Convert.ToString(rdr["InsuranceCreated"]);
+                            mhrDataInfo.InsuranceModified = Convert.ToString(rdr["InsuranceModified"]);
+                            mhrDataInfo.InsuranceModifiedTime = Convert.ToString(rdr["InsuranceModifiedTime"]);
+                            mhrDataInfo.ObservationCreated = Convert.ToString(rdr["ObservationCreated"]);
+                            mhrDataInfo.ObservationModified = Convert.ToString(rdr["ObservationModified"]);
+                            mhrDataInfo.ObservationModifiedTime = Convert.ToString(rdr["ObservationModifiedTime"]);
+                        }
+
+                    }
+                }
+                return mhrDataInfo;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region patient Details Services
         public int SavePatientDetails(PatientPersonalModel personalModel)
         {
             try
@@ -156,7 +221,135 @@ namespace Docttors_portal.Services.Classes
             }
         }
 
-        #region Insurance
+        #endregion
+
+        #region Emergency Contact Service
+        public int SavePatientEmergency(PatientEmergencyModel emergencyModel)
+        {
+            try
+            {
+                var emergencyContact = new PatientEmergencyNew()
+                {
+                    //primary Option
+                    FirstName = emergencyModel.FirstName,
+                    LastName = emergencyModel.LastName,
+                    Relationship = emergencyModel.Relationship,
+                    Address = emergencyModel.Address,
+                    City = emergencyModel.City,
+                    StateId = emergencyModel.StateId,
+                    CountryId = emergencyModel.CountryId,
+                    Zipcode = emergencyModel.Zipcode,
+                    EmailId = emergencyModel.EmailId,
+                    ContactNo = emergencyModel.ContactNo,
+                    //Secondary Option
+                    SecondaryFirstName = emergencyModel.SecondaryFirstName,
+                    SecondaryLastName = emergencyModel.SecondaryLastName,
+                    SecondaryRelationship = emergencyModel.SecondaryRelationship,
+                    SecondaryAddress = emergencyModel.SecondaryAddress,
+                    SecondaryCity = emergencyModel.SecondaryCity,
+                    SecondaryStateId = emergencyModel.SecondaryStateId,
+                    SecondaryCountryId = emergencyModel.SecondaryCountryId,
+                    SecondaryZipcode = emergencyModel.SecondaryZipcode,
+                    SecondaryEmailId = emergencyModel.SecondaryEmailId,
+                    SecondaryContactNo = emergencyModel.SecondaryContactNo,
+                    UserId = emergencyModel.UserId,
+                    CreatedBy = emergencyModel.UserId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = emergencyModel.UserId,
+                    ModifiedOn = DateTime.Now
+                };
+                _emergencyRepository.Add(emergencyContact);
+                return emergencyContact.PatientEmergencyId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public PatientEmergencyModel LoadPatientEmergencyByUserId(int userId)
+        {
+            var ptEmergencyData = new PatientEmergencyModel();
+            try
+            {
+                var emergencyContactData = _emergencyRepository.GetSingle(x => x.UserId == userId);
+                if (emergencyContactData != null)
+                {
+                    ptEmergencyData.PatientEmergencyId = emergencyContactData.PatientEmergencyId;
+                    ptEmergencyData.UserId = emergencyContactData.UserId;
+                    ptEmergencyData.Address = emergencyContactData.Address;
+                    ptEmergencyData.City = emergencyContactData.City;
+                    ptEmergencyData.ContactNo = emergencyContactData.ContactNo;
+                    ptEmergencyData.EmailId = emergencyContactData.EmailId;
+                    ptEmergencyData.FirstName = emergencyContactData.FirstName;
+                    ptEmergencyData.LastName = emergencyContactData.LastName;
+                    ptEmergencyData.StateId = emergencyContactData.StateId;
+                    ptEmergencyData.Zipcode = emergencyContactData.Zipcode;
+                    ptEmergencyData.Relationship = emergencyContactData.Relationship;
+                    ptEmergencyData.CountryId = emergencyContactData.CountryId;
+                    ptEmergencyData.SecondaryCity = emergencyContactData.SecondaryCity;
+                    ptEmergencyData.SecondaryContactNo = emergencyContactData.SecondaryContactNo;
+                    ptEmergencyData.SecondaryEmailId = emergencyContactData.SecondaryEmailId;
+                    ptEmergencyData.SecondaryFirstName = emergencyContactData.SecondaryFirstName;
+                    ptEmergencyData.SecondaryLastName = emergencyContactData.SecondaryLastName;
+                    ptEmergencyData.SecondaryStateId = emergencyContactData.SecondaryStateId;
+                    ptEmergencyData.SecondaryZipcode = emergencyContactData.SecondaryZipcode;
+                    ptEmergencyData.SecondaryRelationship = emergencyContactData.SecondaryRelationship;
+                    ptEmergencyData.SecondaryCountryId = emergencyContactData.SecondaryCountryId;
+                    ptEmergencyData.SecondaryAddress = emergencyContactData.SecondaryAddress;
+
+                }
+                return ptEmergencyData;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool UpdatePatientEmergency(PatientEmergencyModel emergencyModel)
+        {
+            try
+            {
+                var currentEmergencyContact = _emergencyRepository.GetSingle(x => x.PatientEmergencyId == emergencyModel.PatientEmergencyId);
+                if (currentEmergencyContact != null)
+                {
+                    //primary Option
+                    currentEmergencyContact.FirstName = emergencyModel.FirstName;
+                    currentEmergencyContact.LastName = emergencyModel.LastName;
+                    currentEmergencyContact.Relationship = emergencyModel.Relationship;
+                    currentEmergencyContact.Address = emergencyModel.Address;
+                    currentEmergencyContact.City = emergencyModel.City;
+                    currentEmergencyContact.StateId = emergencyModel.StateId;
+                    currentEmergencyContact.CountryId = emergencyModel.CountryId;
+                    currentEmergencyContact.Zipcode = emergencyModel.Zipcode;
+                    currentEmergencyContact.EmailId = emergencyModel.EmailId;
+                    currentEmergencyContact.ContactNo = emergencyModel.ContactNo;
+                    //Secondary Option
+                    currentEmergencyContact.SecondaryFirstName = emergencyModel.SecondaryFirstName;
+                    currentEmergencyContact.SecondaryLastName = emergencyModel.SecondaryLastName;
+                    currentEmergencyContact.SecondaryRelationship = emergencyModel.SecondaryRelationship;
+                    currentEmergencyContact.SecondaryAddress = emergencyModel.SecondaryAddress;
+                    currentEmergencyContact.SecondaryCity = emergencyModel.SecondaryCity;
+                    currentEmergencyContact.SecondaryStateId = emergencyModel.SecondaryStateId;
+                    currentEmergencyContact.SecondaryCountryId = emergencyModel.SecondaryCountryId;
+                    currentEmergencyContact.SecondaryZipcode = emergencyModel.SecondaryZipcode;
+                    currentEmergencyContact.SecondaryEmailId = emergencyModel.SecondaryEmailId;
+                    currentEmergencyContact.SecondaryContactNo = emergencyModel.SecondaryContactNo;
+                    currentEmergencyContact.UserId = emergencyModel.UserId;
+                    currentEmergencyContact.ModifiedBy = emergencyModel.UserId;
+                    currentEmergencyContact.ModifiedOn = DateTime.Now;
+                    _emergencyRepository.Update(currentEmergencyContact);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region Insurance Services
         public int SavePatientInsuranceDetails(PatientInsuranceModel insurancelData)
         {
             try
@@ -178,8 +371,12 @@ namespace Docttors_portal.Services.Classes
                     InsuranceCompanyZipcode = insurancelData.InsuranceCompanyZipcode,
                     InsuranceCompanyPhone = insurancelData.InsuranceCompanyPhone,
                     InsuranceCompanyFax = insurancelData.InsuranceCompanyFax,
-                    EligibilityStartDate = Convert.ToDateTime(insurancelData.EligibilityStartDate),
-                    EligibilityEndDate = Convert.ToDateTime(insurancelData.EligibilityEndDate),
+                    EligibilityStartDate = string.IsNullOrEmpty(insurancelData.EligibilityStartDate) ? (DateTime?)null : Convert.ToDateTime(insurancelData.EligibilityStartDate),
+                    EligibilityEndDate = string.IsNullOrEmpty(insurancelData.EligibilityEndDate) ? (DateTime?)null : Convert.ToDateTime(insurancelData.EligibilityEndDate),
+                    CreatedBy = insurancelData.UserId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = insurancelData.UserId,
+                    ModifiedOn = DateTime.Now
                 };
                 _insuranceRepository.Add(insurance);
                 return insurance.PatientInsuranceId;
@@ -213,8 +410,8 @@ namespace Docttors_portal.Services.Classes
                     ptData.InsuranceCompanyZipcode = insurancelData.InsuranceCompanyZipcode;
                     ptData.InsuranceCompanyPhone = insurancelData.InsuranceCompanyPhone;
                     ptData.InsuranceCompanyFax = insurancelData.InsuranceCompanyFax;
-                    ptData.EligibilityStartDate = insurancelData.EligibilityStartDate.Date.ToString("yyyy-MM-dd");
-                    ptData.EligibilityEndDate = insurancelData.EligibilityEndDate.Date.ToString("yyyy-MM-dd");
+                    ptData.EligibilityStartDate = insurancelData.EligibilityStartDate != null ? Convert.ToDateTime(insurancelData.EligibilityStartDate).Date.ToString("yyyy-MM-dd") : null;
+                    ptData.EligibilityEndDate = insurancelData.EligibilityEndDate != null ? Convert.ToDateTime(insurancelData.EligibilityEndDate).Date.ToString("yyyy-MM-dd") : null;
                 }
                 else
                 {
@@ -252,8 +449,8 @@ namespace Docttors_portal.Services.Classes
                     patientInsurance.InsuranceCompanyZipcode = insurancelData.InsuranceCompanyZipcode;
                     patientInsurance.InsuranceCompanyPhone = insurancelData.InsuranceCompanyPhone;
                     patientInsurance.InsuranceCompanyFax = insurancelData.InsuranceCompanyFax;
-                    patientInsurance.EligibilityStartDate = Convert.ToDateTime(insurancelData.EligibilityStartDate);
-                    patientInsurance.EligibilityEndDate = Convert.ToDateTime(insurancelData.EligibilityEndDate);
+                    patientInsurance.EligibilityStartDate = string.IsNullOrEmpty(insurancelData.EligibilityStartDate) ? (DateTime?)null : Convert.ToDateTime(insurancelData.EligibilityStartDate);
+                    patientInsurance.EligibilityEndDate = string.IsNullOrEmpty(insurancelData.EligibilityEndDate) ? (DateTime?)null : Convert.ToDateTime(insurancelData.EligibilityEndDate);
                     patientInsurance.ModifiedBy = insurancelData.UserId;
                     patientInsurance.ModifiedOn = DateTime.Now;
                     _insuranceRepository.Update(patientInsurance);
@@ -267,6 +464,96 @@ namespace Docttors_portal.Services.Classes
             }
         }
 
+        #endregion
+
+        #region patient Observation Service
+        public int SaveObservationDetails(PatientObservationModel patientObservationModel)
+        {
+            try
+            {
+                var observationData = new PatientObservationNew()
+                {
+                    ObservationNote = patientObservationModel.ObservationNote,
+                    ObservationDate = Convert.ToDateTime(patientObservationModel.ObservationDate),
+                    ObservationTime = TimeSpan.Parse(patientObservationModel.ObservationTime),
+                    UserId = patientObservationModel.UserId,
+                    CreatedBy = patientObservationModel.UserId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = patientObservationModel.UserId,
+                    ModifiedOn = DateTime.Now
+                };
+                _patientObservationRepository.Add(observationData);
+                return observationData.PatientObservationId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public PatientObservationModel LoadObservationByUserId(int userId)
+        {
+            var ptObservationData = new PatientObservationModel();
+            try
+            {
+                var fdfd = _patientObservationRepository.GetAll(x => x.UserId == userId).ToList();
+                ptObservationData.ObservationData = _patientObservationRepository.GetAll(x => x.UserId == userId).Select(x =>
+                new PatientObservationModel()
+                {
+                    ObservationNote = x.ObservationNote,
+                    ObservationDate = x.ObservationDate.Date.ToString("yyyy-MM-dd"),
+                    ObservationTime = x.ObservationTime.ToString()
+                }).ToList();
+                return ptObservationData;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+        public bool UpdateObservationDetails(PatientObservationModel patientObservationModel)
+        {
+            try
+            {
+                var currentPatientObservationData = _patientObservationRepository.GetSingle(x => x.PatientObservationId == patientObservationModel.PatientObservationId);
+                if (currentPatientObservationData != null)
+                {
+                    currentPatientObservationData.ObservationNote = patientObservationModel.ObservationNote;
+                    currentPatientObservationData.ObservationDate = Convert.ToDateTime(patientObservationModel.ObservationDate);
+                    currentPatientObservationData.ObservationTime = TimeSpan.Parse(patientObservationModel.ObservationTime);
+                    currentPatientObservationData.ModifiedBy = patientObservationModel.UserId;
+                    currentPatientObservationData.ModifiedOn = DateTime.Now;
+                    _patientObservationRepository.Update(currentPatientObservationData);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public PatientObservationModel LoadObservationDataByObservationId(int observationId, int userId)
+        {
+            try
+            {
+                var AllpatientObservationData = LoadObservationByUserId(userId);
+                var patientObservationData = _patientObservationRepository.GetSingle(x => x.PatientObservationId == observationId);
+                if (patientObservationData != null)
+                {
+                    patientObservationData.ObservationNote = patientObservationData.ObservationNote;
+                    patientObservationData.ObservationDate = patientObservationData.ObservationDate;
+                    patientObservationData.ObservationTime = patientObservationData.ObservationTime;
+                }
+                return AllpatientObservationData;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
         #endregion
     }
 }

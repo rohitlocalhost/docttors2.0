@@ -1,0 +1,191 @@
+﻿@model Docttors_portal.Common.Models.PatientEmergencyModel
+@{
+    ViewBag.Title = "EmergencyContacts";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+<div class="card">
+    <div class="card-header" style="background-color: #1434A4;">
+        <h1 class="card-title" style="color: #fff;">Contact Info for Parent/Guardian</h1>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("EmergencyContacts", "Patient", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.PatientEmergencyId)
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title" style="color: #1434A4;">
+                        Primary Contact
+                        <span>@ViewBag.Message</span>
+                        <span class="mandatory">@ViewBag.Error</span>
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.FirstName)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.LastName)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Relationship)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.Relationship, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Relationship, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Address)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.City)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.StateId)
+                                <span class="mandatory">*</span>
+                                @Html.DropDownListFor(model => model.StateId, new SelectList(Model.StateList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Zipcode)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.Zipcode, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Zipcode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.CountryId)
+                                <span class="mandatory">*</span>
+                                @Html.DropDownListFor(model => model.CountryId, new SelectList(Model.CountryList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmailId)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.ContactNo)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ContactNo, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h2 class="card-title" style="color: #1434A4;">Secondary Contact (Optional)</h2>
+                </div>
+                <div class="card-body row g-3">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FirstName)
+                            @Html.TextBoxFor(m => m.SecondaryFirstName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastName)
+                            @Html.TextBoxFor(m => m.SecondaryLastName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Relationship)
+                            @Html.TextBoxFor(m => m.SecondaryRelationship, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Address)
+                            @Html.TextBoxFor(m => m.SecondaryAddress, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.City)
+                            @Html.TextBoxFor(m => m.SecondaryCity, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StateId)
+                            @Html.DropDownListFor(model => model.SecondaryStateId, new SelectList(Model.StateList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Zipcode)
+                            @Html.TextBoxFor(m => m.SecondaryZipcode, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CountryId)
+                            @Html.DropDownListFor(model => model.SecondaryCountryId, new SelectList(Model.CountryList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EmailId)
+                            @Html.TextBoxFor(m => m.SecondaryEmailId, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactNo)
+                            @Html.TextBoxFor(m => m.SecondaryContactNo, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 mt-1 mb-1 d-print-none justify-content-lg-end">
+                <div class="col-md-4"></div>
+                <div class="col-md-3">
+                    <a href="Javascript:void(0)" class="btn btn-rounded btn-secondary btn-wave"><i class="fa fa-print" aria-hidden="true"></i>Print This Page</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="@Url.Action("MyHealthRecord")" class="btn btn-rounded btn-warning btn-wave"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-rounded btn-success btn-wave"><i class="fas fa-save"></i> Save</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
