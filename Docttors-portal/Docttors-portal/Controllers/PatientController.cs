@@ -38,53 +38,7 @@ namespace Docttors_portal.Controllers
             var mhrDataInfo = _personalServices.GetMHRData(SessionVariables.LoggedInUser.UserId);
             return View(mhrDataInfo);
         }
-        public ActionResult Message()
-        {
-            return View();
-        }
-        public ActionResult MyProvider()
-        {
-            return View();
-        }
-        public ActionResult Search()
-        {
-            //var physicanData = _physicianServices.LoadPhysicianDetailsByUserId(Convert.ToInt32(Session["UserId"]));
-            var searchData = new PatientSearchDoctorModel();
-            searchData = LoadSearchListData(searchData);
-            return View(searchData);
-        }
-        private PatientSearchDoctorModel LoadSearchListData(PatientSearchDoctorModel physicianModel)
-        {
-
-            physicianModel.StateList = _commonUtilityService.GetAllStates();
-            physicianModel.SpecialistTypesList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Specialty);
-            return physicianModel;
-        }
-        [HttpPost]
-        public ActionResult SearchDoctor(PatientSearchDoctorModel patientSearchModel)
-        {
-            //var searchDoctor = new PatientSearchDoctorModel();
-            _personalServices.GetDoctorByPatient(patientSearchModel);
-            return View(patientSearchModel);
-        }
-        [HttpPost]
-        public ActionResult SearchHospital(PatientSearchDoctorModel patientSearchModel)
-        {
-            //var searchDoctor = new PatientSearchDoctorModel();
-            _personalServices.GetDoctorByPatient(patientSearchModel);
-            return View(patientSearchModel);
-        }
-        [HttpPost]
-        public ActionResult SearchInsurance(PatientSearchDoctorModel patientSearchModel)
-        {
-            //var searchDoctor = new PatientSearchDoctorModel();
-            _personalServices.GetDoctorByPatient(patientSearchModel);
-            return View(patientSearchModel);
-        }
-        public ActionResult SystemCheck()
-        {
-            return View();
-        }
+        #endregion
         public ActionResult PersonalDetails()
         {
             var patientPersonalModel = new PatientPersonalModel();
@@ -119,6 +73,7 @@ namespace Docttors_portal.Controllers
                         int PatientPersonalId = _personalServices.SavePatientDetails(patientRegisterationModel);
                         patientRegisterationModel.PatientPersonalId = PatientPersonalId;
                         ViewBag.Message = "Data Saved Successfully";
+
                     }
                 }
                 return PersonalDetails();
@@ -129,9 +84,7 @@ namespace Docttors_portal.Controllers
             }
         }
         #endregion
-
         #region EmergencyContacts
-
         public ActionResult EmergencyContacts()
         {
             var patientEmergencyModel = new PatientEmergencyModel();
@@ -177,7 +130,6 @@ namespace Docttors_portal.Controllers
             }
         }
         #endregion
-
         #region Physician details
         public ActionResult PhysicianDetails()
         {
@@ -185,7 +137,6 @@ namespace Docttors_portal.Controllers
             physicanData = LoadlistPhysicianData(physicanData);
             return View(physicanData);
         }
-
         [HttpPost]
         public ActionResult PhysicianDetails(PatientPhysicianModel patientRegisterationModel)
         {
@@ -229,7 +180,6 @@ namespace Docttors_portal.Controllers
             physicianModel.SpecialistTypesList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Specialty);
             return physicianModel;
         }
-
         public ActionResult DeletePhysicianDetails(int patientPhysicianId)
         {
             try
@@ -265,7 +215,6 @@ namespace Docttors_portal.Controllers
         }
 
         #endregion
-
         #region Insuarance
         public ActionResult Insurance()
         {
@@ -273,8 +222,6 @@ namespace Docttors_portal.Controllers
             insuranceModel = LoadListInsuranceData(insuranceModel);
             return View(insuranceModel);
         }
-
-
         [HttpPost]
         public ActionResult Insurance(PatientInsuranceModel patientInsuranceModel)
         {
@@ -312,7 +259,6 @@ namespace Docttors_portal.Controllers
         }
 
         #endregion
-
         #region Patient Allergies
         public ActionResult PatientAllergies()
         {
@@ -387,7 +333,6 @@ namespace Docttors_portal.Controllers
         }
 
         #endregion
-
         #region Hospital Details
         public ActionResult HospitalDetails()
         {
@@ -471,7 +416,6 @@ namespace Docttors_portal.Controllers
         }
 
         #endregion
-
         #region Pharmacy Details
         public ActionResult PharmacyDetails()
         {
@@ -550,7 +494,6 @@ namespace Docttors_portal.Controllers
         }
 
         #endregion
-
         #region Mediacation Details
         public ActionResult MedicationDetails()
         {
@@ -626,7 +569,6 @@ namespace Docttors_portal.Controllers
             return View("MedicationDetails", medicationData);
         }
         #endregion
-
         #region patient Observation
         public ActionResult ObservationDetails()
         {
@@ -669,14 +611,12 @@ namespace Docttors_portal.Controllers
                 throw ex;
             }
         }
-
         public ActionResult LoadObservationDetails(int patientObservationId)
         {
             var obserVationData = _personalServices.LoadObservationDataByObservationId(patientObservationId, SessionVariables.LoggedInUser.UserId);
             return View("ObservationDetails", obserVationData);
         }
         #endregion
-
         #region Vital Sign
         public ActionResult VitalSign()
         {
@@ -727,24 +667,8 @@ namespace Docttors_portal.Controllers
             return View("VitalSign", patientVitalModel);
         }
         #endregion
-        #endregion
 
-        public ActionResult Message()
-        {
-            return View();
-        }
-        public ActionResult MyProvider()
-        {
-            return View();
-        }
-        public ActionResult Search()
-        {
-            return View();
-        }
-        public ActionResult SystemCheck()
-        {
-            return View();
-        }
+
         public ActionResult ChangePassword()
         {
             var changePasswordModel = new ChangePasswordModel();
@@ -772,6 +696,55 @@ namespace Docttors_portal.Controllers
             }
             return View(changePasswordModel);
         }
+
+        public ActionResult Message()
+        {
+            return View();
+        }
+        public ActionResult MyProvider()
+        {
+            return View();
+        }
+        public ActionResult Search()
+        {
+            //var physicanData = _physicianServices.LoadPhysicianDetailsByUserId(Convert.ToInt32(Session["UserId"]));
+            var searchData = new PatientSearchDoctorModel();
+            searchData = LoadSearchListData(searchData);
+            return View(searchData);
+        }
+        private PatientSearchDoctorModel LoadSearchListData(PatientSearchDoctorModel physicianModel)
+        {
+
+            physicianModel.StateList = _commonUtilityService.GetAllStates();
+            physicianModel.SpecialistTypesList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Specialty);
+            return physicianModel;
+        }
+        [HttpPost]
+        public ActionResult SearchDoctor(PatientSearchDoctorModel patientSearchModel)
+        {
+            //var searchDoctor = new PatientSearchDoctorModel();
+            _personalServices.GetDoctorByPatient(patientSearchModel);
+            return View(patientSearchModel);
+        }
+        [HttpPost]
+        public ActionResult SearchHospital(PatientSearchDoctorModel patientSearchModel)
+        {
+            //var searchDoctor = new PatientSearchDoctorModel();
+            _personalServices.GetDoctorByPatient(patientSearchModel);
+            return View(patientSearchModel);
+        }
+        [HttpPost]
+        public ActionResult SearchInsurance(PatientSearchDoctorModel patientSearchModel)
+        {
+            //var searchDoctor = new PatientSearchDoctorModel();
+            _personalServices.GetDoctorByPatient(patientSearchModel);
+            return View(patientSearchModel);
+        }
+        public ActionResult SystemCheck()
+        {
+            return View();
+        }
+
         #region private Methods
         private PatientPersonalModel LoadlistData(PatientPersonalModel patientPersonalModel)
         {
