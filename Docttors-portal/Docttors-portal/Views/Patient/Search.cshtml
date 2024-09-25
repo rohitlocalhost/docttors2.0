@@ -1,4 +1,4 @@
-﻿
+﻿@model Docttors_portal.Common.Models.PatientSearchDoctorModel
 @{
     ViewBag.Title = "Search";
     Layout = "~/Views/Shared/_PatientLayout.cshtml";
@@ -37,126 +37,97 @@
                 <p>“Find Provider” is a HIPAA compliant physician directory that allows patients to locate their physician or search for new ones.</p>
                 <div>
                     <h5 class="card-title mt-2 mb-4">Search by Basic Info</h5>
-                    <form id="pristine-valid-example" novalidate="true" method="post">
+                    @using (Html.BeginForm("SearchDoctor", "Patient", FormMethod.Post))
+                    {
                         <input type="hidden">
                         <div class="row g-3">
                             <div class="col-md-4">
-                                <div class="form-group mb-3">
-                                    <input type="text" required="" data-pristine-required-message="First Name" class="form-control" placeholder="First name" fdprocessedid="0bw88">
-                                </div>
+                                <label for="">First Name</label>
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group mb-3">
-                                    <input type="text" required="" data-pristine-required-message="Last Name" class="form-control" placeholder="Last Name" fdprocessedid="ohsqdj">
-                                </div>
+                                <label for="">Last Name</label>
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
                             </div>
+
                             <div class="col-md-4">
-                                <select class="form-select" fdprocessedid="frfmj">
-                                    <option value="1">Select</option>
-                                    <option value="13">CRNA</option>
-                                    <option value="14">Dentist</option>
-                                    <option value="15">Dermatology</option>
-                                    <option value="16">Digestive Disorder</option>
-                                    <option value="17">Ear, Nose &amp; Throat/Otolaryngology</option>
-                                    <option value="18">Emergency Medicine</option>
-                                    <option value="19">Endocrinology</option>
-                                    <option value="20">Family Practice</option>
-                                    <option value="21">Gastroenterology</option>
-                                    <option value="22">Genetics Medicine</option>
-                                    <option value="23">Geriatric Medicine</option>
-                                    <option value="24">Hand Surgery</option>
-                                    <option value="25">Hospitalist</option>
-                                    <option value="26">Hyperbaric Medicine&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                                    <option value="27">Infectious Diseases</option>
-                                    <option value="28">Internal Medicine</option>
-                                    <option value="96">Neighbors Emergency Center</option>
-                                    <option value="29">Neonatology</option>
-                                    <option value="30">Nephrology</option>
-                                </select>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.PhysicianSpecialtyId)
+                                    <span class="mandatory">*</span>
+                                    @Html.DropDownListFor(model => model.PhysicianSpecialtyId, new SelectList(Model.SpecialistTypesList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PhysicianSpecialtyId, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                             <h5 class="card-title mt-3">Search By Location</h5>
                             <div class="col-md-4">
+                                <label for="">City</label>
+                                @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                            </div>
+
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <input type="text" required="" class="form-control" placeholder="City" fdprocessedid="wla22u">
+                                    @Html.LabelFor(m => m.StateId)
+                                    @Html.DropDownListFor(model => model.StateId, new SelectList(Model.StateList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <select class="form-select" fdprocessedid="wwhwrd">
-                                    <option>Select</option>
-                                    <option>Andra Pradesh</option>
-                                    <option>Karnataka</option>
-                                    <option>Delhi</option>
-                                    <option>Haryana</option>
-                                    <option>Manipur</option>
-                                    <option>Sikkim</option>
-                                    <option>Himachal Pradesh</option>
-                                    <option>Meghalaya</option>
-                                    <option>Tamil Nadu</option>
-                                    <option>Assam</option>
-                                    <option>Maharashtra</option>
-                                    <option>Kerala</option>
-                                    <option>Rajasthan</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <input type="text" required="" data-pristine-required-message="City" class="form-control" placeholder="Zip Code" fdprocessedid="g1dbpd">
+                                    @Html.LabelFor(m => m.ZipCode)
+                                    @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control" })
                                 </div>
                             </div>
+
                         </div>
                         <div class="form-group mt-3 float-end">
                             <button type="submit" class="btn btn-primary" fdprocessedid="p96dug">Search</button>
                         </div>
-                    </form>
+                    }
                 </div>
             </div>
+
             <div class="tab-pane" id="profile-1" role="tabpanel">
                 <p>“Find Hospital/Clinic” feature allows patients to view hospital/clinic profiles.</p>
-                <div class="row g-3">
-                    <div class="col-md-4">
-                        <select class="form-select">
-                            <option>Select</option>
-                            <option>Andra Pradesh</option>
-                            <option>Karnataka</option>
-                            <option>Delhi</option>
-                            <option>Haryana</option>
-                            <option>Manipur</option>
-                            <option>Sikkim</option>
-                            <option>Himachal Pradesh</option>
-                            <option>Meghalaya</option>
-                            <option>Tamil Nadu</option>
-                            <option>Assam</option>
-                            <option>Maharashtra</option>
-                            <option>Kerala</option>
-                            <option>Rajasthan</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <select class="form-select">
-                            <option>Doctor</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group mb-3">
-                            <input type="text" required="" data-pristine-required-message="City" class="form-control" placeholder="Zip Code">
+                @using (Html.BeginForm("SearchHospital", "Patient", FormMethod.Post))
+                {
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.StateId)
+                                @Html.DropDownListFor(model => model.StateId, new SelectList(Model.StateList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select">
+                                <option>Doctor</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.ZipCode)
+                                @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control" })
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group mt-2 float-end">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </div>
+                    <div class="form-group mt-2 float-end">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                }
             </div>
 
             <div class="tab-pane" id="messages-1" role="tabpanel">
                 <p>“Find Insurance” feature allows patients to go into health insurance company websites, like Aetna, Cigna etc.</p>
-                <div class="col-md-6 mt-3">
-                    <div class="form-group mb-3">
-                        <input type="text" required="" data-pristine-required-message="City" class="form-control" placeholder="Company Name">
+                @using (Html.BeginForm("SearchInsurance", "Patient", FormMethod.Post))
+                {
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CompanyName)
+                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                        </div>
                     </div>
-                </div>
-                <div class="mt-2 float-end">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </div>
+                    <div class="mt-2 float-end">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                }
             </div>
         </div>
     </div>

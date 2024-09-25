@@ -1,4 +1,6 @@
 ﻿using Docttors_portal.Common.Models;
+using Docttors_portal.Common.procedureModels;
+using System.Collections.Generic;
 
 namespace Docttors_portal.Services.Interfaces
 {
@@ -36,6 +38,10 @@ namespace Docttors_portal.Services.Interfaces
         PatientMedicationModel LoadMedicationDetailsByUserId(int userId);
         int SaveMedicationDetails(PatientMedicationModel medicationModel);
         bool UpdateMedicationDetails(PatientMedicationModel medicationModel);
+        #endregion
+
+        #region Get Doctor By Patient
+        List<GetDoctorsByPatients> GetDoctorByPatient(PatientSearchDoctorModel patientSearchModel);
         #endregion
     }
 }
