@@ -1215,5 +1215,51 @@ namespace Docttors_portal.Services.Classes
             return AllVitalList;
         }
         #endregion
+
+        #region
+        public List<GetDoctorsByPatients> GetDoctorByPatient(PatientSearchDoctorModel patientSearchModel)
+        {
+            var doctorList = new List<GetDoctorsByPatients>();
+            string connectionString = ConfigurationManager.ConnectionStrings["DocttorsEntities"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetDoctorsByPatients", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@FirstName", SqlDbType.VarChar).Value = patientSearchModel.FirstName;
+                    cmd.Parameters.Add("@LastName", SqlDbType.VarChar).Value = patientSearchModel.LastName;
+                    cmd.Parameters.Add("@PhysicianSpecialtyId", SqlDbType.VarChar).Value = patientSearchModel.PhysicianSpecialtyId;
+                    cmd.Parameters.Add("@City", SqlDbType.VarChar).Value = patientSearchModel.City;
+                    cmd.Parameters.Add("@StateId", SqlDbType.VarChar).Value = patientSearchModel.StateId;
+                    cmd.Parameters.Add("@ZipCode", SqlDbType.VarChar).Value = patientSearchModel.ZipCode;
+                    con.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        //Accessing the data using the string key as index
+                        GetDoctorsByPatients getDoctorPatients = new GetDoctorsByPatients()
+                        {
+                            patientId = Convert.ToInt32(rdr["PatientId"]),
+                            FirstName = Convert.ToString(rdr["FirstName"]),
+                            LastName = Convert.ToString(rdr["LastName"]),
+                            EmailAddress = Convert.ToString(rdr["EmailAddress"]),
+                            UserId = Convert.ToInt32(rdr["LoginId"]),
+                            Mrn = Convert.ToString(rdr["MRN"]),
+                            CellPhone = Convert.ToString(rdr["CellPhone"]),
+                            DOB = Convert.ToDateTime(rdr["DOB"]),
+                            CCMIsPatientEligible = Convert.ToString(rdr["CCMIsPatientEligible"]),
+                            CCMIsConsentProvided = Convert.ToString(rdr["CCMConsentProvided"]),
+                            FavoriteDoctors = Convert.ToString(rdr["FavoriteDoctors"])
+                        };
+                        doctorList.Add(getDoctorPatients);
+                    }
+
+                }
+            }
+            return doctorList;
+        }
+
+        #endregion
     }
 }

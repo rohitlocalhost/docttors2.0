@@ -72,5 +72,9 @@ namespace Docttors_portal.Services.Interfaces
         bool UpdateVitalDetails(PatientVitalModel patientObservationModel);
         PatientVitalModel LoadVitalDataByVitalId(int vitalId, int userId);
         #endregion
+
+        #region Get Doctor By Patient
+        List<GetDoctorsByPatients> GetDoctorByPatient(PatientSearchDoctorModel patientSearchModel);
+        #endregion
     }
 }

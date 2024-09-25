@@ -59,10 +59,12 @@
     <Compile Include="Models\PatientPersonalModel.cs" />
     <Compile Include="Models\PatientPharmacyModel.cs" />
     <Compile Include="Models\PatientPhysicianModel.cs" />
+    <Compile Include="Models\PatientSearchDoctorModel.cs" />
     <Compile Include="Models\PatientSearchModel.cs" />
     <Compile Include="Models\patientVitalModel.cs" />
     <Compile Include="Models\UserRegistrationModel.cs" />
     <Compile Include="procedureModels\GetDoctorPatients.cs" />
+    <Compile Include="procedureModels\GetDoctorsByPatients.cs" />
     <Compile Include="procedureModels\GetMHRDataInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionVariables.cs" />

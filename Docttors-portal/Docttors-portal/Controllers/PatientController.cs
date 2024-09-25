@@ -38,9 +38,53 @@ namespace Docttors_portal.Controllers
             var mhrDataInfo = _personalServices.GetMHRData(SessionVariables.LoggedInUser.UserId);
             return View(mhrDataInfo);
         }
-        #endregion
+        public ActionResult Message()
+        {
+            return View();
+        }
+        public ActionResult MyProvider()
+        {
+            return View();
+        }
+        public ActionResult Search()
+        {
+            //var physicanData = _physicianServices.LoadPhysicianDetailsByUserId(Convert.ToInt32(Session["UserId"]));
+            var searchData = new PatientSearchDoctorModel();
+            searchData = LoadSearchListData(searchData);
+            return View(searchData);
+        }
+        private PatientSearchDoctorModel LoadSearchListData(PatientSearchDoctorModel physicianModel)
+        {
 
-        #region Personal Details
+            physicianModel.StateList = _commonUtilityService.GetAllStates();
+            physicianModel.SpecialistTypesList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.Specialty);
+            return physicianModel;
+        }
+        [HttpPost]
+        public ActionResult SearchDoctor(PatientSearchDoctorModel patientSearchModel)
+        {
+            //var searchDoctor = new PatientSearchDoctorModel();
+            _personalServices.GetDoctorByPatient(patientSearchModel);
+            return View(patientSearchModel);
+        }
+        [HttpPost]
+        public ActionResult SearchHospital(PatientSearchDoctorModel patientSearchModel)
+        {
+            //var searchDoctor = new PatientSearchDoctorModel();
+            _personalServices.GetDoctorByPatient(patientSearchModel);
+            return View(patientSearchModel);
+        }
+        [HttpPost]
+        public ActionResult SearchInsurance(PatientSearchDoctorModel patientSearchModel)
+        {
+            //var searchDoctor = new PatientSearchDoctorModel();
+            _personalServices.GetDoctorByPatient(patientSearchModel);
+            return View(patientSearchModel);
+        }
+        public ActionResult SystemCheck()
+        {
+            return View();
+        }
         public ActionResult PersonalDetails()
         {
             var patientPersonalModel = new PatientPersonalModel();
