@@ -24,6 +24,22 @@ namespace Docttors_portal.Common.procedureModels
         public string ObservationCreated { get; set; }
         public string ObservationModified { get; set; }
         public string ObservationModifiedTime { get; set; }
+        public string AllergyCreated { get; set; }
+        public string AllergyModified { get; set; }
+        public string AllergyModifiedTime { get; set; }
+        public string HospitalCreated { get; set; }
+        public string HospitalModified { get; set; }
+        public string HospitalModifiedTime { get; set; }
+        public string MedicationCreated { get; set; }
+        public string MedicationModified { get; set; }
+        public string MedicationModifiedTime { get; set; }
+        public string PharmacyCreated { get; set; }
+        public string PharmacyModified { get; set; }
+        public string PharmacyModifiedTime { get; set; }
+        public string VitalCreated { get; set; }
+        public string VitalModified { get; set; }
+        public string VitalModifiedTime { get; set; }
+
 
     }
 }

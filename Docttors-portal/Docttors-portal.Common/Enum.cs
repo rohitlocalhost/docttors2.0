@@ -30,4 +30,19 @@ namespace Docttors_portal.Common
         Ethnicity=6,
         Specialty = 7
     }
+
+    public enum WeightEnum
+    {
+        [Description("lbs")]
+        lbs=1,
+        [Description("kg")]
+        kg
+    }
+    public enum TempratureEnum
+    {
+        [Description("F")]
+        Fahrenheit = 1,
+        [Description("C")]
+        Celsius
+    }
 }

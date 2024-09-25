@@ -459,6 +459,12 @@
     <Content Include="Views\User\DoctorRegisteration.cshtml" />
     <Content Include="Views\Patient\EmergencyContacts.cshtml" />
     <Content Include="Views\Patient\ObservationDetails.cshtml" />
+    <Content Include="Views\Patient\PatientAllergies.cshtml" />
+    <Content Include="Views\Patient\HospitalDetails.cshtml" />
+    <Content Include="Views\Patient\PharmacyDetails.cshtml" />
+    <Content Include="Views\Patient\MedicationDetails.cshtml" />
+    <Content Include="Views\Patient\VitalSign.cshtml" />
+    <Content Include="Views\Patient\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -480,7 +486,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Docttors-portal.Common\Docttors-portal.Common.csproj">
-      <Project>{69F890C7-1233-4AA3-815A-56265920D7DD}</Project>
+      <Project>{69f890c7-1233-4aa3-815a-56265920d7dd}</Project>
       <Name>Docttors-portal.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Docttors-portal.DataAccess\Docttors-portal.DataAccess.csproj">
@@ -492,7 +498,7 @@
       <Name>Docttors-portal.DependencyResolution</Name>
     </ProjectReference>
     <ProjectReference Include="..\Docttors-portal.Entities\Docttors-portal.Entities.csproj">
-      <Project>{AC77663F-0779-48AF-8A37-7FE946DA1AD1}</Project>
+      <Project>{ac77663f-0779-48af-8a37-7fe946da1ad1}</Project>
       <Name>Docttors-portal.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\Docttors-portal.Services\Docttors-portal.Services.csproj">

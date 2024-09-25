@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography;
@@ -99,6 +100,13 @@ namespace Docttors_portal.Common
             var resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length-1);
             tdes.Clear();
             return Encoding.UTF8.GetString(resultArray);
+        }
+
+        public static string GetEnumDescription(Enum value)
+        {
+            var field = value.GetType().GetField(value.ToString());
+            var attribute = (DescriptionAttribute)Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
+            return attribute == null ? value.ToString() : attribute.Description;
         }
     }
 }

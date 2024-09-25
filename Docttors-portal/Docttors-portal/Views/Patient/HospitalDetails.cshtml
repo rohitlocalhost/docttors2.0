@@ -1,0 +1,147 @@
+﻿@model Docttors_portal.Common.Models.PatientHospitalModel
+@{
+    ViewBag.Title = "HospitalDetails";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+
+<div id="wrapper" class="card">
+    <div class="card-header" style="background-color: #1434A4;">
+        <h1 class="card-title" style="color: #fff;">Hospital Information</h1>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("HospitalDetails", "Patient", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.PatientHospitalId)
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title" style="color: #1434A4;">
+                        Hospital/Facility Information
+                        <span style="font-size: 12px;"><a style="color: red;" id="help" onclick="helpclick(this)" href="#">Help?</a></span>
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.HospitalName)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.HospitalName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.HospitalName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Address1)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.Address1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Address1, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*<div class="col-md-3">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Address2)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.Address2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Address2, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.City)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4 mb-4">
+                <div class="card-body row g-3">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StateId)
+                            <span class="mandatory">*</span>
+                            @Html.DropDownListFor(model => model.StateId, new SelectList(Model.StateList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ZipCode)
+                            @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Phone)
+                            <span class="mandatory">*</span>
+                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ReasonForVisit)
+                            <span class="mandatory">*</span>
+                            @Html.TextBoxFor(m => m.ReasonForVisit, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ReasonForVisit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 mt-1 mb-1 d-print-none justify-content-lg-end">
+                <div class="col-md-4"></div>
+                <div class="col-md-3">
+                    <a href="Javascript:void(0)" class="btn btn-rounded btn-secondary btn-wave"><i class="fa fa-print" aria-hidden="true"></i>Print This Page</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="@Url.Action("MyHealthRecord")" class="btn btn-rounded btn-warning btn-wave"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-rounded btn-success btn-wave"><i class="fas fa-save"></i> Save</button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                @foreach (var item in Model.HospitalList)
+                {
+                    <div class="col-md-4 pe-2">
+                        <div class="card">
+                            <div class="row card-header">
+                                <span class="col-md-9">
+                                    <h2 class="card-title"><strong>Hospital Name:&nbsp;</strong><span style="color: darkblue;">@item.HospitalName</span></h2>
+                                </span>
+                                <span class="col-md-3">
+                                    <span style="color: darkblue;">
+                                        <a href="@Url.Action("LoadHistoryDetails", "Patient", new {@patientHospitalId=item.PatientHospitalId})"><i class="bx bxs-edit float-end">&nbsp;</i></a>
+                                        <a href="@Url.Action("DeleteHospitalDetails", "Patient", new {@patientHospitalId=item.PatientHospitalId})">
+                                            <span class="bx bxs-trash float-end">&nbsp;</span>
+                                        </a>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <p>
+                                    <strong>Address:&nbsp;&nbsp;</strong>@item.Address1<br>
+                                    @*<strong>Address 2:&nbsp;&nbsp;</strong>@item.Address2<br>*@
+                                    <strong>City:&nbsp;</strong>@item.City
+                                    <strong>State:&nbsp;</strong>@(item.StateId!=null?@Model.StateList.FirstOrDefault(x => x.Id == item.StateId).Name:string.Empty)
+                                    <strong>Zipcode:&nbsp;</strong>@item.ZipCode<br>
+                                    <strong>Phone:&nbsp;&nbsp;</strong>@item.Phone<br>
+                                    <strong>Reason For Visit:&nbsp;&nbsp;</strong>@item.ReasonForVisit
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+

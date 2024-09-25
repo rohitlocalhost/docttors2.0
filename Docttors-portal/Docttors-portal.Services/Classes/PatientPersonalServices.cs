@@ -13,6 +13,9 @@ using System.Net;
 using System.Reflection.Emit;
 using System.Linq;
 using System.Globalization;
+using System.Security.Cryptography;
+using Docttors_portal.Common;
+using System.Security.Policy;
 
 namespace Docttors_portal.Services.Classes
 {
@@ -22,8 +25,13 @@ namespace Docttors_portal.Services.Classes
         private IRepository<PatientPersonalNew> _patientRepository;
         private IRepository<PatientPhysicianDetailsNew> _PhysicianRepository;
         private IRepository<PatientInsuranceNew> _insuranceRepository;
+        private IRepository<PatientAllergiesNew> _allergiesRepository;
+        private IRepository<PatientHospitalDetailsNew> _hospitalrepository;
+        private IRepository<PatientPharmacyDetailsNew> _pharmacyRepository;
+        private IRepository<PatientMedicationDetailsNew> _medicationRepository;
         private IRepository<PatientEmergencyNew> _emergencyRepository;
         private IRepository<PatientObservationNew> _patientObservationRepository;
+        private IRepository<PatientVitalsNew> _patientVitalRepository;
 
         public PatientPersonalServices(IUnitOfWork unitOfWork)
         {
@@ -35,6 +43,11 @@ namespace Docttors_portal.Services.Classes
                 _insuranceRepository = _unitOfWork.GetRepository<PatientInsuranceNew>();
                 _emergencyRepository = _unitOfWork.GetRepository<PatientEmergencyNew>();
                 _patientObservationRepository = _unitOfWork.GetRepository<PatientObservationNew>();
+                _allergiesRepository = _unitOfWork.GetRepository<PatientAllergiesNew>();
+                _hospitalrepository = _unitOfWork.GetRepository<PatientHospitalDetailsNew>();
+                _pharmacyRepository = _unitOfWork.GetRepository<PatientPharmacyDetailsNew>();
+                _medicationRepository = _unitOfWork.GetRepository<PatientMedicationDetailsNew>();
+                _patientVitalRepository = _unitOfWork.GetRepository<PatientVitalsNew>();
             }
         }
         #region MHR Page Load Service
@@ -73,6 +86,23 @@ namespace Docttors_portal.Services.Classes
                             mhrDataInfo.ObservationCreated = Convert.ToString(rdr["ObservationCreated"]);
                             mhrDataInfo.ObservationModified = Convert.ToString(rdr["ObservationModified"]);
                             mhrDataInfo.ObservationModifiedTime = Convert.ToString(rdr["ObservationModifiedTime"]);
+                            mhrDataInfo.AllergyCreated = Convert.ToString(rdr["AllergyCreated"]);
+                            mhrDataInfo.AllergyModified = Convert.ToString(rdr["AllergyModified"]);
+                            mhrDataInfo.AllergyModifiedTime = Convert.ToString(rdr["AllergyModifiedTime"]);
+                            mhrDataInfo.HospitalCreated = Convert.ToString(rdr["HospitalCreated"]);
+                            mhrDataInfo.HospitalModified = Convert.ToString(rdr["HospitalModified"]);
+                            mhrDataInfo.HospitalModifiedTime = Convert.ToString(rdr["HospitalModifiedTime"]);
+                            mhrDataInfo.MedicationCreated = Convert.ToString(rdr["MedicationCreated"]);
+                            mhrDataInfo.MedicationModified = Convert.ToString(rdr["MedicationModified"]);
+                            mhrDataInfo.MedicationModifiedTime = Convert.ToString(rdr["MedicationModifiedTime"]);
+                            mhrDataInfo.PharmacyCreated = Convert.ToString(rdr["PharmacyCreated"]);
+                            mhrDataInfo.PharmacyModified = Convert.ToString(rdr["PharmacyModified"]);
+                            mhrDataInfo.PharmacyModifiedTime = Convert.ToString(rdr["PharmacyModifiedTime"]);
+                            mhrDataInfo.VitalCreated = Convert.ToString(rdr["VitalCreated"]);
+                            mhrDataInfo.VitalModified = Convert.ToString(rdr["VitalModified"]);
+                            mhrDataInfo.VitalModifiedTime = Convert.ToString(rdr["VitalModifiedTime"]);
+
+
                         }
 
                     }
@@ -550,9 +580,639 @@ namespace Docttors_portal.Services.Classes
             }
             catch (Exception ex)
             {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region Allergies
+        public PatientAllergiesModel LoadAllergiesDetailsByUserId(int userId)
+        {
+            var ptData = new PatientAllergiesModel();
+            try
+            {
+                ptData.AllergyList = _allergiesRepository.GetAll(x => x.UserId == userId).Select(x => new PatientAllergiesModel()
+                {
+                    PatientAllergyId = x.PatientAllergyId,
+                    UserId = x.UserId,
+                    AllergyName = x.AllergyName,
+                    Reaction = x.Reaction
+                }).ToList();
+                return ptData;
+
+            }
+            catch (Exception ex)
+            {
 
                 throw;
             }
+        }
+
+        public int SaveAllergiesDetails(PatientAllergiesModel allergiesModel)
+        {
+            try
+            {
+                var allergies = new PatientAllergiesNew()
+                {
+                    PatientAllergyId = allergiesModel.PatientAllergyId,
+                    UserId = allergiesModel.UserId,
+                    AllergyName = allergiesModel.AllergyName,
+                    Reaction = allergiesModel.Reaction,
+                    CreatedBy = allergiesModel.UserId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = allergiesModel.UserId,
+                    ModifiedOn = DateTime.Now
+                };
+                _allergiesRepository.Add(allergies);
+                return allergies.PatientAllergyId;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public bool UpdateAllergiesDetails(PatientAllergiesModel allergiesModel)
+        {
+            try
+            {
+                var patientAllergies = _allergiesRepository.GetSingle(x => x.PatientAllergyId == allergiesModel.PatientAllergyId);
+                if (patientAllergies != null)
+                {
+                    patientAllergies.PatientAllergyId = allergiesModel.PatientAllergyId;
+                    patientAllergies.UserId = allergiesModel.UserId;
+                    patientAllergies.AllergyName = allergiesModel.AllergyName;
+                    patientAllergies.Reaction = allergiesModel.Reaction;
+                    patientAllergies.ModifiedBy = allergiesModel.UserId;
+                    patientAllergies.ModifiedOn = DateTime.Now;
+                    _allergiesRepository.Update(patientAllergies);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool DeleteAllergyDetails(int patientAllergyId)
+        {
+            try
+            {
+                var allergyDetails = _allergiesRepository.GetSingle(x => x.PatientAllergyId == patientAllergyId);
+                if (allergyDetails != null)
+                {
+                    _allergiesRepository.Delete(allergyDetails);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public PatientAllergiesModel LoadAllergyDetailsByAllergyId(int patientAllergyId, int userId)
+        {
+            try
+            {
+                var AllAllergyData = LoadAllergiesDetailsByUserId(userId);
+                var patientAllergyData = _allergiesRepository.GetSingle(x => x.PatientAllergyId == patientAllergyId);
+                if (patientAllergyData != null)
+                {
+                    AllAllergyData.PatientAllergyId = patientAllergyData.PatientAllergyId;
+                    AllAllergyData.UserId = patientAllergyData.UserId;
+                    AllAllergyData.AllergyName = patientAllergyData.AllergyName;
+                    AllAllergyData.Reaction = patientAllergyData.Reaction;
+                }
+                return AllAllergyData;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        #endregion
+
+        #region Hospital Details
+        public PatientHospitalModel LoadHospitalDetailsByUserId(int userId)
+        {
+            var ptData = new PatientHospitalModel();
+            try
+            {
+                ptData.HospitalList = _hospitalrepository.GetAll(x => x.UserId == userId).Select(x => new PatientHospitalModel()
+                {
+                    PatientHospitalId = x.PatientHospitalId,
+                    UserId = x.UserId,
+                    HospitalName = x.HospitalName,
+                    Phone = x.Phone,
+                    Address1 = x.Address1,
+                    Address2 = x.Address2,
+                    City = x.City,
+                    StateId = x.StateId,
+                    ZipCode = x.ZipCode,
+                    ReasonForVisit = x.ReasonForVisit
+                }).ToList();
+                return ptData;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public bool UpdateHospitalDetails(PatientHospitalModel hospitalModel)
+        {
+            try
+            {
+                var patientAllergies = _hospitalrepository.GetSingle(x => x.PatientHospitalId == hospitalModel.PatientHospitalId);
+                if (patientAllergies != null)
+                {
+                    patientAllergies.PatientHospitalId = hospitalModel.PatientHospitalId;
+                    patientAllergies.UserId = hospitalModel.UserId;
+                    patientAllergies.HospitalName = hospitalModel.HospitalName;
+                    patientAllergies.Phone = hospitalModel.Phone;
+                    patientAllergies.Address1 = hospitalModel.Address1;
+                    patientAllergies.Address2 = hospitalModel.Address2;
+                    patientAllergies.City = hospitalModel.City;
+                    patientAllergies.StateId = hospitalModel.StateId;
+                    patientAllergies.ZipCode = hospitalModel.ZipCode;
+                    patientAllergies.ReasonForVisit = hospitalModel.ReasonForVisit;
+                    patientAllergies.ModifiedBy = hospitalModel.UserId;
+                    patientAllergies.ModifiedOn = DateTime.Now;
+                    _hospitalrepository.Update(patientAllergies);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public int SaveHospitalDetails(PatientHospitalModel hospitalModel)
+        {
+            try
+            {
+                var patientHospital = new PatientHospitalDetailsNew()
+                {
+                    PatientHospitalId = hospitalModel.PatientHospitalId,
+                    UserId = hospitalModel.UserId,
+                    HospitalName = hospitalModel.HospitalName,
+                    Phone = hospitalModel.Phone,
+                    Address1 = hospitalModel.Address1,
+                    Address2 = hospitalModel.Address2,
+                    City = hospitalModel.City,
+                    StateId = hospitalModel.StateId,
+                    ZipCode = hospitalModel.ZipCode,
+                    ReasonForVisit = hospitalModel.ReasonForVisit,
+                    CreatedBy = hospitalModel.UserId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = hospitalModel.UserId,
+                    ModifiedOn = DateTime.Now
+                };
+                _hospitalrepository.Add(patientHospital);
+                return patientHospital.PatientHospitalId;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public bool DeletehospitalDetails(int patientHospitalId)
+        {
+            try
+            {
+                var hospitalDetails = _hospitalrepository.GetSingle(x => x.PatientHospitalId == patientHospitalId);
+                if (hospitalDetails != null)
+                {
+                    _hospitalrepository.Delete(hospitalDetails);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public PatientHospitalModel LoadHospitalDetailsByHospitalId(int patientHospitalId, int userId)
+        {
+            try
+            {
+                var AllHospitalData = LoadHospitalDetailsByUserId(userId);
+                var patientHospitalData = _hospitalrepository.GetSingle(x => x.PatientHospitalId == patientHospitalId);
+                if (patientHospitalData != null)
+                {
+                    AllHospitalData.PatientHospitalId = patientHospitalData.PatientHospitalId;
+                    AllHospitalData.UserId = patientHospitalData.UserId;
+                    AllHospitalData.HospitalName = patientHospitalData.HospitalName;
+                    AllHospitalData.Phone = patientHospitalData.Phone;
+                    AllHospitalData.Address1 = patientHospitalData.Address1;
+                    AllHospitalData.Address2 = patientHospitalData.Address2;
+                    AllHospitalData.City = patientHospitalData.City;
+                    AllHospitalData.StateId = patientHospitalData.StateId;
+                    AllHospitalData.ZipCode = patientHospitalData.ZipCode;
+                    AllHospitalData.ReasonForVisit = patientHospitalData.ReasonForVisit;
+                }
+                return AllHospitalData;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Pharmacy
+        public PatientPharmacyModel LoadPharmacyDetailsByUserId(int userId)
+        {
+            var ptData = new PatientPharmacyModel();
+            try
+            {
+                ptData.AllPharmacyData = _pharmacyRepository.GetAll(x => x.UserId == userId).Select(x => new PatientPharmacyModel()
+                {
+                    PatientPharmacyId = x.PatientPharmacyId,
+                    UserId = x.UserId,
+                    IsPrimaryPharmacy = x.isPrimaryPharmacy,
+                    Name = x.PharmacyName,
+                    Phone = x.PhramacyPhone,
+                    Address1 = x.Address1,
+                    Address2 = x.Address2,
+                    City = x.City,
+                    StateId = x.StateId,
+                    ZipCode = x.ZipCode
+                }).ToList();
+                return ptData;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+        public bool UpdatePharmacyDetails(PatientPharmacyModel pharmacyModel)
+        {
+            try
+            {
+                var patientPharmacy = _pharmacyRepository.GetSingle(x => x.PatientPharmacyId == pharmacyModel.PatientPharmacyId);
+                if (patientPharmacy != null)
+                {
+                    patientPharmacy.PatientPharmacyId = pharmacyModel.PatientPharmacyId;
+                    patientPharmacy.UserId = pharmacyModel.UserId;
+                    patientPharmacy.PharmacyName = pharmacyModel.Name;
+                    patientPharmacy.isPrimaryPharmacy = pharmacyModel.IsPrimaryPharmacy;
+                    patientPharmacy.PhramacyPhone = pharmacyModel.Phone;
+                    patientPharmacy.Address1 = pharmacyModel.Address1;
+                    patientPharmacy.Address2 = pharmacyModel.Address2;
+                    patientPharmacy.City = pharmacyModel.City;
+                    patientPharmacy.ZipCode = pharmacyModel.ZipCode;
+                    patientPharmacy.StateId = pharmacyModel.StateId;
+                    patientPharmacy.ModifiedBy = pharmacyModel.UserId;
+                    patientPharmacy.ModifiedOn = DateTime.Now;
+                    _pharmacyRepository.Update(patientPharmacy);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public int SavePharmacyDetails(PatientPharmacyModel pharmacyModel)
+        {
+            try
+            {
+                var patientPharmacy = new PatientPharmacyDetailsNew()
+                {
+                    PatientPharmacyId = pharmacyModel.PatientPharmacyId,
+                    UserId = pharmacyModel.UserId,
+                    PharmacyName = pharmacyModel.Name,
+                    PhramacyPhone = pharmacyModel.Phone,
+                    Address1 = pharmacyModel.Address1,
+                    Address2 = pharmacyModel.Address2,
+                    isPrimaryPharmacy = pharmacyModel.IsPrimaryPharmacy,
+                    City = pharmacyModel.City,
+                    StateId = pharmacyModel.StateId,
+                    ZipCode = pharmacyModel.ZipCode,
+                    CreatedBy = pharmacyModel.UserId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = pharmacyModel.UserId,
+                    ModifiedOn = DateTime.Now
+                };
+                _pharmacyRepository.Add(patientPharmacy);
+                return patientPharmacy.PatientPharmacyId;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public bool DeletePharmacyDetails(int patientPharmacyId)
+        {
+            try
+            {
+                var pharmacyDetails = _pharmacyRepository.GetSingle(x => x.PatientPharmacyId == patientPharmacyId);
+                if (pharmacyDetails != null)
+                {
+                    _pharmacyRepository.Delete(pharmacyDetails);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public PatientPharmacyModel LoadPharmacyDetailsByPharmacyId(int patientPharmacyId, int userId)
+        {
+            try
+            {
+                var AllpatientPharmacyData = LoadPharmacyDetailsByUserId(userId);
+                var patientPharmacynData = _pharmacyRepository.GetSingle(x => x.PatientPharmacyId == patientPharmacyId);
+                if (patientPharmacynData != null)
+                {
+                    AllpatientPharmacyData.PatientPharmacyId = patientPharmacynData.PatientPharmacyId;
+                    AllpatientPharmacyData.UserId = patientPharmacynData.UserId;
+                    AllpatientPharmacyData.IsPrimaryPharmacy = patientPharmacynData.isPrimaryPharmacy;
+                    AllpatientPharmacyData.Name = patientPharmacynData.PharmacyName;
+                    AllpatientPharmacyData.Phone = patientPharmacynData.PhramacyPhone;
+                    AllpatientPharmacyData.Address1 = patientPharmacynData.Address1;
+                    AllpatientPharmacyData.Address2 = patientPharmacynData.Address2;
+                    AllpatientPharmacyData.StateId = patientPharmacynData.StateId;
+                    AllpatientPharmacyData.ZipCode = patientPharmacynData.ZipCode;
+                }
+                return AllpatientPharmacyData;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
+
+        #region Medication Service
+        public PatientMedicationModel LoadMedicationDetailsByUserId(int userId)
+        {
+            var ptData = new PatientMedicationModel();
+            try
+            {
+                ptData.MedicationList = _medicationRepository.GetAll(x => x.UserId == userId).Select(x => new PatientMedicationModel()
+                {
+                    PatientMedicationId = x.PatientMedicationId,
+                    UserId = x.UserId,
+                    CurrentMedication = x.CurrentMedication,
+                    MedicationName = x.MedicationName,
+                    Dosage = x.Dosage,
+                    Frequency = x.Frequency,
+                    PrescibedPhysician = x.PrescibedPhysician,
+                    Prescription = x.Prescription,
+                    ReasonforPrescription = x.ReasonforPrescription,
+                    DateOfPrescription = x.DateOfPrescription != null ? Convert.ToDateTime(x.DateOfPrescription).ToString("yyyy-MM-dd") : string.Empty
+                }).ToList();
+                return ptData;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool UpdateMedicationDetails(PatientMedicationModel medicationModel)
+        {
+            try
+            {
+                var medicationDetails = _medicationRepository.GetSingle(x => x.PatientMedicationId == medicationModel.PatientMedicationId);
+                if (medicationDetails != null)
+                {
+                    medicationDetails.PatientMedicationId = medicationModel.PatientMedicationId;
+                    medicationDetails.UserId = medicationModel.UserId;
+                    medicationDetails.MedicationName = medicationModel.MedicationName;
+                    medicationDetails.CurrentMedication = medicationModel.CurrentMedication;
+                    medicationDetails.Dosage = medicationModel.Dosage;
+                    medicationDetails.Frequency = medicationModel.Frequency;
+                    medicationDetails.PrescibedPhysician = medicationModel.PrescibedPhysician;
+                    medicationDetails.Prescription = medicationModel.Prescription;
+                    medicationDetails.ReasonforPrescription = medicationModel.ReasonforPrescription;
+                    medicationDetails.DateOfPrescription = String.IsNullOrEmpty(medicationModel.DateOfPrescription) ? (DateTime?)null : Convert.ToDateTime(medicationModel.DateOfPrescription);
+                    medicationDetails.ModifiedBy = medicationModel.UserId;
+                    medicationDetails.ModifiedOn = DateTime.Now;
+                    _medicationRepository.Update(medicationDetails);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public int SaveMedicationDetails(PatientMedicationModel medicationModel)
+        {
+            try
+            {
+                var medicationDetails = new PatientMedicationDetailsNew()
+                {
+                    PatientMedicationId = medicationModel.PatientMedicationId,
+                    UserId = medicationModel.UserId,
+                    MedicationName = medicationModel.MedicationName,
+                    CurrentMedication = medicationModel.CurrentMedication,
+                    Dosage = medicationModel.Dosage,
+                    Frequency = medicationModel.Frequency,
+                    PrescibedPhysician = medicationModel.PrescibedPhysician,
+                    Prescription = medicationModel.Prescription,
+                    ReasonforPrescription = medicationModel.ReasonforPrescription,
+                    DateOfPrescription = String.IsNullOrEmpty(medicationModel.DateOfPrescription) ? (DateTime?)null : Convert.ToDateTime(medicationModel.DateOfPrescription),
+                    CreatedBy = medicationModel.UserId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = medicationModel.UserId,
+                    ModifiedOn = DateTime.Now
+                };
+                _medicationRepository.Add(medicationDetails);
+                return medicationDetails.PatientMedicationId;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public bool DeleteMedicationDetails(int patientMedicationId)
+        {
+            try
+            {
+                var medicationDetails = _medicationRepository.GetSingle(x => x.PatientMedicationId == patientMedicationId);
+                if (medicationDetails != null)
+                {
+                    _medicationRepository.Delete(medicationDetails);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public PatientMedicationModel LoadMedicationDetailsByMedicalId(int patientMedicationId, int userId)
+        {
+            try
+            {
+                var AllpatientMedicationData = LoadMedicationDetailsByUserId(userId);
+                var patientMedicationData = _medicationRepository.GetSingle(x => x.PatientMedicationId == patientMedicationId);
+                if (patientMedicationData != null)
+                {
+                    AllpatientMedicationData.PatientMedicationId = patientMedicationData.PatientMedicationId;
+                    AllpatientMedicationData.UserId = patientMedicationData.UserId;
+                    AllpatientMedicationData.CurrentMedication = patientMedicationData.CurrentMedication;
+                    AllpatientMedicationData.MedicationName = patientMedicationData.MedicationName;
+                    AllpatientMedicationData.Dosage = patientMedicationData.Dosage;
+                    AllpatientMedicationData.Frequency = patientMedicationData.Frequency;
+                    AllpatientMedicationData.PrescibedPhysician = patientMedicationData.PrescibedPhysician;
+                    AllpatientMedicationData.ReasonforPrescription = patientMedicationData.ReasonforPrescription;
+                    AllpatientMedicationData.DateOfPrescription = patientMedicationData.DateOfPrescription != null ? Convert.ToDateTime(patientMedicationData.DateOfPrescription).ToString("yyyy-MM-dd") : string.Empty;
+                }
+                return AllpatientMedicationData;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+        #endregion
+
+        #region patient Vital Service
+        public int SaveVitalDetails(PatientVitalModel patientVitalModel)
+        {
+            try
+            {
+                var vitalData = new PatientVitalsNew()
+                {
+                    Bloodglucose = patientVitalModel.Bloodglucose,
+                    Dia = patientVitalModel.Dia,
+                    ObservationDateTime = DateTime.Now,
+                    PulseRate = patientVitalModel.PulseRate,
+                    Spirometer = patientVitalModel.Spirometer,
+                    Spo2 = patientVitalModel.Spo2,
+                    Sys = patientVitalModel.Sys,
+                    Temprature = patientVitalModel.Temprature,
+                    TempratureUnit = patientVitalModel.TempratureUnit == true ? Utilities.GetEnumDescription(TempratureEnum.Fahrenheit) : Utilities.GetEnumDescription(TempratureEnum.Celsius),
+                    Weight = patientVitalModel.Weight,
+                    WeightUnit = patientVitalModel.WeightUnit == true ? Utilities.GetEnumDescription(WeightEnum.lbs) : Utilities.GetEnumDescription(WeightEnum.kg),
+                    UserId = patientVitalModel.UserId,
+                    CreatedBy = patientVitalModel.UserId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = patientVitalModel.UserId,
+                    ModifiedOn = DateTime.Now
+                };
+                _patientVitalRepository.Add(vitalData);
+                return vitalData.PatientVitalId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public PatientVitalModel LoadVitalByUserId(int userId)
+        {
+            var ptVitalData = new PatientVitalModel();
+            try
+            {
+                ptVitalData.VitalHistory = GetAllPatientVitalList(userId);
+                //ptVitalData.VitalHistory = ptVitalData.VitalHistory.Prepend(new NameIdModel() { Id = 0, Name = "Enter New Vitals" }).ToList();
+                return ptVitalData;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool UpdateVitalDetails(PatientVitalModel patientVitalModel)
+        {
+
+            try
+            {
+                var currentVitalData = _patientVitalRepository.GetSingle(x => x.PatientVitalId == patientVitalModel.PatientVitalId);
+                if (currentVitalData != null)
+                {
+                    currentVitalData.Bloodglucose = patientVitalModel.Bloodglucose;
+                    currentVitalData.Dia = patientVitalModel.Dia;
+                    //currentVitalData.ObservationDateTime = patientVitalModel.ObservationDateTime;
+                    currentVitalData.PulseRate = patientVitalModel.PulseRate;
+                    currentVitalData.Spirometer = patientVitalModel.Spirometer;
+                    currentVitalData.Spo2 = patientVitalModel.Spo2;
+                    currentVitalData.Sys = patientVitalModel.Sys;
+                    currentVitalData.Temprature = patientVitalModel.Temprature;
+                    currentVitalData.TempratureUnit = patientVitalModel.TempratureUnit == true ? Utilities.GetEnumDescription(TempratureEnum.Fahrenheit) : Utilities.GetEnumDescription(TempratureEnum.Celsius);
+                    currentVitalData.Weight = patientVitalModel.Weight;
+                    currentVitalData.WeightUnit = patientVitalModel.WeightUnit == true ? Utilities.GetEnumDescription(WeightEnum.lbs) : Utilities.GetEnumDescription(WeightEnum.kg);
+                    currentVitalData.ModifiedBy = patientVitalModel.UserId;
+                    currentVitalData.ModifiedOn = DateTime.Now;
+                    _patientVitalRepository.Update(currentVitalData);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public PatientVitalModel LoadVitalDataByVitalId(int vitalId, int userId)
+        {
+            var ptVitalData = new PatientVitalModel();
+            try
+            {
+                var patientVitalData = _patientVitalRepository.GetSingle(x => x.PatientVitalId == vitalId);
+                if (patientVitalData != null)
+                {
+                    ptVitalData.Bloodglucose = patientVitalData.Bloodglucose;
+                    ptVitalData.Dia = patientVitalData.Dia;
+                    ptVitalData.PulseRate = patientVitalData.PulseRate;
+                    ptVitalData.Spirometer = patientVitalData.Spirometer;
+                    ptVitalData.Spo2 = patientVitalData.Spo2;
+                    ptVitalData.Sys = patientVitalData.Sys;
+                    ptVitalData.Temprature = patientVitalData.Temprature;
+                    ptVitalData.TempratureUnit = patientVitalData.TempratureUnit == Utilities.GetEnumDescription(TempratureEnum.Fahrenheit) ? true : false;
+                    ptVitalData.Weight = patientVitalData.Weight;
+                    ptVitalData.WeightUnit = patientVitalData.WeightUnit == Utilities.GetEnumDescription(WeightEnum.lbs) ? true : false;
+                }
+                ptVitalData.VitalHistory = GetAllPatientVitalList(userId);
+                return ptVitalData;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private List<NameIdModel> GetAllPatientVitalList(int userId)
+        {
+            var AllVitalList = _patientVitalRepository.GetAll(x => x.UserId == userId).Select(x =>
+                new NameIdModel()
+                {
+                    Id = x.PatientVitalId,
+                    Name = x.ObservationDateTime.ToString("yyyy-MM-dd hh:mm")
+                }).ToList();
+            AllVitalList = AllVitalList.Prepend(new NameIdModel() { Id = 0, Name = "Enter New Vitals" }).ToList();
+            return AllVitalList;
         }
         #endregion
     }

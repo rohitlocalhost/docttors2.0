@@ -30,5 +30,10 @@ namespace Docttors_portal.DataAccess.EntityModel
         public DbSet<ErrorLog> ErrorLogs { get; set; }
         public DbSet<PatientEmergencyNew> PatientEmergencyNew { get; set; }
         public DbSet<PatientObservationNew> PatientObservationNew { get; set; }
+        public DbSet<PatientAllergiesNew> patientAllergiesNew { get; set; }
+        public DbSet<PatientHospitalDetailsNew> patientHospitalDetailsNews { get; set; }
+        public DbSet<PatientPharmacyDetailsNew> patientPharmacyDetailsNews { get; set; }
+        public DbSet<PatientVitalsNew> patientVitalsNews { get; set; }
+        public DbSet<PatientMedicationDetailsNew> PatientMedicationDetailsNews { get; set; }
     }
 }

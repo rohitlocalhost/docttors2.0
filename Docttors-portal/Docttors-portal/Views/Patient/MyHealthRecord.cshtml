@@ -4,8 +4,6 @@
     Layout = "~/Views/Shared/_PatientLayout.cshtml";
 }
 
-<h2>MyHealthRecord</h2>
-
 <div class="card">
     <div class="card-header" style="background-color: #1434A4;">
         <h1 class="card-title text-white">My Health Record</h1>
@@ -42,16 +40,16 @@
                     <td>@Model.InsuranceModifiedTime</td>
                 </tr>
                 <tr>
-                    <td><a href="Allergy.html">Allergy</a></td>
-                    <td>06-Oct-2022</td>
-                    <td>12-Feb-2023</td>
-                    <td>12:22:03 PM</td>
+                    <td><a href="@Url.Action("PatientAllergies","Patient")">Allergy</a></td>
+                    <td>@Model.AllergyCreated</td>
+                    <td>@Model.AllergyModified</td>
+                    <td>@Model.AllergyModifiedTime</td>
                 </tr>
                 <tr>
-                    <td><a href="HospitalDetails.html">Hospital</a></td>
-                    <td>06-Oct-2022</td>
-                    <td>12-Feb-2023</td>
-                    <td>12:22:03 PM</td>
+                    <td><a href="@Url.Action("HospitalDetails","Patient")">Hospital</a></td>
+                    <td>@Model.HospitalCreated</td>
+                    <td>@Model.HospitalModified</td>
+                    <td>@Model.HospitalModifiedTime</td>
                 </tr>
                 <tr>
                     <td><a href="@Url.Action("PhysicianDetails","Patient")">Physicians</a></td>
@@ -60,28 +58,28 @@
                     <td>@Model.LastPhysicianDetailModifiedTime</td>
                 </tr>
                 <tr>
-                    <td><a href="medication.html">Current Medication</a></td>
+                    <td><a href="@Url.Action("MedicationDetails","Patient")">Current Medication</a></td>
+                    <td>@Model.MedicationCreated</td>
+                    <td>@Model.MedicationModified</td>
+                    <td>@Model.MedicationModifiedTime</td>
+                </tr>
+                <tr>
+                    <td><a href="@Url.Action("PharmacyDetails","Patient")">Favorite Pharmacy</td>
+                    <td>@Model.PharmacyCreated</td>
+                    <td>@Model.PharmacyModified</td>
+                    <td>@Model.PharmacyModifiedTime</td>
+                </tr>
+                <tr>
+                    <td><a href="clinic-history.html">Clinical History</a></td>
                     <td>06-Oct-2022</td>
                     <td>12-Feb-2023</td>
                     <td>12:22:03 PM</td>
                 </tr>
                 <tr>
-                    <td><a href="pharma.html">Favorite Pharmacy</td>
-                    <td>06-Oct-2022</td>
-                    <td>12-Feb-2023</td>
-                    <td>12:22:03 PM</td>
-                </tr>
-                <tr>
-                    <td><a href="clinic-history.html">Clinical History</td>
-                    <td>06-Oct-2022</td>
-                    <td>12-Feb-2023</td>
-                    <td>12:22:03 PM</td>
-                </tr>
-                <tr>
-                    <td><a href="vital-signs.html">My Vital Signs</td>
-                    <td>06-Oct-2022</td>
-                    <td>12-Feb-2023</td>
-                    <td>12:22:03 PM</td>
+                    <td><a href="@Url.Action("VitalSign","Patient")">My Vital Signs</a></td>
+                    <td>@Model.VitalCreated</td>
+                    <td>@Model.VitalModified</td>
+                    <td>@Model.VitalModifiedTime</td>
                 </tr>
                 <tr>
                     <td><a href="@Url.Action("ObservationDetails","Patient")">My Health Diary</td>

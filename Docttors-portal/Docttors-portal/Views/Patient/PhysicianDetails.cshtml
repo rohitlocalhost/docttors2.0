@@ -147,7 +147,6 @@
                                             <a title="Click here to Edit" class="divclose" href="@Url.Action("LoadPhysicianDetails", "Patient", new {@patientPhysicianId=item.PatientPhysicianId})">
                                                 <i class="bx bxs-edit float-end"></i>
                                             </a>
-                                            @* @Html.ActionLink("Index", "Home", new { id = item.PatientPhysicianId },new { @id = "Delete", @class = "element", @data_toggle = "modal", @data_target = "#exampleModalCenter", @data_id = item.PatientPhysicianId })*@
                                         </span>
                                     </div>
                                 </div>
@@ -233,21 +232,6 @@
                 $("#disabledAll select").prop('disabled', false);
             }
         }
-                //$('#Delete').click(function () {
-                //    $("#exampleModalCenter").modal('show');
-                //});
-                //$('.btnClose').click(function () {
-                //    $("#exampleModalCenter").modal('hide');
-                //});
-                //$('#finalDelete').click(function () {
-                //    $.ajax({
-                //        url: ,
-                //        type: 'DELETE',
-                //        data: {patientPhysicianId: 4},
-                //        success: function (result) {
-                //        }
-                //    });
-                // });
     </script>
 }
 

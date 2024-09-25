@@ -1,0 +1,113 @@
+﻿@model Docttors_portal.Common.Models.PatientMedicationModel
+@{
+    ViewBag.Title = "MedicationDetails";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<div id="wrapper" class="card">
+    <div class="card-header" style="background-color: #1434A4;">
+        <h1 class="card-title" style="color: #fff;">Current Medications</h1>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("MedicationDetails", "Patient", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.PatientMedicationId)
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title" style="color: #1434A4;">
+                        List all current medications you are taking (prescription & non-prescription)
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.CurrentMedication, new { @id = "IsPrimary" })
+                                @Html.LabelFor(m => m.CurrentMedication)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-4">
+                            @Html.LabelFor(m => m.MedicationName)
+                            <span class="mandatory">*</span>
+                            @Html.TextBoxFor(m => m.MedicationName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MedicationName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(m => m.Dosage)
+                            <span class="mandatory">*</span>
+                            @Html.TextBoxFor(m => m.Dosage, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Dosage, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(m => m.Frequency)
+                            @Html.TextBoxFor(m => m.Frequency, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(m => m.PrescibedPhysician)
+                            @Html.TextBoxFor(m => m.PrescibedPhysician, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(m => m.Prescription)
+                            @Html.TextBoxFor(m => m.Prescription, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(m => m.DateOfPrescription)
+                            @Html.TextBoxFor(model => model.DateOfPrescription, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(m => m.ReasonforPrescription)
+                            @Html.TextBoxFor(m => m.ReasonforPrescription, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row g-3 mt-1 mb-1 d-print-none justify-content-lg-end">
+                <div class="col-md-4"></div>
+                <div class="col-md-3">
+                    <a href="Javascript:void(0)" class="btn btn-rounded btn-secondary btn-wave"><i class="fa fa-print" aria-hidden="true"></i>Print This Page</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="@Url.Action("MyHealthRecord")" class="btn btn-rounded btn-warning btn-wave"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-rounded btn-success btn-wave"><i class="fas fa-save"></i> Save</button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                @foreach (var item in Model.MedicationList)
+                {
+                <div class="col-md-4 pe-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <span style="float: right">
+                                <a href="@Url.Action("LoadMedicalDetails", "Patient", new {@patientMedicationId=item.PatientMedicationId})"><span class="fa fa-pencil">&nbsp;</span></a>
+                                <a href="@Url.Action("DeleteMedicalDetails", "Patient", new {@patientMedicationId=item.PatientMedicationId})"><span class="fa fa-trash-o fa">&nbsp;</span></a>
+                            </span><strong>Medication Name:</strong>@item.MedicationName
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                <strong>Dosage in MG:</strong>@item.Dosage<br>
+                                <strong>Frequency:</strong>@item.Frequency<br>
+                                <strong>Prescription:</strong>@item.Prescription<br>
+                                <strong>Date:</strong>@item.DateOfPrescription<br>
+                                <strong>Physician Prescribed:</strong>@item.PrescibedPhysician<br>
+                                <strong>Current Medication:</strong>@item.CurrentMedication<br>
+                                <strong>Reason for Prescription:</strong>@item.ReasonforPrescription
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                }
+
+            </div>
+        }
+    </div>
+</div>
+
