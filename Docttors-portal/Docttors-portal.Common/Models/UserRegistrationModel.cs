@@ -5,6 +5,7 @@ namespace Docttors_portal.Common.Models
 {
     public class UserRegistrationModel
     {
+        public int UserID { get; set; }
         public int DoctorId { get; set; }
         [Required(ErrorMessage ="FirstName is required")]
         public string FirstName { get; set; }
@@ -54,6 +55,7 @@ namespace Docttors_portal.Common.Models
         [Range(typeof(bool), "true", "true", ErrorMessage = "You must accepted terms")]
         public bool TermsAndConditions { get; set; }
         public bool IsDoctor { get; set; }
+        public int UserRoleID { get; set; }
         public List<NameIdModel> StateList { get; set; }
         public List<NameIdModel> AllInsaurance { get; set; }
         public List<NameIdModel> AllSpecialty { get; set; }

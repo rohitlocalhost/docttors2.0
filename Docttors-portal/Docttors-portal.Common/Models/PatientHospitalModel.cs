@@ -11,6 +11,7 @@ namespace Docttors_portal.Common.Models
         [Required(ErrorMessage = "Hospital Name is required")]
         public string HospitalName { get; set; }
         public string Phone { get; set; }
+        [Display(Name = "Address")]
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public bool IsNone { get; set; }
@@ -22,6 +23,7 @@ namespace Docttors_portal.Common.Models
         [Display(Name = "Reason For Visit")]
         public string ReasonForVisit { get; set; }
         public List<NameIdModel> StateList { get; set; }
+        public List<PatientHospitalModel> HospitalList { get; set; }
 
     }
 }

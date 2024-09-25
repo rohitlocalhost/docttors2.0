@@ -7,8 +7,10 @@ namespace Docttors_portal.Common.Models
     {
         public int PatientPharmacyId { get; set; }
         public int UserId { get; set; }
+        [Required(ErrorMessage ="Pharmacy Name is Required")]
         public string Name { get; set; }
         public string Phone { get; set; }
+        [Display(Name ="Address")]
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public bool IsNone { get; set; }
@@ -20,5 +22,7 @@ namespace Docttors_portal.Common.Models
         [Display(Name = "Zip Code")]
         public string ZipCode { get; set; }
         public List<NameIdModel> StateList { get; set; }
+        public List<PatientPharmacyModel> AllPharmacyData { get; set; }
+
     }
 }

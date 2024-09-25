@@ -35,6 +35,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,21 +47,27 @@
     <Compile Include="Class1.cs" />
     <Compile Include="CommonFunctions.cs" />
     <Compile Include="Enum.cs" />
+    <Compile Include="LoggedInUserDetails.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\NameIdModel.cs" />
+    <Compile Include="Models\PatientEmergencyModel.cs" />
     <Compile Include="Models\PatientAllergiesModel.cs" />
     <Compile Include="Models\PatientHospitalModel.cs" />
     <Compile Include="Models\PatientInsuranceModel.cs" />
+    <Compile Include="Models\PatientObservationModel.cs" />
     <Compile Include="Models\PatientMedicationModel.cs" />
     <Compile Include="Models\PatientPersonalModel.cs" />
     <Compile Include="Models\PatientPharmacyModel.cs" />
     <Compile Include="Models\PatientPhysicianModel.cs" />
     <Compile Include="Models\PatientSearchDoctorModel.cs" />
     <Compile Include="Models\PatientSearchModel.cs" />
+    <Compile Include="Models\patientVitalModel.cs" />
     <Compile Include="Models\UserRegistrationModel.cs" />
     <Compile Include="procedureModels\GetDoctorPatients.cs" />
     <Compile Include="procedureModels\GetDoctorsByPatients.cs" />
+    <Compile Include="procedureModels\GetMHRDataInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionVariables.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

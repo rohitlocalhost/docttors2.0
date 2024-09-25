@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Docttors_portal.Common.Models
@@ -12,5 +13,7 @@ namespace Docttors_portal.Common.Models
         public string AllergyName { get; set; }
         public string Reaction { get; set; }
         public bool IsNone { get; set; }
+
+        public List<PatientAllergiesModel> AllergyList { get; set; }
     }
 }

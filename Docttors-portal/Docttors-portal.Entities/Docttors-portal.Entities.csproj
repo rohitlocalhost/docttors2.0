@@ -53,13 +53,17 @@
     <Compile Include="Classes\BaseClass.cs" />
     <Compile Include="Classes\Country.cs" />
     <Compile Include="Classes\DoctorSpecialty.cs" />
+    <Compile Include="Classes\ErrorLog.cs" />
+    <Compile Include="Classes\PatientEmergencyNew.cs" />
     <Compile Include="Classes\PatientAllergiesNew.cs" />
     <Compile Include="Classes\PatientHospitalDetailsNew.cs" />
     <Compile Include="Classes\PatientInsuranceNew.cs" />
+    <Compile Include="Classes\PatientObservationNew.cs" />
     <Compile Include="Classes\PatientMedicationDetailsNew.cs" />
     <Compile Include="Classes\PatientPharmacyDetailsNew.cs" />
     <Compile Include="Classes\PatientPhysicianDetailsNew.cs" />
     <Compile Include="Classes\PatientPersonalNew.cs" />
+    <Compile Include="Classes\PatientVitalsNew.cs" />
     <Compile Include="Classes\Role.cs" />
     <Compile Include="Classes\SpecialistInsurance.cs" />
     <Compile Include="Classes\SpecialistTypes.cs" />

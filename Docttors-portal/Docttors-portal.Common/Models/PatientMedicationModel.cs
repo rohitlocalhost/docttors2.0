@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Docttors_portal.Common.Models
@@ -11,6 +12,7 @@ namespace Docttors_portal.Common.Models
         [Required(ErrorMessage = "Medication Name is required")]
         public string MedicationName { get; set; }
         [Display(Name = "Dosage in MG")]
+        [Required(ErrorMessage = "Dosage is required")]
         public string Dosage { get; set; }
         public string Frequency { get; set; }
         [Display(Name = "Physician Prescribed")]
@@ -23,6 +25,7 @@ namespace Docttors_portal.Common.Models
         public bool CurrentMedication { get; set; }
         public bool IsNone { get; set; }
         [Display(Name = "Date of Prescription")]
-        public DateTime DateOfPrescription { get; set; }
+        public string DateOfPrescription { get; set; }
+        public List<PatientMedicationModel> MedicationList { get; set; }
     }
 }

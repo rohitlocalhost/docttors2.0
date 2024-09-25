@@ -1,5 +1,6 @@
 ﻿using Docttors_portal.Common;
 using Docttors_portal.Common.Models;
+using Docttors_portal.Entities.Classes;
 using Docttors_portal.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Docttors_portal.Controllers
     {
         #region Initialize
         private readonly IUserLogOnService _userLoginService;
+        private LoggedInUserDetails _LoggedDetail = new LoggedInUserDetails();
         #endregion
 
         public LoginController(IUserLogOnService userLoginService)
@@ -36,10 +38,7 @@ namespace Docttors_portal.Controllers
                 if (loginId > 0)
                 {
                     var userDetails = _userLoginService.GetUserDetailsByUserId(loginId);
-                    //RedirectToAction("Index", "Patient");
-                    Session["UserName"] = userDetails.EmailId;
-                    Session["UserId"] = loginId;
-                    Session["UserRole"] = userDetails.UserRoleId;
+                    SetSessionOfUser(userDetails, objUserLogOnModel);
                     ViewBag.Message = string.Empty;
                     if (userDetails.UserRoleId == (int)RoleEnum.Patient)
                     {
@@ -124,6 +123,35 @@ namespace Docttors_portal.Controllers
             catch
             {
                 return View();
+            }
+        }
+
+        private void SetSessionOfUser(AppUser user, UserLogOnModel objUserLogOnModel)
+        {
+            UserRegistrationModel objUserRegistrationModel = new UserRegistrationModel();
+            if (user != null)
+            {
+                objUserRegistrationModel.UserID = user.Id;
+                objUserRegistrationModel.FirstName = user.FirstName;
+                objUserRegistrationModel.LastName = user.LastName;
+                objUserRegistrationModel.UserRoleID = user.UserRoleId;
+                objUserRegistrationModel.EmailAddress = user.EmailId;
+            }
+            if (objUserLogOnModel != null)
+                ManageLoggedInUserSession(objUserRegistrationModel, objUserLogOnModel.KeepMeLoggedIn);
+        }
+        private void ManageLoggedInUserSession(UserRegistrationModel objUserRegistrationModel, bool keepMeLoggedIn)
+        {
+            if (objUserRegistrationModel != null)
+            {
+                _LoggedDetail.UserId = objUserRegistrationModel.UserID;
+                _LoggedDetail.Email = objUserRegistrationModel.EmailAddress;
+                _LoggedDetail.FirstName = objUserRegistrationModel.FirstName;
+                _LoggedDetail.LastName = objUserRegistrationModel.LastName;
+                _LoggedDetail.UserRoleID = objUserRegistrationModel.UserRoleID;
+                //_LoggedDetail.KeepMeLoggedIn = keepMeLoggedIn;
+                SessionVariables.LoggedInUser = _LoggedDetail;
+                Session.Timeout = 60;
             }
         }
     }

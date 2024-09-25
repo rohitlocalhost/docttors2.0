@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Docttors-portal/Docttors-portal.DependencyResolution/bin/Release
+/Docttors-portal/Docttors-portal.Entities/bin/Release
+/Docttors-portal/Docttors-portal.Services/bin/Release
+/Docttors-portal/Docttors-portal.Services/obj/Release
+/Docttors-portal/Docttors-portal.Entities/obj/Release
+/Docttors-portal/Docttors-portal.DependencyResolution/obj/Release/Docttors-portal.DependencyResolution.dll
+/Docttors-portal/Docttors-portal.DependencyResolution/obj/Release/Docttors-portal.DependencyResolution.pdb
+/Docttors-portal/Docttors-portal.DataAccess/bin/Release
+/Docttors-portal/Docttors-portal.DataAccess/obj/Release
+/Docttors-portal/Docttors-portal.Common/bin/Release
+/Docttors-portal/Docttors-portal/obj/Release
+/Docttors-portal/.vs/Docttors-portal/FileContentIndex
+*.bin

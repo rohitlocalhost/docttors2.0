@@ -1,0 +1,168 @@
+﻿@model Docttors_portal.Common.Models.PatientVitalModel
+@{
+    ViewBag.Title = "VitalSign";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+<div class="card">
+    <div class="card-header" style="background-color: #1434A4;">
+        <h1 class="card-title" style="color: #fff;">VITAL SIGNS</h1>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("VitalSign", "Patient", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.PatientVitalId)
+            <div class="card mt-3">
+                <div class="card-header">
+                    <p class="card-title">
+                        The Spot-Check Monitor is a home vital signs collection unit supported
+                        by www.Docttors.com.
+                        If you purchase the spot check unit you can use it at home to monitor and record
+                        Blood Pressure, ECG, Blood Glucose, Temperature, SpO2 and Pulse Rate and upload the observations to your online EHR.
+                    </p>
+                    <ul>
+                        <li>For more information <a href="mailto:info@neighborstelehealth.com" target="_top">Contact us by Email</a> </li>
+                        <li>
+                            If you have a Spot-check <a target="_blank" href="../downloads/SpotcheckInstaller.msi">click here to Download Software</a>
+                        </li>
+                    </ul>
+                    <p>If vital signs are entered manually, Please select "Enter New Vitals" and enter the values and click submit.</p>
+                    <br />
+                    <span>@ViewBag.Message</span>
+                    <span class="mandatory">@ViewBag.Error</span>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Vital Sign Date</label>
+                                <span class="mandatory">*</span>
+                                @Html.DropDownListFor(model => model.PatientVitalId, new SelectList(Model.VitalHistory, "Id", "Name"), new { @class = "form-control", onchange = "SelectionChanged(this.value)" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label row">
+                                <span class="row">
+                                    <span class="col-md-4">Weight</span>
+                                    <span class="col-md-4">
+                                        @*<input class="form-check-input" type="radio" id="wLbs" value="lbs" checked="" name="ctrlWEIGHTUNITS">
+                                            <label class="form-check-label fw-bold">
+                                                lbs
+                                            </label>*@
+                                        @Html.RadioButtonFor(model => model.WeightUnit, true)
+                                        @Html.Label("lbs")
+                                    </span>
+                                    <span class="col-md-4">
+                                        @*<input class="form-check-input" type="radio" id="wKg" value="kg" name="ctrlWEIGHTUNITS">
+                                            <label class="form-check-label fw-bold">
+                                                kg
+                                            </label>*@
+                                        @Html.RadioButtonFor(model => model.WeightUnit, false)
+                                        @Html.Label("kg")
+                                    </span>
+                                    @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Spirometer)
+                            @Html.TextBoxFor(m => m.Spirometer, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Spirometer, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3">
+                            <label for="" class="form-label row">
+                                <span class="col-md-auto pe-2">
+                                    Temperature
+                                </span>
+                                <span class="col-md-auto pe-2">
+                                    <span class="form-check mb-2">
+                                        @*<input class="form-check-input" type="radio" id="tempF" value="f" checked="" name="ctrlTEMPUNITS">
+                                            <label class="form-check-label fw-bold">
+                                                F
+                                            </label>*@
+                                        @Html.RadioButtonFor(model => model.TempratureUnit, true)
+                                        @Html.Label("F")
+                                    </span>
+                                </span>
+                                <span class="col-md-auto">
+                                    <span class="form-check mb-2">
+                                        @*<input class="form-check-input" type="radio" id="tempC" value="c" name="ctrlTEMPUNITS">
+                                            <label class="form-check-label fw-bold">
+                                                C
+                                            </label>*@
+                                        @Html.RadioButtonFor(model => model.TempratureUnit, false)
+                                        @Html.Label("C")
+                                    </span>
+                                    @Html.TextBoxFor(m => m.Temprature, new { @class = "form-control" })
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Spo2)
+                            @Html.TextBoxFor(m => m.Spo2, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Spo2, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(m => m.PulseRate)
+                            @Html.TextBoxFor(m => m.PulseRate, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PulseRate, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Bloodglucose)
+                            @Html.TextBoxFor(m => m.Bloodglucose, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Bloodglucose, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <label for="">Blood Pressure (mmHg)</label>
+                                <div class="row col-md-5 pe-1">
+                                    <span class="col-md-3">
+                                        @Html.LabelFor(m => m.Sys)
+                                    </span>
+                                    <span class="col-md-7">
+                                        @Html.TextBoxFor(m => m.Sys, new { @class = "form-control" })
+                                    </span>
+
+                                </div>
+                                <div class="row col-md-5">
+                                    <span class="col-md-3">
+                                        @Html.LabelFor(m => m.Dia)
+                                    </span>
+                                    <span class="col-md-7">
+                                        @Html.TextBoxFor(m => m.Dia, new { @class = "form-control" })
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 mt-1 mb-1 d-print-none justify-content-lg-end">
+                <div class="col-md-4"></div>
+                <div class="col-md-3">
+                    <a href="Javascript:void(0)" class="btn btn-rounded btn-secondary btn-wave"><i class="fa fa-print" aria-hidden="true"></i>Print This Page</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="@Url.Action("MyHealthRecord")" class="btn btn-rounded btn-warning btn-wave"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-rounded btn-success btn-wave"><i class="fas fa-save"></i> Save</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        function SelectionChanged(currentId) {
+            debugger
+            //var url = '@Html.Raw(Url.Action("LoadVitalSign", "Patient", new { patientVitalId = 1 }))';
+            var url = '/Patient/LoadVitalSign?patientVitalId=' + currentId;
+            window.location = url;
+            //window.location = 'http://localhost:51413/Patient/LoadVitalSign/patientVitalId=' + currentId;
+        }
+    </script>
+}

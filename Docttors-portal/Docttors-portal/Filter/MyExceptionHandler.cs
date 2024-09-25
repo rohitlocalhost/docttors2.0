@@ -11,7 +11,7 @@ namespace Docttors_portal.Filter
     {
         public override void OnException(ExceptionContext filterContext)
         {
-            int userRoleId = Convert.ToInt32(HttpContext.Current.Session["UserRole"]);
+            int userRoleId = SessionVariables.LoggedInUser.UserId;
             if (filterContext.ExceptionHandled || filterContext.HttpContext.IsCustomErrorEnabled)
             {
                 Exception ex = filterContext.Exception;

@@ -17,6 +17,6 @@ namespace Docttors_portal.Entities.Classes
         public string Prescription { get; set; }
         public string ReasonforPrescription { get; set; }
         public bool CurrentMedication { get; set; }
-        public DateTime DateOfPrescription { get; set; }        
+        public DateTime? DateOfPrescription { get; set; }        
     }
 }

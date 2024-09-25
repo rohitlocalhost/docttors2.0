@@ -21,7 +21,7 @@ namespace Docttors_portal.Common.Models
         [DisplayName("Insurance Group ID")]
         [Required(ErrorMessage = "Insurance Group ID is required")]
         public string InsuranceGroupId { get; set; }
-        [DisplayName("Insurance Company Name")]
+        [DisplayName("Insurance Company")]
         [Required(ErrorMessage = "Insurance Company Name is required")]
         public string InsuranceCompanyName { get; set; }  
         public int UserId { get; set; }
