@@ -4,25 +4,23 @@
     Layout = "~/Views/Shared/_PatientLayout.cshtml";
 }
 
-<h2>Search</h2>
-
 <div class="card mt-4">
     <div class="card-header" style="background-color: #1434A4;">
         <ul class="nav nav-pills nav-justified" role="tablist">
             <li class="nav-item waves-effect waves-primary" role="presentation">
-                <a class="nav-link active" data-bs-toggle="tab" href="#home-1" role="tab" aria-selected="true" tabindex="-1">
+                <a class="nav-link active" data-bs-toggle="tab" href="#doctorSearch" role="tab" aria-selected="true" tabindex="-1">
                     <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
                     <span class="d-none d-sm-block"><h6 style="color:#fff;">Find Doctor</h6></span>
                 </a>
             </li>
             <li class="nav-item waves-effect waves-primary" role="presentation">
-                <a class="nav-link" data-bs-toggle="tab" href="#profile-1" role="tab" aria-selected="false" tabindex="-1">
+                <a class="nav-link" data-bs-toggle="tab" href="#hospitalSearch" role="tab" aria-selected="false" tabindex="-1">
                     <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
                     <span class="d-none d-sm-block"><h6 style="color:#fff;">Find Hospital/Clinic</h6></span>
                 </a>
             </li>
             <li class="nav-item waves-effect waves-primary" role="presentation">
-                <a class="nav-link" data-bs-toggle="tab" href="#messages-1" role="tab" aria-selected="false" tabindex="-1">
+                <a class="nav-link" data-bs-toggle="tab" href="#insuranceSearch" role="tab" aria-selected="false" tabindex="-1">
                     <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
                     <span class="d-none d-sm-block"><h6 style="color:#fff;">Find Insurance</h6></span>
                 </a>
@@ -32,18 +30,19 @@
     <!-- end card header -->
 
     <div class="card-body">
-        <div class="tab-content p-3 text-muted">
-            <div class="tab-pane active" id="home-1" role="tabpanel">
+        <div id="searchTab" class="tab-content p-3 text-muted">
+            <div class="tab-pane active" id="doctorSearch" role="tabpanel">
                 <p>“Find Provider” is a HIPAA compliant physician directory that allows patients to locate their physician or search for new ones.</p>
                 <div>
                     <h5 class="card-title mt-2 mb-4">Search by Basic Info</h5>
                     @using (Html.BeginForm("SearchDoctor", "Patient", FormMethod.Post))
                     {
+                        //@Html.HiddenFor(x => x.StateId)
                         <input type="hidden">
                         <div class="row g-3">
                             <div class="col-md-4">
                                 <label for="">First Name</label>
-                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", })
                             </div>
                             <div class="col-md-4">
                                 <label for="">Last Name</label>
@@ -85,7 +84,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane" id="profile-1" role="tabpanel">
+            <div class="tab-pane" id="hospitalSearch" role="tabpanel">
                 <p>“Find Hospital/Clinic” feature allows patients to view hospital/clinic profiles.</p>
                 @using (Html.BeginForm("SearchHospital", "Patient", FormMethod.Post))
                 {
@@ -95,11 +94,6 @@
                                 @Html.LabelFor(m => m.StateId)
                                 @Html.DropDownListFor(model => model.StateId, new SelectList(Model.StateList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <select class="form-select">
-                                <option>Doctor</option>
-                            </select>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
@@ -114,7 +108,7 @@
                 }
             </div>
 
-            <div class="tab-pane" id="messages-1" role="tabpanel">
+            <div class="tab-pane" id="insuranceSearch" role="tabpanel">
                 <p>“Find Insurance” feature allows patients to go into health insurance company websites, like Aetna, Cigna etc.</p>
                 @using (Html.BeginForm("SearchInsurance", "Patient", FormMethod.Post))
                 {
@@ -132,3 +126,163 @@
         </div>
     </div>
 </div>
+<div id="searchResult">
+    @if (Model.SearchCount > 0)
+    {
+        <div class="row mt-2">
+            <h5>
+                <span> Total @Model.SearchCount Record(s) found!</span>
+            </h5>
+        </div>
+        foreach (var item in Model.DoctorsList)
+        {
+            <div class="card">
+                <div class="card-header d-flex justify-content-between text-white" style="background-color: #1434A4;">
+                    <div class="col-lg-auto">
+                        <h3 class="card-title">
+                            <a class="text-white" target="_blank" href="#">
+                                @item.Name , @item.City
+                            </a>
+                        </h3>
+                    </div>
+                    <div class="col-lg-auto">
+                        @if (item.FavoriteDoctorId > 0)
+                        {
+                            <span class="clschkIsPrimaryDoctor">@Html.CheckBoxFor(m => item.IsprimaryDoctor, new { id = item.FavoriteDoctorId, @class = "toggle"})<label> Is Primary Doctor</label></span>
+                        }
+                    </div>
+                    @if (item.FavoriteDoctorId == 0)
+                    {
+                        <a title="your doctor has been added to your list of favorites" href="@Url.Action("AddFavouriteDoctor", "Patient", new { doctorId = item.UserId })" class="btn btn-danger"><span class="fa fa-plus fav"></span></a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-danger pull-right" title="Remove from favorite" href="@Url.Action("RemoveFavouriteDoctor", "Patient", new { favouriteId = item.FavoriteDoctorId,isFromSearchpage=true })"><span class="fa fa-minus fav"></span></a>
+                    }
+                </div>
+                <div class="card-body d-lg-flex justify-content-around">
+                    <div class="col-lg-3">
+                        @if (string.IsNullOrEmpty(item.ProfilePic))
+                        {
+                            <img src="../assets/images/doctor.jpg" style="border-width:0px;max-width: 100px; max-height: 100px; width: 100%; height: 100%;">
+                        }
+                        else
+                        {
+                            <img src="../images/doctor.jpg" style="border-width:0px;max-width: 100px; max-height: 100px; width: 100%; height: 100%;">
+                        }
+                    </div>
+                    <div class="col-lg-7">
+                        <ul>
+                            <li><strong>Address:</strong>@item.Address</li>
+                            <li><strong>Phone:</strong>@item.Phone</li>
+                            <li><strong>Email:</strong><a href="mailto:@item.EmailAddress">@item.EmailAddress</a></li>
+                            <li class="spec_text"><strong>Specialty:</strong>@item.SpecialtyName</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row col-12 col-sm-12 col-md-12 mt-4">
+            @foreach (var item in Model.HospitalData)
+            {
+                <div class="card col-lg-6" ng-repeat="hos in hospitalsearchlist">
+                    <div class="card-header">
+                        <h5>
+                            @item.HospitalName
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <p>
+                                    <b>City :</b>@item.City<br>
+                                    <b>Zip :</b>@item.ZIP
+                                </p>
+                            </div>
+                            <div class="col-lg-7">
+                                <p>
+                                    <b>Phone :</b>@item.PhoneNumber
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p>
+                                <b>Address :</b>@item.Address
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row col-lg-12">
+            @foreach (var item in Model.InsuranceList)
+            {
+                <div class="col-lg-4 pe-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <table style="width: 100%; margin: 0px">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>Company Name and Plan: </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @item.CompanyName<br>@item.PlanType
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <a href="@item.URL" target="_blank">Visit Website</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('.nav-pills li a').removeClass('active');
+            $('#searchTab div').removeClass('active');
+            if (@Model.DoctorsList.Count > 0) {
+                $('.nav-pills li a[href="#doctorSearch"]').addClass('active');
+                $('#doctorSearch').addClass('active');
+            }
+            else if (@Model.HospitalData.Count > 0) {
+                $('.nav-pills li a[href="#hospitalSearch"]').addClass('active');
+                $('#hospitalSearch').addClass('active');
+            }
+            else if (@Model.InsuranceList.Count > 0) {
+                $('.nav-pills li a[href="#insuranceSearch"]').addClass('active');
+                $('#insuranceSearch').addClass('active');
+            } else {
+                $('.nav-pills li a[href="#doctorSearch"]').addClass('active');
+                $('#doctorSearch').addClass('active');
+            }
+        })
+        $('.nav-link').click(function () {
+            $('#searchResult').css('display','none');
+        })
+        $(function () {
+            $('.toggle').change(function () {
+                var self = $(this);
+                var url = '/Patient/UpdatePrimaryDoctor';
+                var id = self.attr('id');
+                var value = self.prop('checked');
+                $.ajax({
+                    url: url,
+                    data: { favouriteId: id, isprimary: value },
+                    type: 'POST',
+                    success: function (response) {
+                        //alert(response);
+                    }
+                });
+            });
+        });
+    </script>
+}

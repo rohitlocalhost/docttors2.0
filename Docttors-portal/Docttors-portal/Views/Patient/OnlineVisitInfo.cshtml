@@ -1,0 +1,1393 @@
+﻿@model Docttors_portal.Common.Models.MyProvider
+@{
+    ViewBag.Title = "OnlineVisitInfo";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<h2>OnlineVisitInfo</h2>
+<style>
+    .mr-6 {
+        margin: 0 0 0 16px;
+    }
+</style>
+<div class="card">
+    <div class="card-body">
+        <!-- Nav tabs -->
+        <ul id="tabList" class="nav nav-pills nav-justified border" role="tablist">
+            <li class="nav-item waves-effect waves-light" role="presentation">
+                <a class="nav-link active" data-bs-toggle="tab" href="#step-1" role="tab" aria-selected="true" tabindex="-1">
+                    Personal
+                </a>
+            </li>
+            <li class="nav-item waves-effect waves-light" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#step-2" role="tab" aria-selected="false" tabindex="-1">
+                    Complaint
+                </a>
+            </li>
+            <li class="nav-item waves-effect waves-light" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#step-3" role="tab" aria-selected="false" tabindex="-1">
+                    Condition
+                </a>
+            </li>
+            <li class="nav-item waves-effect waves-light" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#step-4" role="tab" aria-selected="false" tabindex="-1">
+                    Symptoms
+                </a>
+            </li>
+            <li class="nav-item waves-effect waves-light" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#step-5" role="tab" aria-selected="false" tabindex="-1">
+                    Video
+                </a>
+            </li>
+            <li class="nav-item waves-effect waves-light" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#step-6" role="tab" aria-selected="false" tabindex="-1">
+                    Payment
+                </a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content p-3 text-muted mt-5">
+            <div class="tab-pane active show" id="step-1" role="tabpanel">
+                <div class="card-body">
+                    @using (Html.BeginForm("OnlineVisitInfo", "Patient", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        <div class="card">
+                            <div class="card-header border-primary d-flex justify-content-between">
+                                <h3 class="card-title" style="color: #1434A4;">Personal Details</h3>
+                                <a href="/Patient/PersonalDetails">Update</a>
+                            </div>
+                            <div class="card-body d-lg-flex">
+                                <div class="col-lg-6">
+                                    <p><b>Name: </b><span id="ctl00_ContentPlaceHolder1_spnName">@Model.PersonalTab.PatientPersonalModel.FirstName  @Model.PersonalTab.PatientPersonalModel.LastName</span></p>
+                                    <p><b>Date of Birth: </b><span id="ctl00_ContentPlaceHolder1_spnDob">@Model.PersonalTab.PatientPersonalModel.DOB</span></p>
+                                    <p><b>Gender: </b><span id="ctl00_ContentPlaceHolder1_spnGender">@Model.PersonalTab.PatientPersonalModel.GenderList.FirstOrDefault(x => x.Id == Model.PersonalTab.PatientPersonalModel.GenderId).Name</span></p>
+                                    <p><b>Height: </b><span id="ctl00_ContentPlaceHolder1_spnHeight">@Model.PersonalTab.PatientPersonalModel.HeightList.FirstOrDefault(x => x.Id == Model.PersonalTab.PatientPersonalModel.HeightId).Name</span></p>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <p><b>Address: </b><span id="ctl00_ContentPlaceHolder1_spnAddress">@Model.PersonalTab.PatientPersonalModel.City, @Model.PersonalTab.PatientPersonalModel.Address (@Model.PersonalTab.PatientPersonalModel.ZipCode)</span></p>
+                                    <p><b>E-mail: </b><span id="ctl00_ContentPlaceHolder1_spnEmail">@Model.PersonalTab.PatientPersonalModel.EmailId</span></p>
+                                    <p><b>Cellphone: </b><span id="ctl00_ContentPlaceHolder1_spnCellPhone">@Model.PersonalTab.PatientPersonalModel.ContactNo</span></p>
+                                    <p><b>Weight: </b><span id="ctl00_ContentPlaceHolder1_spnWeight">@Model.PersonalTab.PatientPersonalModel.Weight</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header border-primary d-flex justify-content-between">
+                                <h3 class="card-title" style="color: #1434A4;">Insurance Details</h3>
+                                <a href="/Patient/Insurance">Update</a>
+                            </div>
+                            <div class="card-body d-lg-flex">
+                                <div class="col-lg-6">
+                                    <p><b>Name Of Insured: </b><span>@Model.PersonalTab.PatientInsuranceModel.NameOfInsured</span></p>
+                                    <p><b>Insurance Plan Number: </b><span>@Model.PersonalTab.PatientInsuranceModel.InsuranceIdNumber</span></p>
+                                    <p><b>Insurance Company: </b><span>@Model.PersonalTab.PatientInsuranceModel.InsuranceCompanyName</span></p>
+                                </div>
+                                <div class="col-lg-6">
+                                    <p><b>Relation Of Patient: </b><span>@Model.PersonalTab.PatientInsuranceModel.RelationshipToPatient</span></p>
+                                    <p><b>Insurance Group ID: </b><span>@Model.PersonalTab.PatientInsuranceModel.InsuranceGroupId</span></p>
+                                    <p><b>Insurance Phone Number: </b><span>@Model.PersonalTab.PatientInsuranceModel.InsuranceCompanyPhone</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header border-primary d-flex justify-content-between">
+                                <h3 class="card-title" style="color: #1434A4;">Medication History</h3>
+                                <a href="/Patient/MedicationDetails">Update</a>
+                            </div>
+                            <div class="card-body d-lg-flex">
+                                <div class="row col-md-12">
+                                    @foreach (var item in Model.PersonalTab.patientMedicationList)
+                                    {
+                                        <div class="col-lg-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <span style="float: right"></span><strong>Medication Name:&nbsp;&nbsp;</strong>@item.MedicationName
+                                                </div>
+                                                <div class="card-body">
+                                                    <p>
+                                                        <strong>Dosage in MG:&nbsp;&nbsp;</strong>@item.Dosage<br>
+                                                        <strong>Frequency:&nbsp;&nbsp;</strong>@item.Frequency<br>
+                                                        <strong>Prescription:&nbsp;&nbsp;</strong>@item.Prescription<br>
+                                                        <strong>Date:&nbsp;&nbsp;</strong>@item.DateOfPrescription<br>
+                                                        <strong>Physician Prescribed:&nbsp;&nbsp;@item.PrescibedPhysician</strong><br>
+                                                        <strong>Current Medication:&nbsp;&nbsp;</strong>@(item.CurrentMedication ? "yes" : "No") <br>
+                                                        <strong>Reason for Prescription:&nbsp;&nbsp;</strong>@item.ReasonforPrescription
+
+                                                    </p><div class="clearfix">
+                                                    </div>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header border-primary d-flex justify-content-between">
+                                <h3 class="card-title" style="color: #1434A4;">Clinical History</h3>
+                                <a href="/Patient/PatientClinicalHistory">Update</a>
+                            </div>
+                            <div class="card-body d-lg-flex" id="clinicalHistory">
+                                <div class="row col-md-12">
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Diagnosis</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.allChronicConditions)
+                                                {
+                                                    if (item.IsChecked)
+                                                    {
+                                                        @item.Name <span class="greytext">: <font color="red"> Yes </font><br></span>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Social History</h5></div>
+                                            <div class="card-body">
+                                                Cancer <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientClinicalHistoryModel.IsCancer > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoSelectionList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientClinicalHistoryModel.IsCancer).Name : "") </font><br></span>
+                                                Diabetes <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientClinicalHistoryModel.IsDiabetes > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoSelectionList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientClinicalHistoryModel.IsDiabetes).Name : "") </font><br></span>
+                                                High BP <span class="greytext">: <font color="red"> @(Model.PersonalTab.patientClinicalViewModel.patientClinicalHistoryModel.IsBloodPressure > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoSelectionList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientClinicalHistoryModel.IsBloodPressure).Name : "")</font><br></span>
+                                                Heart Disease <span class="greytext">: <font color="red"> @(Model.PersonalTab.patientClinicalViewModel.patientClinicalHistoryModel.IsHeartDisease > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoSelectionList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientClinicalHistoryModel.IsHeartDisease).Name : "")</font><br></span>
+                                                Alcohol Abuse <span class="greytext">: <font color="red"> @(Model.PersonalTab.patientClinicalViewModel.patientClinicalHistoryModel.IsAlcoholAbuse > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoSelectionList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientClinicalHistoryModel.IsAlcoholAbuse).Name : "")</font><br></span>
+                                                Drug Abuse <span class="greytext">: <font color="red"> @(Model.PersonalTab.patientClinicalViewModel.patientClinicalHistoryModel.IsDrugAbuse > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoSelectionList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientClinicalHistoryModel.IsDrugAbuse).Name : "")</font><br></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Family History</h5></div>
+                                            <div class="card-body">
+                                                Smoke <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientSocialHisotryModel.IsSmoke > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoSelectionList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientSocialHisotryModel.IsSmoke).Name : "") </font><br></span>
+                                                Drug <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientSocialHisotryModel.IsDrugs > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoSelectionList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientSocialHisotryModel.IsDrugs).Name : "") </font><br></span>
+                                                Alcohal <span class="greytext">: <font color="red"> @(Model.PersonalTab.patientClinicalViewModel.patientSocialHisotryModel.IsAlcohol > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoSelectionList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientSocialHisotryModel.IsAlcohol).Name : "")</font><br></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Surgucal History</h5></div>
+                                            <div class="card-body">
+                                                Tonsils <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsTonsils > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoDontKnowList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsTonsils).Name : "") </font><br></span>
+                                                Appendix <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsAppendix > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoDontKnowList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsAppendix).Name : "") </font><br></span>
+                                                Gallbladder <span class="greytext">: <font color="red"> @(Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsGallbladder > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoDontKnowList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsGallbladder).Name : "")</font><br></span>
+                                                Stent <span class="greytext">: <font color="red"> @(Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsStent > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoDontKnowList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsStent).Name : "")</font><br></span>
+                                                Heart ByPass <span class="greytext">: <font color="red"> @(Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsHeartByPass > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoDontKnowList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsHeartByPass).Name : "")</font><br></span>
+                                                Hysterectomy <span class="greytext">: <font color="red"> @(Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsHysterectomy > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoDontKnowList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsHysterectomy).Name : "")</font><br></span>
+                                                Cataracts <span class="greytext">: <font color="red"> @(Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsCataracts > 0 ? @Model.PersonalTab.patientClinicalViewModel.YesNoDontKnowList.FirstOrDefault(x => x.Id == Model.PersonalTab.patientClinicalViewModel.patientSurgicalHistoryModel.IsCataracts).Name : "")</font><br></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>General</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.GeneralConditionList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.GeneralCondition == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Endocrine</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.EndocrineorDiabetesList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.Diabetes == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Gastrointestinal</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.StomachList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.Stomach == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Genitourinary</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.UrinaryList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.Urinary == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Neurological</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.NeurologicalList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.Neurological == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Cardiovascular</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.CardiovascularList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.Cardiovascular == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Respiratory</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.RespiratoryList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.Respiratory == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Eyes</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.EyesList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.Eyes == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Ear</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.EarList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.Ear == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>OB/Gyn</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.ObOrGynList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.ObOrGyn == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Musculoskeletal</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.MusclesOrJointsList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.MusclesOrJoints == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Skin</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.SkinList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.Skin == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Hematology/Lymphatic</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.CancerOrHematologyList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.Hematology == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Dental</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.DentalList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.Dental == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-header"><h5>Psychologic</h5></div>
+                                            <div class="card-body">
+                                                @foreach (var item in Model.PersonalTab.patientClinicalViewModel.PsychologicalList)
+                                                {
+                                                    @item.Name <span class="greytext">: <font color="red">@(Model.PersonalTab.patientClinicalViewModel.patientReviewOfSystemModel.Psychological == item.Id ? "Yes" : "No") </font><br></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header border-primary d-flex justify-content-between">
+                                <h3 class="card-title" style="color: #1434A4;">Allergy Information</h3>
+                                <a href="/Patient/PatientAllergies">Update</a>
+                            </div>
+                            <div class="card-body d-lg-flex">
+                                <div class="row col-md-12">
+                                    @foreach (var item in Model.PersonalTab.AllergyList)
+                                    {
+                                        <div class="col-lg-3">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h2 class="card-title">
+                                                        <strong>Allergy Name: &nbsp;</strong>@item.AllergyName
+                                                    </h2>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p>
+                                                        <strong>Allergy Reaction:</strong> &nbsp;@item.Reaction
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            @Html.CheckBoxFor(m => m.PersonalTab.TermAndCondition)
+                            <span id="ctl00_ContentPlaceHolder1_stateSpan">  I will update my Personal Health Record before seeking online visit.</span><br />
+                            @Html.ValidationMessageFor(x => x.PersonalTab.TermAndCondition, "", new { @class = "text-danger mr-6" })
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-9"></div>
+                            <div class="col-lg-auto">
+                                <input type="submit" value="Save &amp; Next" class="btn btn-success">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane" id="step-2" role="tabpanel">
+                <div class="card-body">
+                    @using (Html.BeginForm("OnlineVisitStep2", "Patient", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(x => x.ComplaintTab.Step1Id);
+                        @Html.HiddenFor(x => x.ComplaintTab.DoctorId);
+                        <div class="col-lg-auto mb-4">
+                            <label class="form-label">
+                                1
+                            </label>
+                            What is your Chief Complaint or the Reason for Online Visit?&nbsp;
+                            <div class="fom-control">
+                                @Html.TextAreaFor(x => x.ComplaintTab.A1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.ComplaintTab.A1, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-auto mb-4">
+                            <label class="form-label">
+                                2
+                            </label>
+                            How many days have you been feeling this way?
+                            <div id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl01_pnlTxt" class="fom-control">
+                                @Html.TextAreaFor(x => x.ComplaintTab.A2, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-auto mb-4">
+                            <label class="form-label">
+                                3
+                            </label>
+                            Do you consider this to be mild, moderate or severe?
+                            <div class="fom-control">
+                                <table cellspacing="5" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.ComplaintTab.ComplainTypeList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.ComplaintTab.A3, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-auto mb-4">
+                            <label class="form-label">
+                                4
+                            </label>
+                            What do you think might have caused this condition?
+                            <div id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl03_pnlTxt" class="fom-control">
+                                @Html.TextAreaFor(x => x.ComplaintTab.A4, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-auto mb-4">
+                            <label class="form-label">
+                                5
+                            </label>
+                            List current prescription or nonprescription treatments you have used for the condition?
+                            <div id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl04_pnlTxt" class="fom-control">
+                                @Html.TextAreaFor(x => x.ComplaintTab.A5, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="row col-lg-auto mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label">
+                                    6
+                                </label>
+                                How is your Blood Pressure?
+                                <div class="fom-control">
+                                    <table cellspacing="5" border="0">
+                                        <tbody>
+                                            <tr>
+                                                @foreach (var item in Model.ComplaintTab.BloodPressureList)
+                                                {
+                                                    <td>
+                                                        @Html.RadioButtonFor(model => model.ComplaintTab.A6, item.Id)
+                                                        @Html.Label(item.Name)
+                                                    </td>
+                                                }
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">
+                                    7
+                                </label>
+                                How is your Breathing?
+                                <div class="fom-control">
+                                    <table cellspacing="5" border="0">
+                                        <tbody>
+                                            <tr>
+                                                @foreach (var item in Model.ComplaintTab.BreathingList)
+                                                {
+                                                    <td>
+                                                        @Html.RadioButtonFor(model => model.ComplaintTab.A7, item.Id)
+                                                        @Html.Label(item.Name)
+                                                    </td>
+                                                }
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">
+                                    8
+                                </label>
+                                How is your Weight?
+                                <div class="fom-control">
+                                    <table cellspacing="5" border="0">
+                                        <tbody>
+                                            <tr>
+                                                @foreach (var item in Model.ComplaintTab.WeightList)
+                                                {
+                                                    <td>
+                                                        @Html.RadioButtonFor(model => model.ComplaintTab.A8, item.Id)
+                                                        @Html.Label(item.Name)
+                                                    </td>
+                                                }
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-lg-auto mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    9
+                                </label>
+                                Approximate date of your last visit to doctor/clinic/ER?
+                                <div class="leftme input-group input-append date">
+                                    @Html.TextBoxFor(x => x.ComplaintTab.A9, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    10
+                                </label>
+                                Approximately date of your last Online Visit?
+                                <div class="leftme input-group input-append date">
+                                    @Html.TextBoxFor(x => x.ComplaintTab.A10, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    11
+                                </label>
+                                Appointment Date
+                                <div class="leftme input-group input-append date">
+                                    @Html.TextBoxFor(x => x.ComplaintTab.A11, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-auto mb-4" style="display:none">
+                            <label class="form-label">
+                                11
+                            </label>
+                            Symptoms (check all that apply)
+                            <div class="fom-control">
+                                <table border="0">
+                                    <tbody>
+                                        <tr>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_0" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$0"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_0"> Fever</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_1" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$1"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_1"> Cough</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_2" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$2"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_2"> Runny Nose/Sneezing</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_3" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$3"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_3"> Sputum</label></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_4" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$4"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_4"> Sore throat</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_5" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$5"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_5"> Sinus Infection</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_6" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$6"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_6"> Itchy eyes</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_7" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$7"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_7"> Ear drainage</label></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_8" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$8"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_8"> Headache</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_9" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$9"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_9"> Chest pressure/pain</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_10" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$10"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_10"> Heartburn / reflux</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_11" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$11"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_11"> Dizzy / lightheaded</label></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_12" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$12"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_12"> Fatigue / weakness</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_13" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$13"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_13"> Pink eye (conjunctivitis)</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_14" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$14"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_14"> Plugged Ears</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_15" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$15"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_15"> Vision changes</label></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_16" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$16"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_16"> Anxiety/Mood Changes</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_17" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$17"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_17"> Joint/Muscle Pain or Weakness</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_18" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$18"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_18"> Abdominal pain/discomfort</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_19" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$19"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_19"> Diarrhea</label></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_20" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$20"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_20"> Loss of appetite</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_21" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$21"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_21"> Nausea / vomiting</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_22" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$22"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_22"> Eczema or dermatitis</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_23" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$23"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_23"> Skin Rash</label></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_24" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$24"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_24"> Frequent urination</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_25" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$25"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_25"> Foreign travel (past month)</label></span></td>
+                                            <td><span id="checkBoxType"><input id="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_26" type="checkbox" name="ctl00$ContentPlaceHolder1$rprtQuestions$ctl10$myCb$26"><label for="ctl00_ContentPlaceHolder1_rprtQuestions_ctl10_myCb_26"> Other</label></span></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table><span></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2 col-lg-offset-8" style="text-align: right">
+                                <input type="submit" value="Save &amp; Next" class="btn btn-success">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane" id="step-3" role="tabpanel">
+                <div class="card-body">
+                    <h5>Medical Condition</h5>
+                    <p>
+                        Click Down Arrow and select from the following clinical groups symptoms that best
+                        describe your illness
+                    </p>
+                    <div>
+                        <div class="col-lg-4 mt-4">
+                            <div class="form-group">
+                                <select name="ctl00$ContentPlaceHolder1$ddlMedical" onchange="javascript:setTimeout('__doPostBack(\'ctl00$ContentPlaceHolder1$ddlMedical\',\'\')', 0)" id="ctl00_ContentPlaceHolder1_ddlMedical" class="form-select">
+                                    <option selected="selected" value="Select">Select</option>
+                                    <option value="1">Allergy</option>
+                                    <option value="2">Arms / Legs / Bones</option>
+                                    <option value="3">Arthritis</option>
+                                    <option value="4">Blood / Bleeding</option>
+                                    <option value="5">Lymph Nodes</option>
+                                    <option value="6">Chest / Heart / Vascular</option>
+                                    <option value="7">Diabetes / Thyroid</option>
+                                    <option value="8">Ear - Nose - Throat</option>
+                                    <option value="9">Eye</option>
+                                    <option value="10">General Medicine</option>
+                                    <option value="11">Head / Neurology</option>
+                                    <option value="12">Kidney</option>
+                                    <option value="13">Nutrition</option>
+                                    <option value="14">Ob / Gyn</option>
+                                    <option value="15">Psych / Neuro</option>
+                                    <option value="16">Respiratory / Lungs</option>
+                                    <option value="17">Sexually Transmitted Disease</option>
+                                    <option value="18">Skin / Dermatology</option>
+                                    <option value="19">Stomach / Gastro</option>
+                                    <option value="20">Urinary / Urology</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="card-text fw-bold mt-1 mb-4"></div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-12" style="text-align: right">
+                        <br>
+                        <input type="submit" id="btnSkip" name="skip" value="Skip &amp; Next" class="btn btn-success btnskip">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="step-4" role="tabpanel">
+                <div class="row mt-4">
+                    <div class="col-lg-7 mb-4">
+                        6. Click Test Mic and speak into your microphone. Click the button Recording when you are done speaking and it will play your microphone test back to you. If you cannot hear your microphone recording, you can select another microphone from the drop down menu, or adjust the input level. <br>
+                    </div>
+                    <div class="col-lg-3">
+                        <img src="../../assets/images/system05.png" style="height: 100%; width: 105%;">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="step-5" role="tabpanel">
+                @using (Html.BeginForm("OnlineVisitStep5", "Patient", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(x => x.videoTab.DoctorId);
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><b>From: </b><span id="ctl00_ContentPlaceHolder1_lblFrom">@Model.videoTab.PatientName</span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>To: </b><span id="ctl00_ContentPlaceHolder1_lblTo">@Model.videoTab.DoctorName</span></p>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><b>Subject :</b></span>
+                                    <input name="ctl00$ContentPlaceHolder1$txtSubject" type="text" value="Video Email Visit" readonly="readonly" id="ctl00_ContentPlaceHolder1_txtSubject" class="form-control" placeholder="Type Subject Here*" fdprocessedid="8ba9j">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header border-primary">
+                                <h3 class="card-title">Provider Details</h3>
+                            </div>
+                            <div class="card-body d-lg-flex">
+                                <div class="col-md-6">
+                                    <p><b>Provider: </b><span id="ctl00_ContentPlaceHolder1_lblDoctor">@Model.videoTab.DoctorName</span></p>
+                                    <p><b>Title: </b><span id="ctl00_ContentPlaceHolder1_lblSpecialty">@Model.videoTab.Title</span></p>
+                                    <p><b>Phone: </b><span id="ctl00_ContentPlaceHolder1_lblphone">@Model.videoTab.phone</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p id="ctl00_ContentPlaceHolder1_docproEmail"><b>Doctor/Provider Email: </b><span id="ctl00_ContentPlaceHolder1_lblDoctorEmail">@Model.videoTab.DoctorEmail</span></p>
+                                    <p id="ctl00_ContentPlaceHolder1_nurseEmail"><b>Nurse Email: </b><span id="ctl00_ContentPlaceHolder1_lblNurseEmail">@Model.videoTab.NurseEmail</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header border-primary">
+                                <h3 class="card-title">
+                                    <b id="ctl00_ContentPlaceHolder1_messageSectionHeader">Text Message<span style="color: red"> *</span></b>
+                                </h3>
+                            </div>
+                            <div class="card-body d-lg-flex justify-content-lg-evenly">
+                                @Html.TextAreaFor(x => x.videoTab.TextMessage, new { @class = "form-control" })
+                                <div class="speechTxtMessage" style="display: none;">
+                                    <div id="info" style="visibility: visible;">
+                                        <p id="info_start" style="display: inline;">Click on the microphone icon and begin speaking.</p>
+                                        <p id="info_speak_now" style="display: none;">Speak now. Click on the microphone icon once done.</p>
+                                        <p id="info_no_speech" style="display: none;">
+                                            No speech was detected. You may need to adjust your
+                                            <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
+                                                microphone settings
+                                            </a>.
+                                        </p>
+                                        <p id="info_no_microphone" style="display: none">
+                                            No microphone was found. Ensure that a microphone is installed and that
+                                            <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
+                                                microphone settings
+                                            </a>are configured correctly.
+                                        </p>
+                                        <p id="info_allow" style="display: none;">Click the "Allow" button above to enable your microphone.</p>
+                                        <p id="info_denied" style="display: none;">Permission to use microphone was denied.</p>
+                                        <p id="info_blocked" style="display: none;">
+                                            Permission to use microphone is blocked. To change,
+                                            go to chrome://settings/contentExceptions#media-stream
+                                        </p>
+                                        <p id="info_upgrade" style="display: none;">
+                                            Web Speech API is not supported by this browser.
+                                            Upgrade to <a href="//www.google.com/chrome">Chrome</a>
+                                            version 25 or later.
+                                        </p>
+                                    </div>
+                                    <div class="right">
+                                        <button id="start_button" type="button" onclick="startButton(event)" style="display: inline-block;">
+                                            <img id="start_img" src="../assets/img/mic.gif" alt="Start">
+                                        </button>
+                                    </div>
+                                    <div id="ctl00_ContentPlaceHolder1_results" contenteditable="true" data-text="Click on the microphone and begin speaking">
+                                        <span id="ctl00_ContentPlaceHolder1_final_span" class="final"></span>
+                                        <span id="ctl00_ContentPlaceHolder1_interim_span" class="interim"></span>
+                                        <p>
+                                        </p>
+                                    </div>
+                                    <div class="center" style="display: none;">
+                                        <div class="sidebyside" style="text-align: right">
+                                            <button id="copy_button" type="button" class="blue-btn btn-block" onclick="copyButton()">
+                                                Copy and Paste
+                                            </button>
+                                            <div id="copy_info" class="info">
+                                                Press Control-C to copy text.<br>
+                                                (Command-C on Mac.)
+                                            </div>
+                                        </div>
+                                        <div class="sidebyside">
+                                            <button id="email_button" type="button" class="green-btn btn-block" onclick="emailButton()" style="display: none;">
+                                                Create Email
+                                            </button>
+                                            <div id="email_info" class="info" style="display: none;">
+                                                Text sent to default email application.<br>
+                                            </div>
+                                        </div>
+                                        <p>
+                                        </p><div id="div_language" style="display: none;">
+                                            <select id="select_language" onchange="updateCountry()"><option value="0">Afrikaans</option><option value="1">Bahasa Indonesia</option><option value="2">Bahasa Melayu</option><option value="3">Català</option><option value="4">Čeština</option><option value="5">Deutsch</option><option value="6">English</option><option value="7">Español</option><option value="8">Euskara</option><option value="9">Français</option><option value="10">Galego</option><option value="11">Hrvatski</option><option value="12">IsiZulu</option><option value="13">Íslenska</option><option value="14">Italiano</option><option value="15">Magyar</option><option value="16">Nederlands</option><option value="17">Norsk bokmål</option><option value="18">Polski</option><option value="19">Português</option><option value="20">Română</option><option value="21">Slovenčina</option><option value="22">Suomi</option><option value="23">Svenska</option><option value="24">Türkçe</option><option value="25">български</option><option value="26">Pусский</option><option value="27">Српски</option><option value="28">한국어</option><option value="29">中文</option><option value="30">日本語</option><option value="31">Lingua latīna</option></select>
+                                            &nbsp;&nbsp;
+                                            <select id="select_dialect" style="visibility: visible;"><option value="en-AU">Australia</option><option value="en-CA">Canada</option><option value="en-IN">India</option><option value="en-NZ">New Zealand</option><option value="en-ZA">South Africa</option><option value="en-GB">United Kingdom</option><option value="en-US">United States</option></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div align="center">
+                                <button id="showMic" type="button" class="col-md-2 btn btn-outline-primary mb-4 btn-block blue-btn" fdprocessedid="hxdn9s">Toggle Mic</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="ctl00_ContentPlaceHolder1_MessageAttachment_pnlAttachment" class="card">
+                                <div class="card-header text-white" style="background-color: #1434A4;">
+                                    <h3 class="card-title">Attachment</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div id="ctl00_ContentPlaceHolder1_MessageAttachment_PanelUpload">
+
+                                        <div class="col-md-8">
+                                            <label id="LiteralErr" style="color: red"></label>
+                                            <input type="file" name="ctl00$ContentPlaceHolder1$MessageAttachment$filUpload" id="ctl00_ContentPlaceHolder1_MessageAttachment_filUpload" ng-model="file">
+                                            <button type="button" style="margin: 10px" class="btn btn-primary" id="upload" value="Upload" fdprocessedid="de347o">Upload</button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <img id="loadImg" class="dontdisplay" style="width: 25%; height: 25%; margin: 30px; display: none" src="../Patient/images/ajax-loader.gif" alt="Processing ...">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table id="tblAttachments" class="table table-sm table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <th></th>
+                                                    <th><strong>From:</strong></th>
+                                                    <th><strong>Document Name:</strong></th>
+                                                    <th><strong>Date:</strong></th>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header border-primary">
+                                <h3 class="card-title">
+                                    Record Video
+                                </h3>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <ziggeo ziggeo-limit="300" ziggeo-disable_snapshots="true" class="record_video" ziggeo-width="400" ziggeo-height="300">
+                                            <span style="display:none"></span><ba-ziggeoplayer ba-if="false" ba-theme="modern" ba-themecolor="red" ba-lazy-application="true" ba-client-auth="null" ba-server-auth="null" ba-intermediate-token="null" ba-application="null" ba-stretch="false" ba-width="400" ba-height="300" ba-effect-profile="" ba-video="null" ba-stream="null" ba-loop="false" ba-autoplay="false" ba-nofullscreen="false" ba-popup="false" ba-popup-width="null" ba-popup-height="null" ba-stream-width="null" ba-stream-height="null" ba-event:error="event_player_error" ba-event:playing="event_player_playing" ba-event:paused="event_player_paused" ba-event:ended="event_player_ended" ba-event:ready_to_play="event_player_ready_to_play" style="display: none;"></ba-ziggeoplayer><span style="display:none"></span><ba-ziggeorecorder ba-if="true" ba-theme="modern" ba-themecolor="red" ba-lazy-application="true" ba-client-auth="null" ba-server-auth="null" ba-intermediate-token="null" ba-application="null" ba-stretch="false" ba-width="400" ba-height="300" ba-filesizelimit="null" ba-effect-profile="" ba-video="null" ba-allowedextensions="null" ba-skipinitial="false" ba-picksnapshots="false" ba-faceoutline="false" ba-manualsubmit="false" ba-framerate="null" ba-custom-covershots="false" ba-flip-camera="false" ba-simulate="false" ba-noaudio="false" ba-timelimit="300" ba-timeminlimit="null" ba-countdown="3" ba-recordingwidth="null" ba-recordingheight="null" ba-input-bind="null" ba-form-accept="null" ba-microphone-volume="null" ba-autoplay="false" ba-display-timer="true" ba-audio-test-mandatory="true" ba-title="null" ba-description="null" ba-tags="null" ba-custom-data="null" ba-key="null" ba-auto-crop="false" ba-auto-pad="false" ba-force-overwrite="false" ba-video-profile="null" ba-meta-profile="null" ba-enforce-duration="false" ba-expiration-days="null" ba-recover-streams="false" ba-delete-old-streams="false" ba-allowrecord="true" ba-allowupload="false" ba-rerecordable="true" ba-recordermode="true" ba-playermodeifexists="null" ba-rerecordableifexists="null" ba-recordings="null" ba-early-rerecord="false" ba-framerate-warning="null" ba-event:camera_unresponsive="event_recorder_camera_unresponsive" ba-event:camera_signal="event_recorder_camera_signal" ba-event:camera_nosignal="event_recorder_camera_nosignal" ba-event:access_granted="event_recorder_access_granted" ba-event:access_forbidden="event_recorder_access_forbidden" ba-event:upload_progress="event_recorder_upload_progress" ba-event:processing="event_recorder_processing" ba-event:recording="event_recorder_recording" ba-event:uploading="event_recorder_uploading" ba-event:recording_stopped="event_recorder_recording_stopped" ba-event:recording_progress="event_recorder_recording_progress" ba-event:manually_submitted="event_recorder_manually_submitted" ba-event:countdown="event_recorder_countdown" ba-event:rerecord="event_recorder_rerecord" ba-event:error="event_recorder_error" ba-event:playing="event_recorder_playing" ba-event:paused="event_recorder_paused" ba-event:ready_to_record="event_recorder_ready_to_record" ba-event:uploaded="event_recorder_uploaded" ba-event:verified="event_recorder_verified" ba-event:upload_selected="event_recorder_upload_selected" class="ba-commoncss-full-width" style="display: inline-block; aspect-ratio: 640 / 480;">
+                                                <div data-selector="video-recorder-container" ba-show="true" class="ba-videorecorder-container ba-recorder-theme-modern ba-videorecorder-size-medium
+     ba-videorecorder-noie8 ba-videorecorder-normal-view
+     ba-recorder-common-browser
+     ba-recorder-red-color
+	 ba-commoncss-full-width" ba-styles="[object Object]" style="aspect-ratio: 640 / 480;">
+
+                                                    <video tabindex="-1" data-selector="recorder-status" class="ba-videorecorder-video ba-videorecorder-norecorder" data-video="video" playsinline="" disablepictureinpicture=""></video>
+                                                    <ba-videorecorder-faceoutline class="ba-videorecorder-overlay" ba-if="false" style="display: none;"></ba-videorecorder-faceoutline>
+                                                    <div data-selector="recorder-overlay" style="" class="ba-recorder-overlay " ba-show="true" data-overlay="overlay">
+                                                        <ba-videorecorder-loader ba-css="ba-videorecorder" ba-cssrecorder="ba-recorder" ba-themecolor="red" ba-template="" ba-show="false" ba-tooltip="null" ba-hovermessage="null" ba-label="null" style="display: none;">
+                                                            <div class="ba-recorder-loader-container">
+                                                                <div data-selector="recorder-loader-block" class="ba-recorder-loader-loader" title="">
+                                                                </div>
+                                                            </div><div data-selector="recorder-loader-label-container" class="ba-recorder-loader-label" ba-show="null" style="display: none;">
+                                                                null
+                                                            </div>
+                                                        </ba-videorecorder-loader>
+
+                                                        <ba-videorecorder-message ba-css="ba-videorecorder" ba-themecolor="red" ba-cssrecorder="ba-recorder" ba-template="" ba-show="true" ba-message="You need to confirm / upgrade your account." ba-links="null" ba-event:click="message_click" ba-event:link="message_link_click" style="">
+                                                            <div data-selector="recorder-message-container" class="ba-videorecorder-message-container" ba-click="{{click()}}">
+                                                                <div data-selector="recorder-message-block" class="ba-videorecorder-message-message">
+                                                                    <p>
+                                                                        You need to confirm / upgrade your account.
+                                                                    </p>
+                                                                    <ul ba-if="false" ba-repeat="[object Object]" style="display: none;"></ul>
+                                                                </div>
+                                                            </div>
+                                                        </ba-videorecorder-message>
+
+                                                        <ba-videorecorder-topmessage ba-css="ba-videorecorder" ba-themecolor="red" ba-cssrecorder="ba-recorder" ba-template="" ba-show="false" ba-topmessage="null" style="display: none;">
+                                                            <div class="ba-videorecorder-topmessage-container">
+                                                                <div class="ba-videorecorder-topmessage-background">
+                                                                </div>
+                                                                <div data-selector="recorder-topmessage-block" class="ba-videorecorder-topmessage-message">
+                                                                    null
+                                                                </div>
+                                                            </div>
+                                                        </ba-videorecorder-topmessage>
+
+                                                        <ba-videorecorder-chooser ba-if="false" ba-onlyaudio="false" ba-facecamera="null" ba-recordviafilecapture="false" ba-css="ba-videorecorder" ba-themecolor="red" ba-cssrecorder="ba-recorder" ba-template="" ba-allowscreen="false" ba-allowmultistreams="false" ba-parentpopup="false" ba-allowrecord="true" ba-allowupload="false" ba-allowcustomupload="true" ba-allowedextensions="null" ba-primaryrecord="true" ba-initialmessages="" ba-timelimit="300" ba-event:record="record_video" ba-event:record-screen="record_screen" ba-event:upload="video_file_selected" style="display: none;">
+                                                            <div class="ba-videorecorder-chooser-container">
+                                                                <div ba-if="false" class="ba-commoncss-message-container" style="display: none;">
+                                                                    <ul ba-repeat="{{initialmessage :: initialmessages}}">
+                                                                        <li ba-if="{{initialmessage.message}}" class="{{csscommon}}-message-text {{csscommon}}-message-{{initialmessage.type ? initialmessage.type : 'default'}}">
+                                                                            {{ initialmessage.message }}
+                                                                            <span ba-if="{{initialmessage.id}}" class="{{csscommon}}-action-button" ba-click="close_message(initialmessage.id)">
+                                                                                <i class="{{csscommon}}-icon-cancel"></i>
+                                                                            </span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+
+                                                                <div class="ba-videorecorder-chooser-button-container">
+
+                                                                    <div class="ba-videorecorder-chooser-icon-container">
+                                                                        <i class="ba-commoncss-icon-videocam"></i>
+                                                                    </div>
+                                                                    <div ba-repeat="[object Object]"></div>
+                                                                </div>
+                                                            </div>
+                                                        </ba-videorecorder-chooser>
+
+                                                        <ba-{{dynimagegallery}} ba-if="false" ba-css="ba-videorecorder" ba-themecolor="red" ba-cssrecorder="ba-recorder" ba-template="" ba-imagecount="3" ba-snapshots="" ba-imagenativewidth="640" ba-imagenativeheight="480" ba-event:image-selected="select_image" ba-event:upload-covershot="upload_covershot" style="display: none;"></ba-{{dynimagegallery}}>
+
+                                                        <ba-videorecorder-controlbar ba-css="ba-videorecorder" ba-cssrecorder="ba-recorder" ba-csstheme="ba-recorder-theme-modern" ba-themecolor="red" ba-template="" ba-show="false" ba-cameras="null" ba-microphones="null" ba-noaudio="false" ba-novideo="false" ba-allowscreen="false" ba-selectedcamera="0" ba-selectedmicrophone="0" ba-addstreamdeviceid="null" ba-showaddstreambutton="false" ba-camerahealthy="null" ba-microphonehealthy="null" ba-hovermessage="null" ba-settingsvisible="null" ba-recordvisible="null" ba-cancelvisible="false" ba-uploadcovershotvisible="null" ba-rerecordvisible="null" ba-stopvisible="null" ba-skipvisible="null" ba-controlbarlabel="null" ba-mintimeindicator="null" ba-timeminlimit="5" ba-resumevisible="null" ba-pausable="false" ba-firefox="false" ba-event:select-camera="select_camera" ba-event:select-microphone="select_microphone" ba-event:invoke-record="record" ba-event:invoke-rerecord="rerecord" ba-event:invoke-stop="stop" ba-event:invoke-skip="invoke_skip" ba-event:invoke-pause="pause_recorder" ba-event:invoke-resume="resume" ba-event:invoke-cancel="cancel" ba-event:upload-covershot="upload_covershot" ba-event:toggle-face-mode="toggle_face_mode" ba-event:add-new-stream="add_new_stream" style="display: none;">
+                                                            <div class="ba-videorecorder-dashboard">
+                                                                <div class="ba-videorecorder-backbar"></div>
+                                                                <div data-selector="recorder-settings" class="ba-videorecorder-settings" ba-show="null" style="display: none;">
+                                                                    <div class="ba-videorecorder-settings-backbar"></div>
+                                                                    <div data-selector="settings-list-front" class="ba-videorecorder-settings-front">
+                                                                        <ul data-selector="add-new-stream" ba-if="null" style="display: none;">
+                                                                            <li>
+                                                                                <div data-selector="single-camera-stream">
+                                                                                    <i class="ba-commoncss-icon-plus"></i> {{string('add-stream')}}
+                                                                                </div>
+                                                                            </li>
+                                                                            <li>
+                                                                                <div data-selector="single-camera-stream" class="{{csscommon}}-text-error">
+                                                                                    {{videoselectnotification}}
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                        <ul data-selector="add-new-stream" ba-show="false" style="display: none;">
+                                                                            <li>
+                                                                                <div data-selector="single-camera-stream" class="ba-videorecorder-add-stream" onclick="" onmouseenter="">
+                                                                                    <i class="ba-commoncss-icon-plus"></i> Add Stream
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+
+                                                                        <ul data-selector="add-new-stream" ba-show="false" ba-repeat="null" style="display: none;"></ul>
+                                                                        <hr ba-show="false" style="display: none;">
+                                                                        <ul data-selector="camera-settings" ba-repeat="null" ba-show="true"></ul>
+                                                                        <hr ba-show="true">
+                                                                        <ul data-selector="microphone-settings" ba-repeat="null" ba-show="true"></ul>
+                                                                    </div>
+                                                                </div>
+                                                                <div data-selector="controlbar" class="ba-videorecorder-controlbar">
+
+                                                                    <div class="ba-videorecorder-leftbutton-container" ba-show="null" style="display: none;">
+                                                                        <div data-selector="face-mode-toggle-icon" class="ba-videorecorder-mobile-camera-switcher ba-videorecorder-button-inner" onclick="" onmouseenter="">
+                                                                            <i class="ba-commoncss-icon-arrows-cw"></i>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="ba-videorecorder-leftbutton-container" ba-show="null" style="display: none;">
+                                                                        <div tabindex="0" ba-hotkey:space^enter="{{settingsopen=!settingsopen}}" onmouseout="this.blur()" data-selector="record-button-icon-cog" class="ba-videorecorder-button-inner ba-videorecorder-button-unselected" onclick="" onmouseenter="" onmouseleave="">
+                                                                            <i class="ba-commoncss-icon-cog"></i>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="ba-videorecorder-lefticon-container" ba-show="null" style="display: none;">
+                                                                        <div data-selector="record-button-icon-videocam" class="ba-commoncss-icon-inner" onmouseenter="" onmouseleave="">
+                                                                            <i class="ba-commoncss-icon-videocam ba-commoncss-icon-state-bad"></i>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="ba-videorecorder-lefticon-container" ba-show="null" style="display: none;">
+                                                                        <div data-selector="record-button-icon-mic" class="ba-commoncss-icon-inner" onmouseenter="" onmouseleave="">
+                                                                            <i class="ba-commoncss-icon-mic ba-commoncss-icon-state-bad"></i>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="ba-videorecorder-lefticon-container" ba-show="null" style="display: none;">
+                                                                        <div data-selector="recording-indicator" class="ba-videorecorder-recording-indication">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="ba-videorecorder-label-container" ba-show="null" style="display: none;">
+                                                                        <div data-selector="record-label-block" class="ba-videorecorder-label-label">
+                                                                            null
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="ba-videorecorder-rightbutton-container" ba-show="null" style="display: none;">
+                                                                        <div tabindex="0" ba-hotkey:space^enter="{{record()}}" onmouseout="this.blur()" data-selector="record-primary-button" class="ba-videorecorder-button-primary" onclick="" onmouseenter="" onmouseleave="">
+                                                                            Record
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="ba-videorecorder-rightbutton-container" ba-if="null" style="display: none;">
+                                                                        <div data-selector="covershot-primary-button" class="{{css}}-button-primary" onmouseenter="{{hover(string('upload-covershot-tooltip'))}}" onmouseleave="{{unhover()}}">
+                                                                            <input type="file" class="{{css}}-chooser-file" style="height:100" onchange="{{uploadCovershot(domEvent)}}" accept="{{covershot_accept_string}}">
+                                                                            <span>
+                                                                                {{string('upload-covershot')}}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="ba-videorecorder-rightbutton-container" ba-show="null" style="display: none;">
+                                                                        <div tabindex="0" ba-hotkey:space^enter="{{rerecord()}}" onmouseout="this.blur()" data-selector="rerecord-primary-button" class="ba-videorecorder-button-primary" onclick="" onmouseenter="" onmouseleave="">
+                                                                            Redo
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="ba-videorecorder-rightbutton-container" ba-show="false" style="display: none;">
+                                                                        <div tabindex="0" ba-hotkey:space^enter="{{cancel()}}" onmouseout="this.blur()" data-selector="cancel-primary-button" class="ba-videorecorder-button-primary" onclick="" onmouseenter="" onmouseleave="">
+                                                                            Cancel
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="ba-videorecorder-rightbutton-container" ba-show="null" style="display: none;">
+                                                                        <div tabindex="0" ba-hotkey:space^enter="{{stop()}}" onmouseout="this.blur()" data-selector="stop-primary-button" class="ba-videorecorder-button-primary " title="Click here to stop." onclick="" onmouseenter="" onmouseleave="">
+                                                                            Stop
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="ba-videorecorder-rightbutton-container" ba-show="false" style="display: none;">
+                                                                        <div tabindex="0" ba-hotkey:space^enter="{{pause()}}" onmouseout="this.blur()" data-selector="pause-primary-button" class="ba-videorecorder-button-primary" title="Pause Recorder" onclick="" onmouseenter="" onmouseleave="">
+                                                                            <i class="ba-commoncss-icon-pause"></i>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="ba-videorecorder-rightbutton-container" ba-show="false" style="display: none;">
+                                                                        <div tabindex="0" ba-hotkey:space^enter="{{resume()}}" onmouseout="this.blur()" data-selector="resume-primary-button" class="ba-videorecorder-button-primary" title="Resume Recorder" onclick="" onmouseenter="" onmouseleave="">
+                                                                            <i class="ba-commoncss-icon-ccw"></i>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="ba-videorecorder-centerbutton-container" ba-show="null" style="display: none;">
+                                                                        <div tabindex="0" ba-hotkey:space^enter="{{skip()}}" onmouseout="this.blur()" data-selector="skip-primary-button" class="ba-videorecorder-button-primary" onclick="" onmouseenter="" onmouseleave="">
+                                                                            Skip
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </ba-videorecorder-controlbar>
+
+                                                        <ba-{{dynhelperframe}} ba-if="false" ba-template="" ba-framereversable="true" ba-framedragable="true" ba-frameresizeable="false" ba-framepositionx="5" ba-framepositiony="5" ba-frameproportional="true" ba-flipframe="0" style="display: none;"></ba-{{dynhelperframe}}>
+                                                    </div>
+                                                </div><div data-selector="recorder-player" ba-if="false" ba-styles="[object Object]" style="display: none; aspect-ratio: 640 / 480;">
+                                                    <span ba-show="{{ie8}}">&nbsp;</span>
+                                                    <ba-{{dynvideoplayer}} ba-theme="{{theme || 'default'}}" ba-themecolor="{{themecolor}}" ba-cssrecorder="{{cssrecorder || css}}" ba-source="{{localplayback ? playbacksource : ''}}" ba-poster="{{localplayback ? playbackposter : ''}}" ba-localplayback="{{localplayback}}" ba-hideoninactivity="{{false}}" ba-showsettingsmenu="{{showplayersettingsmenu}}" ba-onlyaudio="{{onlyaudio}}" ba-attrs="{{playerattrs}}" ba-data:id="player" ba-width="100%" ba-height="100%" ba-totalduration="{{duration}}" ba-rerecordable="{{rerecordable &amp;&amp; (recordings === null || recordings > 0)}}" ba-submittable="{{manualsubmit &amp;&amp; verified}}" ba-reloadonplay="{{true}}" ba-autoplay="{{autoplay}}" ba-nofullscreen="{{nofullscreen}}" ba-topmessage="{{playertopmessage}}" ba-allowtexttrackupload="{{allowtexttrackupload}}" ba-uploadtexttracksvisible="{{uploadtexttracksvisible}}" ba-snapshottype="{{snapshottype}}" ba-tracktags="{{tracktags}}" ba-tracktagsstyled="{{tracktagsstyled}}" ba-trackcuetext="{{trackcuetext}}" ba-acceptedtracktexts="{{acceptedtracktexts}}" ba-sharevideo="{{sharevideo}}" ba-videofitstrategy="{{videofitstrategy}}" ba-posterfitstrategy="{{posterfitstrategy}}" ba-placeholderstyle="{{placeholderstyle}}" ba-event:loaded="ready_to_play" ba-event:rerecord="rerecord" ba-event:playing="playing" ba-event:paused="paused" ba-event:ended="ended" ba-event:submit="manual_submit" ba-event:upload-text-tracks="upload_text_tracks" ba-tracksshowselection="{{tracksshowselection}}" ba-trackselectorhovered="{{trackselectorhovered}}" ba-uploadlocales="{{uploadlocales}}" ba-frameselectionmode="{{frameselectionmode}}" ba-timeminlimit="{{timeminlimit}}" ba-event:selected_label_value="selected_label_value" ba-event:move_to_option="move_to_option">
+                                                    </ba-{{dynvideoplayer}}>
+                                                </div>
+                                            </ba-ziggeorecorder><span style="display:none"></span>
+                                        </ziggeo>
+                                        <input type="hidden" name="ctl00$ContentPlaceHolder1$hdnfldVideoGuid" id="ctl00_ContentPlaceHolder1_hdnfldVideoGuid">
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span style="font-size: 16px;">
+                                            1. Click Record your video.<br>
+                                            <br>
+                                            2. Make sure the MIC light is green. (you may have to speak louder)<br>
+                                            <br>
+                                            3. Click Record.<br>
+                                            <br>
+                                            4. Click Stop to end recording.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-9"></div>
+                            <div class="col-lg-auto">
+                                <input type="submit" value="Save &amp; Next" onclick="return validate();" class="btn btn-success">
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="tab-pane" id="step-6" role="tabpanel">
+                <div class="card-body">
+                    <div id="ctl00_ContentPlaceHolder1_lblMessage"></div>
+                    <div style="color: Red; padding-bottom: 10px;">
+                        <h5>
+                            <span id="ctl00_ContentPlaceHolder1_lblInfo"> You selected to Pay for Video Email Visit</span>
+                        </h5>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <b>First Name</b><span style="color: Red;">*</span>
+                            </label>
+                            <input name="ctl00$ContentPlaceHolder1$txtFirstName" type="text" id="ctl00_ContentPlaceHolder1_txtFirstName" class="form-control" fdprocessedid="rmza6">
+                            <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator17" style="color:Red;visibility:hidden;">Please enter first name</span>
+                            <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator2" style="color:Red;visibility:hidden;">Enter Valid First Name</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <b>Last Name</b><span style="color: Red;">*</span>
+                            </label>
+                            <input name="ctl00$ContentPlaceHolder1$txtLastName" type="text" id="ctl00_ContentPlaceHolder1_txtLastName" class="form-control" fdprocessedid="qhl348">
+                            <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator2" style="color:Red;visibility:hidden;">Please enter last name</span>
+                            <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator3" style="color:Red;visibility:hidden;">Enter Valid Last Name</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <b>Phone</b><span style="color: Red;">*</span>
+                            </label>
+                            <input name="ctl00$ContentPlaceHolder1$txtPhone" type="text" maxlength="10" id="ctl00_ContentPlaceHolder1_txtPhone" class="form-control" placeholder="ex.7137891234" ng-minlength="10" fdprocessedid="7u9o18">
+                            <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator3" style="color:Red;visibility:hidden;">Please enter phone#</span>
+
+                            <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator4" style="color:Red;visibility:hidden;">Enter Valid Phone</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label><b>Email</b><span style="color: Red;">*</span></label>
+                            <input name="ctl00$ContentPlaceHolder1$txtEmail" type="text" id="ctl00_ContentPlaceHolder1_txtEmail" class="form-control" fdprocessedid="gcrlbe">
+                            <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator4" style="color:Red;visibility:hidden;">Please enter email address</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <b>Payment Amount</b>
+                            </label>
+                            <select name="ctl00$ContentPlaceHolder1$cboPaymentAmount" id="ctl00_ContentPlaceHolder1_cboPaymentAmount" disabled="disabled" class="form-select" fdprocessedid="mtr3w">
+                                <option value="0.0000">Ask A Doctor ($0.00)</option>
+                                <option selected="selected" value="1.0000">Video Email Visit ($1.00)</option>
+                                <option value="1.0000">Online Face to Face ($1.00)</option>
+                                <option value="0.0000">Prescription Refill ($0.00)</option>
+
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>
+                                    <b>Credit Card Type</b>
+                                </label>
+                                <select name="ctl00$ContentPlaceHolder1$cboCreditCardType" id="ctl00_ContentPlaceHolder1_cboCreditCardType" class="form-select" fdprocessedid="md6cok">
+                                    <option value="Visa">Visa</option>
+                                    <option value="MasterCard">MasterCard</option>
+                                    <option value="Discover">Discover</option>
+                                    <option value="Amex">Amex</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>
+                                    <b>Credit Card #</b><span style="color: Red;">*</span>
+                                </label>
+                                <input name="ctl00$ContentPlaceHolder1$txtCCNum" type="text" id="ctl00_ContentPlaceHolder1_txtCCNum" class="form-control" fdprocessedid="t3t14i">
+                                <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator5" style="color:Red;visibility:hidden;">Please enter credit card#</span>
+                                <br>
+                                <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator5" style="color:Red;visibility:hidden;">Enter Valid Credit Card Number</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>
+                                    <b>CVV</b><span style="color: Red;">*</span>
+                                </label>
+                                <input name="ctl00$ContentPlaceHolder1$txtCvv" type="text" id="ctl00_ContentPlaceHolder1_txtCvv" class="form-control" fdprocessedid="xtty69">
+                                <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator6" style="color:Red;visibility:hidden;">Please enter cvv</span>
+                                <br>
+                                <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator6" style="color:Red;visibility:hidden;">Enter Valid CVV</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label><b>Exp Month</b></label>
+                                <select name="ctl00$ContentPlaceHolder1$DropDownMonth" id="ctl00_ContentPlaceHolder1_DropDownMonth" class="form-select" fdprocessedid="g2gacs">
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label><b>Exp Year</b></label>
+                                <select name="ctl00$ContentPlaceHolder1$DropDownYear" id="ctl00_ContentPlaceHolder1_DropDownYear" class="form-select" fdprocessedid="u2tawo">
+                                    <option selected="selected" value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29">29</option>
+                                    <option value="30">30</option>
+                                    <option value="31">31</option>
+                                    <option value="32">32</option>
+                                    <option value="33">33</option>
+                                    <option value="34">34</option>
+                                    <option value="35">35</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                <b>Address 1</b><span style="color: Red;">*</span>
+                            </label>
+                            <input name="ctl00$ContentPlaceHolder1$txtAddress" type="text" id="ctl00_ContentPlaceHolder1_txtAddress" class="form-control" fdprocessedid="620em6">
+                            <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator9" style="color:Red;visibility:hidden;">Please enter address 1</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                <b>Address 2</b>
+                            </label>
+                            <input name="ctl00$ContentPlaceHolder1$txtAddress2" type="text" id="ctl00_ContentPlaceHolder1_txtAddress2" class="form-control" fdprocessedid="4r0kr">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>
+                                    <b>City</b><span style="color: Red;">*</span>
+                                </label>
+                                <input name="ctl00$ContentPlaceHolder1$txtCity" type="text" id="ctl00_ContentPlaceHolder1_txtCity" class="form-control" fdprocessedid="f8jucw">
+                                <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator11" style="color:Red;visibility:hidden;">Please enter city</span>
+                                <br>
+                                <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator1" style="color:Red;visibility:hidden;">Enter Valid City</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>
+                                    <b>State/Province</b><span style="color: Red;">*</span>
+                                </label>
+                                <select name="ctl00$ContentPlaceHolder1$cboBillingState" id="ctl00_ContentPlaceHolder1_cboBillingState" class="form-select" fdprocessedid="4ismlg">
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="KK">Other</option>
+                                    <option value="PB">Punjab</option>
+
+                                </select>
+                                <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator14" style="color:Red;display:none;">Please select state</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>
+                                    <b>Zip</b><span style="color: Red;">*</span>
+                                </label>
+                                <input name="ctl00$ContentPlaceHolder1$txtZip" type="text" maxlength="5" id="ctl00_ContentPlaceHolder1_txtZip" class="form-control" fdprocessedid="kk8yvf">
+                                <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator12" style="color:Red;visibility:hidden;">Please enter zip</span>
+                                <br>
+                                <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator7" style="color:Red;visibility:hidden;">Enter Valid Zip</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-9"></div>
+                        <div class="col-lg-auto" style="text-align: right">
+                            <input type="submit" name="ctl00$ContentPlaceHolder1$btnSearch" value="Submit Payment" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ContentPlaceHolder1$btnSearch&quot;, &quot;&quot;, true, &quot;billing&quot;, &quot;&quot;, false, false))" id="ctl00_ContentPlaceHolder1_btnSearch" class="btn btn-success" fdprocessedid="awe92i">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        debugger
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('step')) {
+            $('#tabList li:first a').removeClass('active');
+            $('.tab-content div').removeClass('active');
+            const stepValue = parseInt(urlParams.get('step'));
+            switch (stepValue) {
+                case 2:
+                    $('#step-1').hide();
+                    $('#step-3').hide();
+                    $('#tabList li:nth-child(2) a').addClass('active');
+                    $('#step-' + stepValue).addClass('active');
+                    break;
+                case 3:
+                    $('#step-1').hide();
+                    $('#step-2').hide();
+                    $('#tabList li:nth-child(3) a').addClass('active');
+                    $('#step-' + stepValue).addClass('active');
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    $('#step-1').hide();
+                    $('#step-2').hide();
+                    $('#step-3').hide();
+                    $('#step-4').hide();
+                    $('#tabList li:nth-child(5) a').addClass('active');
+                    $('#step-' + stepValue).addClass('active');
+                    break;
+                case 6:
+                    $('#step-1').hide();
+                    $('#step-2').hide();
+                    $('#step-3').hide();
+                    $('#step-4').hide();
+                    $('#step-5').hide();
+                    $('#tabList li:nth-child(6) a').addClass('active');
+                    $('#step-' + stepValue).addClass('active');
+                    break;
+
+            }
+        }
+        $('#btnSkip').click(function () {
+             var url = '@Url.Action("OnlineVisitStep", "Patient", new { step =5,VisitId=0 })';
+            window.location.href = '/Patient/OnlineVisitStep?step=5&VisitId=0';
+        })
+    </script>
+}

@@ -16,6 +16,8 @@ using System.Globalization;
 using System.Security.Cryptography;
 using Docttors_portal.Common;
 using System.Security.Policy;
+using System.Data.Linq;
+using static Docttors_portal.Common.Models.MyProvider;
 
 namespace Docttors_portal.Services.Classes
 {
@@ -32,7 +34,18 @@ namespace Docttors_portal.Services.Classes
         private IRepository<PatientEmergencyNew> _emergencyRepository;
         private IRepository<PatientObservationNew> _patientObservationRepository;
         private IRepository<PatientVitalsNew> _patientVitalRepository;
-
+        private IRepository<PatientFavoriteDoctor> _patientFavouriteDoctor;
+        private IRepository<ChronicConditionsMaster> _chronicConditionsMaster;
+        private IRepository<PatientChronicConditions> _patientChronicCondition;
+        private IRepository<PatientSocialHisotry> _patientSocialHisotry;
+        private IRepository<PatientClinicalHistory> _patientClinicalHistory;
+        private IRepository<PatientSurgicalHistory> _patientSurgicalHistory;
+        private IRepository<PatientReviewOfSystem> _patientReviewOfSystem;
+        private IRepository<PatientCondition> _patientCondition;
+        private IRepository<OnlineVisitStep1> _onlineVisitStep1;
+        private IRepository<OnlineVisitStep2> _onlineVisitStep2;
+        private IRepository<OnlineVisitStep5> _onlineVisitStep5;
+        private string connectionString = ConfigurationManager.ConnectionStrings["DocttorsEntities"].ConnectionString;
         public PatientPersonalServices(IUnitOfWork unitOfWork)
         {
             if (unitOfWork != null)
@@ -48,15 +61,70 @@ namespace Docttors_portal.Services.Classes
                 _pharmacyRepository = _unitOfWork.GetRepository<PatientPharmacyDetailsNew>();
                 _medicationRepository = _unitOfWork.GetRepository<PatientMedicationDetailsNew>();
                 _patientVitalRepository = _unitOfWork.GetRepository<PatientVitalsNew>();
+                _patientFavouriteDoctor = _unitOfWork.GetRepository<PatientFavoriteDoctor>();
+                _chronicConditionsMaster = _unitOfWork.GetRepository<ChronicConditionsMaster>();
+                _patientChronicCondition = _unitOfWork.GetRepository<PatientChronicConditions>();
+                _patientSocialHisotry = _unitOfWork.GetRepository<PatientSocialHisotry>();
+                _patientClinicalHistory = _unitOfWork.GetRepository<PatientClinicalHistory>();
+                _patientSurgicalHistory = _unitOfWork.GetRepository<PatientSurgicalHistory>();
+                _patientReviewOfSystem = _unitOfWork.GetRepository<PatientReviewOfSystem>();
+                _patientCondition = _unitOfWork.GetRepository<PatientCondition>();
+                _onlineVisitStep1 = _unitOfWork.GetRepository<OnlineVisitStep1>();
+                _onlineVisitStep2 = _unitOfWork.GetRepository<OnlineVisitStep2>();
+                _onlineVisitStep5 = _unitOfWork.GetRepository<OnlineVisitStep5>();
             }
         }
+
+        #region patient Load Services
+        public List<GetpatientMessage> GetpatientMessages(int patientId)
+        {
+            try
+            {
+                var patientMessages = new List<GetpatientMessage>();
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("GetpatientMessage", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@patientId", SqlDbType.Int).Value = patientId;
+                        con.Open();
+                        SqlDataReader rdr = cmd.ExecuteReader();
+                        while (rdr.Read())
+                        {
+                            var currentPatientMessage = new GetpatientMessage()
+                            {
+                                Step1Id = Convert.ToInt32(rdr["Step1Id"]),
+                                Step2Id = Convert.ToInt32(rdr["Step2Id"]),
+                                Status = Convert.ToString(rdr["Status"]),
+                                ProviderName = Convert.ToString(rdr["providerName"]),
+                                ServiceType = Convert.ToString(rdr["ServiceType"]),
+                                Symptoms = Convert.ToString(rdr["Symptoms"]),
+                                DateTimeRequested = Convert.ToString(rdr["DateTimeRequested"]),
+                                AppointmentDate = Convert.ToString(rdr["AppointmentDate"]),
+                                DateTreated = Convert.ToString(rdr["DateTreated"]),
+                                Amount = Convert.ToString(rdr["Amount"])
+                            };
+                            patientMessages.Add(currentPatientMessage);
+                        }
+
+                    }
+                    con.Close();
+                }
+                return patientMessages;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
         #region MHR Page Load Service
         public GetMHRDataInfo GetMHRData(int UserId)
         {
             try
             {
                 var mhrDataInfo = new GetMHRDataInfo();
-                string connectionString = ConfigurationManager.ConnectionStrings["DocttorsEntities"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
                     using (SqlCommand cmd = new SqlCommand("sp_GetMHRDataInfo", con))
@@ -101,8 +169,9 @@ namespace Docttors_portal.Services.Classes
                             mhrDataInfo.VitalCreated = Convert.ToString(rdr["VitalCreated"]);
                             mhrDataInfo.VitalModified = Convert.ToString(rdr["VitalModified"]);
                             mhrDataInfo.VitalModifiedTime = Convert.ToString(rdr["VitalModifiedTime"]);
-
-
+                            mhrDataInfo.ClinicalHistoryCreated = Convert.ToString(rdr["ClinicalHistoryCreated"]);
+                            mhrDataInfo.ClinicalHistoryModified = Convert.ToString(rdr["ClinicalHistoryModified"]);
+                            mhrDataInfo.ClinicalHistoryModifiedTime = Convert.ToString(rdr["ClinicalHistoryModifiedTime"]);
                         }
 
                     }
@@ -1136,7 +1205,6 @@ namespace Docttors_portal.Services.Classes
             try
             {
                 ptVitalData.VitalHistory = GetAllPatientVitalList(userId);
-                //ptVitalData.VitalHistory = ptVitalData.VitalHistory.Prepend(new NameIdModel() { Id = 0, Name = "Enter New Vitals" }).ToList();
                 return ptVitalData;
             }
             catch (Exception ex)
@@ -1216,48 +1284,653 @@ namespace Docttors_portal.Services.Classes
         }
         #endregion
 
-        #region
-        public List<GetDoctorsByPatients> GetDoctorByPatient(PatientSearchDoctorModel patientSearchModel)
+        #region Search Functionality
+        public PatientSearchDoctorModel GetDoctorByPatient(PatientSearchDoctorModel patientSearchModel, SearchType searchType)
         {
-            var doctorList = new List<GetDoctorsByPatients>();
+            var searchData = new PatientSearchDoctorModel();
             string connectionString = ConfigurationManager.ConnectionStrings["DocttorsEntities"].ConnectionString;
+
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("GetDoctorsByPatients", con))
+                switch ((int)searchType)
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    case 1:
+                        searchData.DoctorsList = SearchDoctor(patientSearchModel, searchData.DoctorsList, con);
+                        searchData.SearchCount = searchData.DoctorsList.Count;
+                        break;
+                    case 2:
+                        searchData.HospitalData = SearchHospital(patientSearchModel, searchData.HospitalData, con);
+                        searchData.SearchCount = searchData.HospitalData.Count;
+                        break;
+                    case 3:
+                        searchData.InsuranceList = SearchInsurance(patientSearchModel, searchData.InsuranceList, con);
+                        searchData.SearchCount = searchData.InsuranceList.Count;
+                        break;
+                }
 
-                    cmd.Parameters.Add("@FirstName", SqlDbType.VarChar).Value = patientSearchModel.FirstName;
-                    cmd.Parameters.Add("@LastName", SqlDbType.VarChar).Value = patientSearchModel.LastName;
-                    cmd.Parameters.Add("@PhysicianSpecialtyId", SqlDbType.VarChar).Value = patientSearchModel.PhysicianSpecialtyId;
-                    cmd.Parameters.Add("@City", SqlDbType.VarChar).Value = patientSearchModel.City;
-                    cmd.Parameters.Add("@StateId", SqlDbType.VarChar).Value = patientSearchModel.StateId;
-                    cmd.Parameters.Add("@ZipCode", SqlDbType.VarChar).Value = patientSearchModel.ZipCode;
-                    con.Open();
-                    SqlDataReader rdr = cmd.ExecuteReader();
-                    while (rdr.Read())
+            }
+            return searchData;
+        }
+        private List<GetDoctorsByPatients> SearchDoctor(PatientSearchDoctorModel patientSearchModel, List<GetDoctorsByPatients> doctorData, SqlConnection sqlConnection)
+        {
+            using (SqlCommand cmd = new SqlCommand("GetDoctorsByPatients", sqlConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@firstName", SqlDbType.VarChar).Value = patientSearchModel.FirstName;
+                cmd.Parameters.Add("@lastName", SqlDbType.VarChar).Value = patientSearchModel.LastName;
+                cmd.Parameters.Add("@specilityId", SqlDbType.Int).Value = patientSearchModel.PhysicianSpecialtyId;
+                cmd.Parameters.Add("@city", SqlDbType.VarChar).Value = patientSearchModel.City;
+                cmd.Parameters.Add("@stateId", SqlDbType.Int).Value = patientSearchModel.StateId;
+                cmd.Parameters.Add("@zipCode", SqlDbType.VarChar).Value = patientSearchModel.ZipCode;
+                sqlConnection.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    //Accessing the data using the string key as index
+                    GetDoctorsByPatients getDoctorPatients = new GetDoctorsByPatients()
                     {
-                        //Accessing the data using the string key as index
-                        GetDoctorsByPatients getDoctorPatients = new GetDoctorsByPatients()
-                        {
-                            patientId = Convert.ToInt32(rdr["PatientId"]),
-                            FirstName = Convert.ToString(rdr["FirstName"]),
-                            LastName = Convert.ToString(rdr["LastName"]),
-                            EmailAddress = Convert.ToString(rdr["EmailAddress"]),
-                            UserId = Convert.ToInt32(rdr["LoginId"]),
-                            Mrn = Convert.ToString(rdr["MRN"]),
-                            CellPhone = Convert.ToString(rdr["CellPhone"]),
-                            DOB = Convert.ToDateTime(rdr["DOB"]),
-                            CCMIsPatientEligible = Convert.ToString(rdr["CCMIsPatientEligible"]),
-                            CCMIsConsentProvided = Convert.ToString(rdr["CCMConsentProvided"]),
-                            FavoriteDoctors = Convert.ToString(rdr["FavoriteDoctors"])
-                        };
-                        doctorList.Add(getDoctorPatients);
+                        Name = Convert.ToString(rdr["name"]),
+                        EmailAddress = Convert.ToString(rdr["EmailAddress"]),
+                        UserId = Convert.ToInt32(rdr["userId"]),
+                        Phone = Convert.ToString(rdr["phone"]),
+                        Address = Convert.ToString(rdr["address"]),
+                        SpecialtyName = Convert.ToString(rdr["SpecialtyName"]),
+                        City = Convert.ToString(rdr["city"]),
+                        ProfilePic = Convert.ToString(rdr["ProfilePic"]),
+                        FavoriteDoctorId = Convert.ToInt32(rdr["FavoriteId"]),
+                        IsprimaryDoctor = Convert.ToBoolean(rdr["IsprimaryDoctor"])
+                    };
+                    doctorData.Add(getDoctorPatients);
+                }
+
+            }
+            sqlConnection.Close();
+            return doctorData;
+        }
+
+        private List<GetHospitalData> SearchHospital(PatientSearchDoctorModel patientSearchModel, List<GetHospitalData> hospitalData, SqlConnection sqlConnection)
+        {
+            using (SqlCommand cmd = new SqlCommand("GetHospitalData", sqlConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@city", SqlDbType.VarChar).Value = patientSearchModel.City;
+                cmd.Parameters.Add("@Zip", SqlDbType.VarChar).Value = patientSearchModel.ZipCode;
+                sqlConnection.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    //Accessing the data using the string key as index
+                    GetHospitalData getHospitalData = new GetHospitalData()
+                    {
+                        HospitalId = Convert.ToInt32(rdr["HospitalId"]),
+                        HospitalName = Convert.ToString(rdr["HospitalName"]),
+                        City = Convert.ToString(rdr["City"]),
+                        PhoneNumber = Convert.ToString(rdr["PhoneNumber"]),
+                        Address = Convert.ToString(rdr["address"]),
+                        ZIP = Convert.ToString(rdr["ZIP"])
+                    };
+                    hospitalData.Add(getHospitalData);
+                }
+
+            }
+            return hospitalData;
+        }
+
+        private List<GetInsuranceCompanyList> SearchInsurance(PatientSearchDoctorModel patientSearchModel, List<GetInsuranceCompanyList> InsuranceList, SqlConnection sqlConnection)
+        {
+            using (SqlCommand cmd = new SqlCommand("GetInsuranceCompanyList", sqlConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@CompanyName", SqlDbType.VarChar).Value = patientSearchModel.CompanyName;
+                sqlConnection.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    //Accessing the data using the string key as index
+                    GetInsuranceCompanyList getInsuranceData = new GetInsuranceCompanyList()
+                    {
+                        InsuaranceId = Convert.ToInt32(rdr["InsuaranceId"]),
+                        CompanyName = Convert.ToString(rdr["CompanyName"]),
+                        URL = Convert.ToString(rdr["Url"]),
+                        PlanType = Convert.ToString(rdr["PlanType"])
+                    };
+                    InsuranceList.Add(getInsuranceData);
+                }
+
+            }
+            return InsuranceList;
+        }
+
+        public void AddFavouriteDoctor(int doctorId)
+        {
+            try
+            {
+                PatientFavoriteDoctor patientFavoriteDoctor = new PatientFavoriteDoctor()
+                {
+                    PatientId = SessionVariables.LoggedInUser.UserId,
+                    DoctorId = doctorId,
+                    IsprimaryDoctor = false,
+                    CreatedBy = SessionVariables.LoggedInUser.UserId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = SessionVariables.LoggedInUser.UserId,
+                    ModifiedOn = DateTime.Now
+                };
+                _patientFavouriteDoctor.Add(patientFavoriteDoctor);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void RemoveFavouriteDoctor(int favouriteId)
+        {
+            try
+            {
+                var currentFavouriteData = _patientFavouriteDoctor.GetSingle(x => x.FavoriteId == favouriteId);
+                _patientFavouriteDoctor.Delete(currentFavouriteData);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void UpdatePrimaryDoctor(int favouriteId, bool isPrimary)
+        {
+            try
+            {
+                var currentFavouriteData = _patientFavouriteDoctor.GetSingle(x => x.FavoriteId == favouriteId);
+                currentFavouriteData.IsprimaryDoctor = isPrimary;
+                _patientFavouriteDoctor.Update(currentFavouriteData);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
+
+        #region Patient Clinical History
+        public PatientClinicalViewModel GetPatientClinicalData(int patientId)
+        {
+            var patientClinicalViewModel = new PatientClinicalViewModel();
+            try
+            {
+                patientClinicalViewModel.allChronicConditions = _chronicConditionsMaster.GetAll().Select(x => new ChronicConditionsMasterViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                }).ToList();
+                patientClinicalViewModel.patientChronicConditionsModel = _patientChronicCondition.GetAll(x => x.PatientId == patientId).Select(x => new PatientChronicConditionsViewModel()
+                {
+                    Id = x.Id,
+                    PatientId = x.PatientId,
+                    ChronicConditionId = x.ChronicConditionId,
+                    ChronicConditionText = x.ChronicConditionText
+                }).ToList();
+                foreach (var item in patientClinicalViewModel.patientChronicConditionsModel)
+                {
+                    var currentChronicCondition = patientClinicalViewModel.allChronicConditions.Where(x => x.Id == item.ChronicConditionId).FirstOrDefault();
+                    currentChronicCondition.IsChecked = true;
+                    currentChronicCondition.Text = item.ChronicConditionText;
+                }
+                patientClinicalViewModel.patientSocialHisotryModel = _patientSocialHisotry.GetAll(x => x.PatientId == patientId).Select(x => new PatientSocialHisotryViewModel()
+                {
+                    Id = x.Id,
+                    PatientId = x.PatientId,
+                    IsAlcohol = x.IsAlcohol,
+                    IsDrugs = x.IsDrugs,
+                    IsSmoke = x.IsSmoke,
+                    Other = x.Other
+                }).FirstOrDefault();
+                patientClinicalViewModel.patientClinicalHistoryModel = _patientClinicalHistory.GetAll(x => x.PatientId == patientId).Select(x => new PatientClinicalHistoryViewModel()
+                {
+                    Id = x.Id,
+                    PatientId = x.PatientId,
+                    IsAlcoholAbuse = x.IsAlcoholAbuse,
+                    IsBloodPressure = x.IsBloodPressure,
+                    IsDiabetes = x.IsDiabetes,
+                    IsCancer = x.IsCancer,
+                    IsDrugAbuse = x.IsDrugAbuse,
+                    IsHeartDisease = x.IsHeartDisease,
+                }).FirstOrDefault();
+                patientClinicalViewModel.patientSurgicalHistoryModel = _patientSurgicalHistory.GetAll(x => x.PatientId == patientId).Select(x => new PatientSurgicalHistoryViewModel()
+                {
+                    Id = x.Id,
+                    PatientId = x.PatientId,
+                    IsAppendix = x.IsAppendix,
+                    IsCataracts = x.IsCataracts,
+                    IsGallbladder = x.IsGallbladder,
+                    IsHeartByPass = x.IsHeartByPass,
+                    IsHysterectomy = x.IsHysterectomy,
+                    IsStent = x.IsStent,
+                    IsTonsils = x.IsTonsils
+                }).FirstOrDefault();
+                patientClinicalViewModel.patientReviewOfSystemModel = _patientReviewOfSystem.GetAll(x => x.PatientId == patientId).Select(x => new PatientReviewOfSystemViewModel()
+                {
+                    Id = x.Id,
+                    PatientId = x.PatientId,
+                    Cardiovascular = x.Cardiovascular,
+                    MusclesOrJoints = x.MusclesOrJoints,
+                    Hematology = x.Hematology,
+                    Neurological = x.Neurological,
+                    GeneralCondition = x.GeneralCondition,
+                    Diabetes = x.Diabetes,
+                    Eyes = x.Eyes,
+                    Dental = x.Dental,
+                    Ear = x.Ear,
+                    ObOrGyn = x.ObOrGyn,
+                    Psychological = x.Psychological,
+                    Respiratory = x.Respiratory,
+                    Skin = x.Skin,
+                    Stomach = x.Stomach,
+                    Urinary = x.Urinary
+                }).FirstOrDefault();
+                patientClinicalViewModel.PatientConditionInfo.patientConditionData = _patientCondition.GetAll(x => x.PatientId == patientId).Select(x => new PatientConditionViewModel()
+                {
+                    Id = x.Id,
+                    PatientId = x.PatientId,
+                    Condition = x.Condition
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return patientClinicalViewModel;
+        }
+        public bool SavepatientClinicalData(PatientClinicalViewModel patientClinicalViewModel)
+        {
+            bool result = false;
+            try
+            {
+                // Insert/Update Chrononical Condition section
+                if (patientClinicalViewModel.allChronicConditions.Count > 0)
+                {
+                    List<PatientChronicConditions> patientChornicalConditionList = new List<PatientChronicConditions>();
+                    PatientChronicConditions patientChornicalCondition;
+                    //delete all assigned data first
+                    var currentChornicaldata = _patientChronicCondition.GetAll(x => x.PatientId == SessionVariables.LoggedInUser.UserId).ToList();
+                    if (currentChornicaldata.Count > 0)
+                    {
+                        _patientChronicCondition.DeleteAll(currentChornicaldata);
                     }
 
+                    foreach (var item in patientClinicalViewModel.allChronicConditions)
+                    {
+                        if (item.IsChecked)
+                        {
+                            patientChornicalCondition = new PatientChronicConditions()
+                            {
+                                ChronicConditionId = item.Id,
+                                ChronicConditionText = item.Text,
+                                PatientId = patientClinicalViewModel.PatientId,
+                                CreatedBy = patientClinicalViewModel.PatientId,
+                                CreatedOn = DateTime.Now,
+                                ModifiedBy = patientClinicalViewModel.PatientId,
+                                ModifiedOn = DateTime.Now
+                            };
+                            patientChornicalConditionList.Add(patientChornicalCondition);
+                        }
+                    }
+                    _patientChronicCondition.AddAll(patientChornicalConditionList);
+                }
+                //Insert/Update Social History
+                if (patientClinicalViewModel.patientSocialHisotryModel != null)
+                {
+                    if (patientClinicalViewModel.patientSocialHisotryModel.Id > 0)
+                    {
+                        var currentSocialHistory = _patientSocialHisotry.GetSingle(x => x.Id == patientClinicalViewModel.patientSocialHisotryModel.Id);
+                        currentSocialHistory.IsAlcohol = patientClinicalViewModel.patientSocialHisotryModel.IsAlcohol;
+                        currentSocialHistory.IsDrugs = patientClinicalViewModel.patientSocialHisotryModel.IsDrugs;
+                        currentSocialHistory.IsSmoke = patientClinicalViewModel.patientSocialHisotryModel.IsSmoke;
+                        currentSocialHistory.Other = patientClinicalViewModel.patientSocialHisotryModel.Other;
+                        currentSocialHistory.PatientId = patientClinicalViewModel.PatientId;
+                        currentSocialHistory.ModifiedBy = patientClinicalViewModel.PatientId;
+                        currentSocialHistory.ModifiedOn = DateTime.Now;
+                        _patientSocialHisotry.Update(currentSocialHistory);
+                    }
+                    else
+                    {
+                        PatientSocialHisotry patientSocialHisotry = new PatientSocialHisotry();
+                        patientSocialHisotry.IsAlcohol = patientClinicalViewModel.patientSocialHisotryModel.IsAlcohol;
+                        patientSocialHisotry.IsDrugs = patientClinicalViewModel.patientSocialHisotryModel.IsDrugs;
+                        patientSocialHisotry.IsSmoke = patientClinicalViewModel.patientSocialHisotryModel.IsSmoke;
+                        patientSocialHisotry.Other = patientClinicalViewModel.patientSocialHisotryModel.Other;
+                        patientSocialHisotry.PatientId = patientClinicalViewModel.PatientId;
+                        patientSocialHisotry.CreatedBy = patientClinicalViewModel.PatientId;
+                        patientSocialHisotry.CreatedOn = DateTime.Now;
+                        patientSocialHisotry.ModifiedBy = patientClinicalViewModel.PatientId;
+                        patientSocialHisotry.ModifiedOn = DateTime.Now;
+                        _patientSocialHisotry.Add(patientSocialHisotry);
+                    }
+                }
+                //Insert/Update family history
+                if (patientClinicalViewModel.patientClinicalHistoryModel != null)
+                {
+                    if (patientClinicalViewModel.patientClinicalHistoryModel.Id > 0)
+                    {
+                        var currentClinicalHistory = _patientClinicalHistory.GetSingle(x => x.Id == patientClinicalViewModel.patientClinicalHistoryModel.Id);
+                        currentClinicalHistory.IsAlcoholAbuse = patientClinicalViewModel.patientClinicalHistoryModel.IsAlcoholAbuse;
+                        currentClinicalHistory.IsBloodPressure = patientClinicalViewModel.patientClinicalHistoryModel.IsBloodPressure;
+                        currentClinicalHistory.IsCancer = patientClinicalViewModel.patientClinicalHistoryModel.IsCancer;
+                        currentClinicalHistory.IsDiabetes = patientClinicalViewModel.patientClinicalHistoryModel.IsDiabetes;
+                        currentClinicalHistory.IsDrugAbuse = patientClinicalViewModel.patientClinicalHistoryModel.IsDrugAbuse;
+                        currentClinicalHistory.IsHeartDisease = patientClinicalViewModel.patientClinicalHistoryModel.IsHeartDisease;
+                        currentClinicalHistory.PatientId = patientClinicalViewModel.PatientId;
+                        currentClinicalHistory.ModifiedBy = patientClinicalViewModel.PatientId;
+                        currentClinicalHistory.ModifiedOn = DateTime.Now;
+                        _patientClinicalHistory.Update(currentClinicalHistory);
+                    }
+                    else
+                    {
+                        PatientClinicalHistory patientClinicalHistory = new PatientClinicalHistory()
+                        {
+                            IsAlcoholAbuse = patientClinicalViewModel.patientClinicalHistoryModel.IsAlcoholAbuse,
+                            IsBloodPressure = patientClinicalViewModel.patientClinicalHistoryModel.IsBloodPressure,
+                            IsCancer = patientClinicalViewModel.patientClinicalHistoryModel.IsCancer,
+                            IsDiabetes = patientClinicalViewModel.patientClinicalHistoryModel.IsDiabetes,
+                            IsDrugAbuse = patientClinicalViewModel.patientClinicalHistoryModel.IsDrugAbuse,
+                            IsHeartDisease = patientClinicalViewModel.patientClinicalHistoryModel.IsHeartDisease,
+                            PatientId = SessionVariables.LoggedInUser.UserId,
+                            CreatedBy = SessionVariables.LoggedInUser.UserId,
+                            CreatedOn = DateTime.Now,
+                            ModifiedBy = SessionVariables.LoggedInUser.UserId,
+                            ModifiedOn = DateTime.Now
+                        };
+                        _patientClinicalHistory.Add(patientClinicalHistory);
+                    }
+                }
+                //Insert/update Surgical History
+                if (patientClinicalViewModel.patientSurgicalHistoryModel != null)
+                {
+                    if (patientClinicalViewModel.patientSurgicalHistoryModel.Id > 0)
+                    {
+                        var currentSurgicalHistory = _patientSurgicalHistory.GetSingle(x => x.Id == patientClinicalViewModel.patientSurgicalHistoryModel.Id);
+                        currentSurgicalHistory.IsAppendix = patientClinicalViewModel.patientSurgicalHistoryModel.IsAppendix;
+                        currentSurgicalHistory.IsCataracts = patientClinicalViewModel.patientSurgicalHistoryModel.IsCataracts;
+                        currentSurgicalHistory.IsGallbladder = patientClinicalViewModel.patientSurgicalHistoryModel.IsGallbladder;
+                        currentSurgicalHistory.IsHeartByPass = patientClinicalViewModel.patientSurgicalHistoryModel.IsHeartByPass;
+                        currentSurgicalHistory.IsHysterectomy = patientClinicalViewModel.patientSurgicalHistoryModel.IsHysterectomy;
+                        currentSurgicalHistory.IsStent = patientClinicalViewModel.patientSurgicalHistoryModel.IsStent;
+                        currentSurgicalHistory.IsTonsils = patientClinicalViewModel.patientSurgicalHistoryModel.IsTonsils;
+                        currentSurgicalHistory.PatientId = patientClinicalViewModel.PatientId;
+                        currentSurgicalHistory.ModifiedBy = patientClinicalViewModel.PatientId;
+                        currentSurgicalHistory.ModifiedOn = DateTime.Now;
+                        _patientSurgicalHistory.Update(currentSurgicalHistory);
+                    }
+                    else
+                    {
+                        PatientSurgicalHistory patientSurgicalHistory = new PatientSurgicalHistory()
+                        {
+                            IsAppendix = patientClinicalViewModel.patientSurgicalHistoryModel.IsAppendix,
+                            IsCataracts = patientClinicalViewModel.patientSurgicalHistoryModel.IsCataracts,
+                            IsGallbladder = patientClinicalViewModel.patientSurgicalHistoryModel.IsGallbladder,
+                            IsHeartByPass = patientClinicalViewModel.patientSurgicalHistoryModel.IsHeartByPass,
+                            IsHysterectomy = patientClinicalViewModel.patientSurgicalHistoryModel.IsHysterectomy,
+                            IsStent = patientClinicalViewModel.patientSurgicalHistoryModel.IsStent,
+                            IsTonsils = patientClinicalViewModel.patientSurgicalHistoryModel.IsTonsils,
+                            PatientId = patientClinicalViewModel.PatientId,
+                            CreatedBy = patientClinicalViewModel.PatientId,
+                            CreatedOn = DateTime.Now,
+                            ModifiedBy = patientClinicalViewModel.PatientId,
+                            ModifiedOn = DateTime.Now
+                        };
+                        _patientSurgicalHistory.Add(patientSurgicalHistory);
+                    }
+                }
+                //Insert/update Clinical History
+                if (patientClinicalViewModel.patientReviewOfSystemModel != null)
+                {
+                    if (patientClinicalViewModel.patientReviewOfSystemModel.Id > 0)
+                    {
+                        var currentReviewOfSystemHistory = _patientReviewOfSystem.GetSingle(x => x.Id == patientClinicalViewModel.patientReviewOfSystemModel.Id);
+                        currentReviewOfSystemHistory.Cardiovascular = patientClinicalViewModel.patientReviewOfSystemModel.Cardiovascular;
+                        currentReviewOfSystemHistory.Dental = patientClinicalViewModel.patientReviewOfSystemModel.Dental;
+                        currentReviewOfSystemHistory.Diabetes = patientClinicalViewModel.patientReviewOfSystemModel.Diabetes;
+                        currentReviewOfSystemHistory.Ear = patientClinicalViewModel.patientReviewOfSystemModel.Ear;
+                        currentReviewOfSystemHistory.Eyes = patientClinicalViewModel.patientReviewOfSystemModel.Eyes;
+                        currentReviewOfSystemHistory.GeneralCondition = patientClinicalViewModel.patientReviewOfSystemModel.GeneralCondition;
+                        currentReviewOfSystemHistory.Hematology = patientClinicalViewModel.patientReviewOfSystemModel.Hematology;
+                        currentReviewOfSystemHistory.MusclesOrJoints = patientClinicalViewModel.patientReviewOfSystemModel.MusclesOrJoints;
+                        currentReviewOfSystemHistory.Neurological = patientClinicalViewModel.patientReviewOfSystemModel.Neurological;
+                        currentReviewOfSystemHistory.ObOrGyn = patientClinicalViewModel.patientReviewOfSystemModel.ObOrGyn;
+                        currentReviewOfSystemHistory.Psychological = patientClinicalViewModel.patientReviewOfSystemModel.Psychological;
+                        currentReviewOfSystemHistory.Respiratory = patientClinicalViewModel.patientReviewOfSystemModel.Respiratory;
+                        currentReviewOfSystemHistory.Skin = patientClinicalViewModel.patientReviewOfSystemModel.Skin;
+                        currentReviewOfSystemHistory.Stomach = patientClinicalViewModel.patientReviewOfSystemModel.Stomach;
+                        currentReviewOfSystemHistory.Urinary = patientClinicalViewModel.patientReviewOfSystemModel.Urinary;
+                        currentReviewOfSystemHistory.PatientId = patientClinicalViewModel.PatientId;
+                        currentReviewOfSystemHistory.ModifiedBy = patientClinicalViewModel.PatientId;
+                        currentReviewOfSystemHistory.ModifiedOn = DateTime.Now;
+                        _patientReviewOfSystem.Update(currentReviewOfSystemHistory);
+                    }
+                    else
+                    {
+
+                        PatientReviewOfSystem patientReviewOfSystem = new PatientReviewOfSystem()
+                        {
+                            Cardiovascular = patientClinicalViewModel.patientReviewOfSystemModel.Cardiovascular,
+                            Dental = patientClinicalViewModel.patientReviewOfSystemModel.Dental,
+                            Diabetes = patientClinicalViewModel.patientReviewOfSystemModel.Diabetes,
+                            Ear = patientClinicalViewModel.patientReviewOfSystemModel.Ear,
+                            Eyes = patientClinicalViewModel.patientReviewOfSystemModel.Eyes,
+                            GeneralCondition = patientClinicalViewModel.patientReviewOfSystemModel.GeneralCondition,
+                            Hematology = patientClinicalViewModel.patientReviewOfSystemModel.Hematology,
+                            MusclesOrJoints = patientClinicalViewModel.patientReviewOfSystemModel.MusclesOrJoints,
+                            Neurological = patientClinicalViewModel.patientReviewOfSystemModel.Neurological,
+                            ObOrGyn = patientClinicalViewModel.patientReviewOfSystemModel.ObOrGyn,
+                            Psychological = patientClinicalViewModel.patientReviewOfSystemModel.Psychological,
+                            Respiratory = patientClinicalViewModel.patientReviewOfSystemModel.Respiratory,
+                            Skin = patientClinicalViewModel.patientReviewOfSystemModel.Skin,
+                            Stomach = patientClinicalViewModel.patientReviewOfSystemModel.Stomach,
+                            Urinary = patientClinicalViewModel.patientReviewOfSystemModel.Urinary,
+                            PatientId = patientClinicalViewModel.PatientId,
+                            CreatedBy = patientClinicalViewModel.PatientId,
+                            CreatedOn = DateTime.Now,
+                            ModifiedBy = patientClinicalViewModel.PatientId,
+                            ModifiedOn = DateTime.Now
+                        };
+                        _patientReviewOfSystem.Add(patientReviewOfSystem);
+                    }
                 }
             }
-            return doctorList;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
+        public bool SavePatientConditiondata(PatientConditionInfo patientConditionInfo, int patientId)
+        {
+            bool result = false;
+            try
+            {
+                PatientCondition patientCondition = new PatientCondition()
+                {
+                    Condition = patientConditionInfo.patientConditionViewModel.Condition,
+                    PatientId = patientId,
+                    CreatedBy = patientId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = patientId,
+                    ModifiedOn = DateTime.Now
+
+                };
+                _patientCondition.Add(patientCondition);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
+        public bool DeletepatientConditionData(int patientConditionId)
+        {
+            try
+            {
+                var patientConditionData = _patientCondition.GetSingle(x => x.Id == patientConditionId);
+                if (patientConditionData != null)
+                {
+                    _patientCondition.Delete(patientConditionData);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+        #region Providers
+        public PatientFavouriteDoctor GetFavouriteDoctors(int patientId)
+        {
+            try
+            {
+                PatientFavouriteDoctor patientFavouriteDoctor = new PatientFavouriteDoctor();
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("dbo.GetFavoriteDoctor", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@patientId", SqlDbType.Int).Value = patientId;
+                        con.Open();
+                        SqlDataReader rdr = cmd.ExecuteReader();
+                        while (rdr.Read())
+                        {
+                            //Accessing the data using the string key as index
+                            GetDoctorsByPatients getDoctorPatients = new GetDoctorsByPatients()
+                            {
+                                Name = Convert.ToString(rdr["name"]),
+                                EmailAddress = Convert.ToString(rdr["EmailAddress"]),
+                                UserId = Convert.ToInt32(rdr["userId"]),
+                                Phone = Convert.ToString(rdr["phone"]),
+                                Address = Convert.ToString(rdr["address"]),
+                                SpecialtyName = Convert.ToString(rdr["SpecialtyName"]),
+                                City = Convert.ToString(rdr["city"]),
+                                ProfilePic = Convert.ToString(rdr["ProfilePic"]),
+                                FavoriteDoctorId = Convert.ToInt32(rdr["FavoriteId"]),
+                                IsprimaryDoctor = Convert.ToBoolean(rdr["IsprimaryDoctor"]),
+                                VideoChat = Convert.ToDecimal(rdr["VideoChat"]),
+                                VideoEmail = Convert.ToDecimal(rdr["VideoEmail"]),
+                                AskDoctor = Convert.ToDecimal(rdr["AskDoctor"]),
+                                Refill = Convert.ToDecimal(rdr["Refill"]),
+                            };
+                            patientFavouriteDoctor.getDoctorsByPatients.Add(getDoctorPatients);
+                        }
+                        con.Close();
+                    }
+                }
+                return patientFavouriteDoctor;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public PersonalTab LoadPersonalTabData(int patientId)
+        {
+            try
+            {
+                PersonalTab personalTab = new PersonalTab();
+                personalTab.PatientPersonalModel = LoadPersonalDetailsByUserId(patientId);
+                personalTab.PatientInsuranceModel = LoadInsuranceDetailsByUserId(patientId);
+                personalTab.patientMedicationList = LoadMedicationDetailsByUserId(patientId).MedicationList;
+                personalTab.AllergyList = LoadAllergiesDetailsByUserId(patientId).AllergyList;
+                return personalTab;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public int SaveStep1Data(bool isTermAndConditionChecked, int UserId, int doctorId, int serviceType)
+        {
+            try
+            {
+                OnlineVisitStep1 onlineVisitStep1 = new OnlineVisitStep1()
+                {
+                    CreatedBy = UserId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = UserId,
+                    ModifiedOn = DateTime.Now,
+                    IsTncChecked = isTermAndConditionChecked,
+                    PatientId = UserId,
+                    DoctorId = doctorId,
+                    ServiceType = serviceType
+                };
+                _onlineVisitStep1.Add(onlineVisitStep1);
+                return onlineVisitStep1.VisitId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public int SaveStep2Data(ComplaintTab complaintTab, int UserId)
+        {
+            try
+            {
+                OnlineVisitStep2 onlineVisitStep2 = new OnlineVisitStep2()
+                {
+                    PatientId = UserId,
+                    A1 = complaintTab.A1,
+                    A2 = complaintTab.A2,
+                    A3 = complaintTab.A3,
+                    A4 = complaintTab.A4,
+                    A5 = complaintTab.A5,
+                    A6 = complaintTab.A6,
+                    A7 = complaintTab.A7,
+                    A8 = complaintTab.A8,
+                    A9 = Convert.ToDateTime(complaintTab.A9),
+                    A10 = Convert.ToDateTime(complaintTab.A10),
+                    A11 = Convert.ToDateTime(complaintTab.A11),
+                    DoctorId = complaintTab.DoctorId,
+                    step1Id = complaintTab.Step1Id,
+                    CreatedBy = UserId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = UserId,
+                    ModifiedOn = DateTime.Now
+
+                };
+                _onlineVisitStep2.Add(onlineVisitStep2);
+                return onlineVisitStep2.Step2VisitId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public int SaveStep5Data(VideoTab videoTab, int UserId)
+        {
+            try
+            {
+                OnlineVisitStep5 onlineVisitStep5 = new OnlineVisitStep5()
+                {
+                    PatientId = UserId,
+                    DoctorId = videoTab.DoctorId,
+                    TextMessage = videoTab.TextMessage,
+                    CreatedBy = UserId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = UserId,
+                    ModifiedOn = DateTime.Now
+
+                };
+                _onlineVisitStep5.Add(onlineVisitStep5);
+                return onlineVisitStep5.VisitId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #endregion
