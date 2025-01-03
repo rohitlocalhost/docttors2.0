@@ -1,0 +1,722 @@
+﻿@model Docttors_portal.Common.Models.PatientClinicalViewModel
+@{
+    ViewBag.Title = "PatientClinicalHistory";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header text-white" style="background-color: #1434A4;">
+        <h2 class="card-title">
+            Clinical History
+            <span style="font-size: 12px;"><a style="color: red;" id="help" onclick="helpclick(this)" href="#">Help?</a></span>
+        </h2>
+    </div>
+    <div class="card-body">
+        <div id="ctl00_ContentPlaceHolder1_UpdatePanel1">
+            <span id="ctl00_ContentPlaceHolder1_lblMessage"></span>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Active Problem List</h3>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("patientCondition", "Patient", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.PatientConditionInfo.patientConditionViewModel.Id)
+                        <div class="row justify-content-lg-start justify-content-center">
+                            <div class="col-md-2">
+                                <label>Condition/Illness <span style="color: red">*</span></label>
+                            </div>
+                            <div class="col-md-2">
+                                @Html.TextBoxFor(x => x.PatientConditionInfo.patientConditionViewModel.Condition)
+                                @Html.ValidationMessageFor(model => model.PatientConditionInfo.patientConditionViewModel.Condition, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-4 ms-lg-3">
+                                <input type="submit" value="Save" class="btn text-white" style="background-color: #1434A4;" />
+                            </div>
+                        </div>
+                    }
+                    <div class="row mt-3 g-2 justify-content-around">
+                        @foreach (var item in Model.PatientConditionInfo.patientConditionData)
+                        {
+                            <div class="col-auto col-sm-auto col-md-4 col-lg-auto">
+                                <div class="card-body rounded-3" style="background-color: #ffdbac;">
+                                    <b>Condition: </b>@item.Condition
+                                    <a href="@Url.Action("DeletePatientCondition", "Patient", new {@patientConditionId=item.Id})"><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+
+            @using (Html.BeginForm("PatientClinicalHistory", "Patient", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.PatientId);
+                @Html.HiddenFor(m => m.patientClinicalHistoryModel.Id);
+                @Html.HiddenFor(m => m.patientSocialHisotryModel.Id);
+                @Html.HiddenFor(m => m.patientSurgicalHistoryModel.Id);
+                @Html.HiddenFor(m => m.patientReviewOfSystemModel.Id);
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Chronic Conditions </h3>
+                        <span>(have you been diagnosed with any of the following)</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-2">
+                            @for (int i = 0; i < Model.allChronicConditions.Count; i++)
+                            {
+                                @Html.HiddenFor(m => m.allChronicConditions[i].Id)
+                                <div class="col-md-3">
+                                    <span>@Model.allChronicConditions[i].Name</span>
+                                    <div class="input-group">
+                                        <span class="input-group-addon mt-2 pe-1">
+                                            @Html.CheckBoxFor(m => Model.allChronicConditions[i].IsChecked, new { @class = "clsChronicConditions" })
+                                            @Html.TextBoxFor(m => m.allChronicConditions[i].Text, new { @class = "txtChronicConditions", @disabled = true })
+                                        </span>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Social History </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">Smoke</div>
+                            <div class="row col-lg-9">
+                                <table class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoSelectionList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientSocialHisotryModel.IsSmoke, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Drugs</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdDrug" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoSelectionList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientSocialHisotryModel.IsDrugs, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Alcohol</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdAlcohol" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoSelectionList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientSocialHisotryModel.IsAlcohol, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Other</div>
+                            <div class="row col-lg-9">
+                                @Html.TextBoxFor(m => m.patientSocialHisotryModel.Other, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Family Clinical History</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">Cancer</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdCancer" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoSelectionList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientClinicalHistoryModel.IsCancer, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">Diabetes</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdDiabetes" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoSelectionList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientClinicalHistoryModel.IsDiabetes, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">High Blood Pressure</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdHighBPressure" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoSelectionList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientClinicalHistoryModel.IsBloodPressure, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Heart Disease</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdHeartDisease" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoSelectionList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientClinicalHistoryModel.IsHeartDisease, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Alcohol Abuse</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdAlcoholAbuse" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoSelectionList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientClinicalHistoryModel.IsAlcoholAbuse, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Drug Abuse</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdDrugAbuse" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoSelectionList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientClinicalHistoryModel.IsDrugAbuse, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Surgical History </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">Tonsils</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdTonsil" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoDontKnowList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientSurgicalHistoryModel.IsTonsils, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Appendix</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdApendix" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoDontKnowList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientSurgicalHistoryModel.IsAppendix, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Gallbladder</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdGallblader" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoDontKnowList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientSurgicalHistoryModel.IsGallbladder, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Stent</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdStent" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoDontKnowList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientSurgicalHistoryModel.IsStent, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Heart ByPass</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdHeartBypass" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoDontKnowList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientSurgicalHistoryModel.IsHeartByPass, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Hysterectomy</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdHysterctomy" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoDontKnowList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientSurgicalHistoryModel.IsHysterectomy, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Cataracts</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdCataracts" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.YesNoDontKnowList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientSurgicalHistoryModel.IsCataracts, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Review of System(RoS)</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">General Condition</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdGeneral" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.GeneralConditionList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.GeneralCondition, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Endocrine/Diabetes</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdEndocrine" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.EndocrineorDiabetesList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.Diabetes, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Stomach/GI</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdStomach" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.StomachList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.Stomach, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Urinary</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdUrinary" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.UrinaryList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.Urinary, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Neurological/Head</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdNeurology" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.NeurologicalList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.Neurological, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Cardiovascular</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdCardi" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.CardiovascularList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.Cardiovascular, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Respiratory</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdRespiratory" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.RespiratoryList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.Respiratory, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Eyes</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdEye" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.EyesList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.Eyes, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Ear</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdEar" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.EarList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.Ear, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Ob/Gyn</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdGyn" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.ObOrGynList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.ObOrGyn, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Muscles/Joints</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdMuscles" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.MusclesOrJointsList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.MusclesOrJoints, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Skin</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdSkin" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.SkinList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.Skin, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Cancer/Hematology</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdCancerHema" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.CancerOrHematologyList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.Hematology, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Dental</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdDental" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.DentalList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.Dental, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">Psychological</div>
+                            <div class="row col-lg-9">
+                                <table id="ctl00_ContentPlaceHolder1_rdPsychology" class="RadioList" border="0">
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var item in Model.PsychologicalList)
+                                            {
+                                                <td>
+                                                    @Html.RadioButtonFor(model => model.patientReviewOfSystemModel.Psychological, item.Id)
+                                                    @Html.Label(item.Name)
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3 mt-1 mb-1 d-print-none justify-content-lg-end">
+                    <div class="col-md-3">
+                        <a href="Javascript:void(0)" id="ctl00_ContentPlaceHolder1_ctl00_ContentPlaceHolder1_btnPrint" class="btn btn-rounded btn-secondary btn-wave">
+                            <i class="fa fa-print" aria-hidden="true"></i>Print This Page
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <a id="ctl00_ContentPlaceHolder1_btnCancel" class="btn btn-rounded btn-warning btn-wave" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$btnCancel','')">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            Back
+                        </a>
+                    </div>
+
+                    <div class="col-md-2">
+                        <input type="submit" value="Save" class="btn btn-rounded btn-success btn-wave" />
+                    </div>
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $('.clsChronicConditions').click(function () {
+            if (this.checked) {
+                $(this).parent().find('input.txtChronicConditions').attr('disabled', false)
+            } else {
+                $(this).parent().find('input.txtChronicConditions').attr('disabled', true)
+                $(this).parent().find('input.txtChronicConditions').val('')
+            }
+        })
+    </script>
+}

@@ -44,6 +44,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,7 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Docttors-portal.Common\Docttors-portal.Common.csproj">
-      <Project>{69F890C7-1233-4AA3-815A-56265920D7DD}</Project>
+      <Project>{69f890c7-1233-4aa3-815a-56265920d7dd}</Project>
       <Name>Docttors-portal.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Docttors-portal.DataAccess\Docttors-portal.DataAccess.csproj">

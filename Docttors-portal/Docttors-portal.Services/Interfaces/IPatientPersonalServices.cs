@@ -1,11 +1,16 @@
-﻿using Docttors_portal.Common.Models;
+﻿using Docttors_portal.Common;
+using Docttors_portal.Common.Models;
 using Docttors_portal.Common.procedureModels;
 using System.Collections.Generic;
+using static Docttors_portal.Common.Models.MyProvider;
 
 namespace Docttors_portal.Services.Interfaces
 {
     public interface IPatientPersonalServices
     {
+        #region patient Load Services
+        List<GetpatientMessage> GetpatientMessages(int patientId);
+        #endregion
         #region MHR Load Interface
         GetMHRDataInfo GetMHRData(int UserId);
         #endregion
@@ -66,6 +71,7 @@ namespace Docttors_portal.Services.Interfaces
         bool UpdateObservationDetails(PatientObservationModel patientObservationModel);
         PatientObservationModel LoadObservationDataByObservationId(int observationId, int userId);
         #endregion
+
         #region patient Vital Service
         int SaveVitalDetails(PatientVitalModel patientObservationModel);
         PatientVitalModel LoadVitalByUserId(int userId);
@@ -73,8 +79,28 @@ namespace Docttors_portal.Services.Interfaces
         PatientVitalModel LoadVitalDataByVitalId(int vitalId, int userId);
         #endregion
 
-        #region Get Doctor By Patient
-        List<GetDoctorsByPatients> GetDoctorByPatient(PatientSearchDoctorModel patientSearchModel);
+        #region Search Functionality
+        PatientSearchDoctorModel GetDoctorByPatient(PatientSearchDoctorModel patientSearchModel, SearchType searchType);
+
+        void AddFavouriteDoctor(int doctorId);
+        void RemoveFavouriteDoctor(int favouriteId);
+        void UpdatePrimaryDoctor(int favouriteId, bool isPrimary);
+        #endregion
+
+        #region Patient Clinical History
+        PatientClinicalViewModel GetPatientClinicalData(int patientId);
+        bool SavepatientClinicalData(PatientClinicalViewModel patientClinicalViewModel);
+
+        bool SavePatientConditiondata(PatientConditionInfo patientConditionInfo, int patientId);
+        bool DeletepatientConditionData(int patientConditionId);
+        #endregion
+
+        #region Providers
+        PatientFavouriteDoctor GetFavouriteDoctors(int patientId);
+        PersonalTab LoadPersonalTabData(int patientId);
+        int SaveStep1Data(bool isTermAndConditionChecked, int UserId, int doctorId, int serviceType);
+        int SaveStep2Data(ComplaintTab complaintTab, int UserId);
+        int SaveStep5Data(VideoTab videoTab, int UserId);
         #endregion
     }
 }

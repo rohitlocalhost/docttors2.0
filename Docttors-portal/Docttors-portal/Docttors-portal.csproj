@@ -180,8 +180,8 @@
     <Content Include="assets\images\logo-sm.svg" />
     <Content Include="assets\images\logo.png" />
     <Content Include="assets\images\medical-team.png" />
-    <Content Include="assets\images\online-pharmacy.png" />
     <Content Include="assets\images\plus.png" />
+    <Content Include="assets\images\refill.png" />
     <Content Include="assets\images\small\img-1.jpg" />
     <Content Include="assets\images\small\img-2.jpg" />
     <Content Include="assets\images\small\img-3.jpg" />
@@ -204,8 +204,8 @@
     <Content Include="assets\images\users\avatar-6.jpg" />
     <Content Include="assets\images\users\avatar-8.jpg" />
     <Content Include="assets\images\users\avatar-9.jpg" />
-    <Content Include="assets\images\video-call.png" />
-    <Content Include="assets\images\video-chat.png" />
+    <Content Include="assets\images\Videochat.png" />
+    <Content Include="assets\images\videoemail.png" />
     <Content Include="assets\js\app.js" />
     <Content Include="assets\js\bootstrap-timepicker.js" />
     <Content Include="assets\js\pages\alert.init.js" />
@@ -465,6 +465,11 @@
     <Content Include="Views\Patient\MedicationDetails.cshtml" />
     <Content Include="Views\Patient\VitalSign.cshtml" />
     <Content Include="Views\Patient\ChangePassword.cshtml" />
+    <Content Include="Views\Patient\PatientClinicalHistory.cshtml" />
+    <Content Include="Views\Patient\OnlineVisitConfirmation.cshtml" />
+    <Content Include="Views\Patient\OnlineVisitInfo.cshtml" />
+    <Content Include="Views\Patient\VisitComplete.cshtml" />
+    <Content Include="Views\Patient\SentMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

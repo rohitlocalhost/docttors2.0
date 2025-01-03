@@ -40,6 +40,10 @@ namespace Docttors_portal.Common.procedureModels
         public string VitalModified { get; set; }
         public string VitalModifiedTime { get; set; }
 
+        public string ClinicalHistoryCreated { get; set; }
+        public string ClinicalHistoryModified { get; set; }
+        public string ClinicalHistoryModifiedTime { get; set; }
+
 
     }
 }

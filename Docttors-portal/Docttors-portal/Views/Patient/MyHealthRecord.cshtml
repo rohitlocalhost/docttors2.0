@@ -70,10 +70,10 @@
                     <td>@Model.PharmacyModifiedTime</td>
                 </tr>
                 <tr>
-                    <td><a href="clinic-history.html">Clinical History</a></td>
-                    <td>06-Oct-2022</td>
-                    <td>12-Feb-2023</td>
-                    <td>12:22:03 PM</td>
+                    <td><a href="@Url.Action("PatientClinicalHistory","Patient")">Clinical History</a></td>
+                    <td>@Model.ClinicalHistoryCreated</td>
+                    <td>@Model.ClinicalHistoryModified</td>
+                    <td>@Model.ClinicalHistoryModifiedTime</td>
                 </tr>
                 <tr>
                     <td><a href="@Url.Action("VitalSign","Patient")">My Vital Signs</a></td>
