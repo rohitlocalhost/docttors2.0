@@ -13,13 +13,16 @@ namespace Docttors_portal.Common.Models
         {
             this.PersonalTab = new PersonalTab();
             this.ComplaintTab = new ComplaintTab();
-            this.videoTab=new VideoTab();
+            this.videoTab = new VideoTab();
+            this.paymentTab = new paymentTab();
         }
         public PersonalTab PersonalTab { get; set; }
 
         public ComplaintTab ComplaintTab { get; set; }
 
         public VideoTab videoTab { get; set; }
+
+        public paymentTab paymentTab { get; set; }
     }
     public class PersonalTab
     {
@@ -82,6 +85,7 @@ namespace Docttors_portal.Common.Models
         public bool? PatientOrGuardian { get; set; }
         public static int DoctorId { get; set; }
         public static int ServiceType { get; set; }
+        public static int Step1Id { get; set; }
     }
 
     public class Symptoms
@@ -104,6 +108,60 @@ namespace Docttors_portal.Common.Models
         [Required(ErrorMessage = "This field is required")]
         public string TextMessage { get; set; }
         public int DoctorId { get; set; }
+        public int Step1Id { get; set; }
+
+    }
+
+    public class paymentTab
+    {
+        public int VisitId { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        public int PatientId { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        public int DoctorId { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        public int step1Id { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "This field is required")]
+        public string LastName { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        public string Phone { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+                    @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+                    @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
+                    ErrorMessage = "Email is not valid")]
+        public string Email { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        public string Address { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        public string City { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        public int StateId { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        public string Zip { get; set; }
+
+        public string PaymentType { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        public int CardTypeId { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        public decimal Amount { get; set; }
+        public string CardId { get; set; }
+        public string CvvNumber { get; set; }
+        public DateTime TransactionDate { get; set; }
+        public string BillingType { get; set; }
+        public string PaypalTrasactionId { get; set; }
+        public string PaymentTransactionId { get; set; }
+        public string RefundTransId { get; set; }
+        public string RefundStatus { get; set; }
+        public int CardExpMonthId { get; set; }
+        public int CardExpYearId { get; set; }
+        public List<NameIdModel> StateList { get; set; }
+        public List<NameIdModel> CardExpMonthList { get; set; }
+        public List<NameIdModel> CardExpYearList { get; set; }
+        public List<NameIdModel> CardTypeList { get; set; }
 
     }
 }

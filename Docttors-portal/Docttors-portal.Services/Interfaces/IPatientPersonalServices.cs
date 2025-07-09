@@ -9,7 +9,7 @@ namespace Docttors_portal.Services.Interfaces
     public interface IPatientPersonalServices
     {
         #region patient Load Services
-        List<GetpatientMessage> GetpatientMessages(int patientId);
+        List<GetpatientMessage> GetpatientMessages(int? patientId, int? doctorId);
         #endregion
         #region MHR Load Interface
         GetMHRDataInfo GetMHRData(int UserId);
@@ -101,6 +101,8 @@ namespace Docttors_portal.Services.Interfaces
         int SaveStep1Data(bool isTermAndConditionChecked, int UserId, int doctorId, int serviceType);
         int SaveStep2Data(ComplaintTab complaintTab, int UserId);
         int SaveStep5Data(VideoTab videoTab, int UserId);
+        int SaveStep6Data(paymentTab paymentTab, int UserId);
+        GetMessageDetails GetpatientMessagesDetails(int visitId);
         #endregion
     }
 }

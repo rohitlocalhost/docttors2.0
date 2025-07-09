@@ -1,5 +1,6 @@
 ﻿using Docttors_portal.Common;
 using Docttors_portal.Common.Models;
+using Docttors_portal.Common.procedureModels;
 using Docttors_portal.Filter;
 using Docttors_portal.Services.Interfaces;
 using System;
@@ -17,16 +18,24 @@ namespace Docttors_portal.Controllers
         private readonly IDoctorServices _doctorServices;
         private readonly IUserLogOnService _userLoginService;
         private readonly ICommonUtilityService _commonUtilityService;
+        private readonly IPatientPersonalServices _patientServices;
         #endregion
-        public DoctorController(IDoctorServices doctorServices, IUserLogOnService userLoginService, ICommonUtilityService commonUtilityService)
+        public DoctorController(IDoctorServices doctorServices, IUserLogOnService userLoginService, ICommonUtilityService commonUtilityService, IPatientPersonalServices patientServices)
         {
             _doctorServices = doctorServices;
             _userLoginService = userLoginService;
             _commonUtilityService = commonUtilityService;
+            _patientServices = patientServices;
         }
         public ActionResult Index()
         {
-            return View();
+            var doctorMessageData = LoadpatientMessage();
+            return View(doctorMessageData);
+        }
+
+        private List<GetpatientMessage> LoadpatientMessage()
+        {
+            return _patientServices.GetpatientMessages(null, SessionVariables.LoggedInUser.UserId);
         }
         public ActionResult SearchPatient()
         {
@@ -75,7 +84,17 @@ namespace Docttors_portal.Controllers
         }
         public ActionResult Inbox()
         {
-            return View();
+            var doctorMessageData = LoadpatientMessage();
+            return View(doctorMessageData);
+        }
+        [HttpGet]
+        public ActionResult CompleteTreatment(int Step1Id)
+        {
+            if (Step1Id > 0)
+            {
+                _doctorServices.CompleteTreatment(Step1Id, SessionVariables.LoggedInUser.UserId);
+            }
+            return RedirectToAction("Inbox");
         }
 
         public ActionResult Transactions()
@@ -207,6 +226,12 @@ namespace Docttors_portal.Controllers
             {
                 throw ex;
             }
+        }
+
+        public ActionResult OpenMessage(int visitId)
+        {
+            var patientMessageDetails = _doctorServices.GetDoctorMessagesDetails(visitId);
+            return View(patientMessageDetails);
         }
     }
 }

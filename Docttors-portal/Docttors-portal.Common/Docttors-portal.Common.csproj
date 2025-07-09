@@ -68,8 +68,10 @@
     <Compile Include="Models\PatientSearchModel.cs" />
     <Compile Include="Models\patientVitalModel.cs" />
     <Compile Include="Models\UserRegistrationModel.cs" />
+    <Compile Include="procedureModels\GetDoctorMessageDetails.cs" />
     <Compile Include="procedureModels\GetDoctorPatients.cs" />
     <Compile Include="procedureModels\GetDoctorsByPatients.cs" />
+    <Compile Include="procedureModels\GetMessageDetails.cs" />
     <Compile Include="procedureModels\GetMHRDataInfo.cs" />
     <Compile Include="procedureModels\GetpatientMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

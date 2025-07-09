@@ -16,5 +16,6 @@ namespace Docttors_portal.Entities.Classes
         public int PatientId { get; set; }
         public int DoctorId { get; set; }
         public string TextMessage { get; set; }
+        public int Step1Id { get; set; }
     }
 }

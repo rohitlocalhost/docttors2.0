@@ -32,6 +32,8 @@ namespace Docttors_portal.Services.Classes
         private readonly IRepository<DoctorOnlineFees> _doctorOnlineFees;
         private readonly IRepository<DoctorContact> _doctorContact;
         private readonly IRepository<DoctoreNews> _doctorNews;
+        private IRepository<OnlineVisitStep1> _onlineVisitStep1;
+        private string connectionString = ConfigurationManager.ConnectionStrings["DocttorsEntities"].ConnectionString;
         public DoctorServices(IUnitOfWork unitOfWork)
         {
             if (unitOfWork != null)
@@ -44,6 +46,7 @@ namespace Docttors_portal.Services.Classes
                 _doctorOnlineFees = _unitOfWork.GetRepository<DoctorOnlineFees>();
                 _doctorContact = _unitOfWork.GetRepository<DoctorContact>();
                 _doctorNews = _unitOfWork.GetRepository<DoctoreNews>();
+                _onlineVisitStep1 = _unitOfWork.GetRepository<OnlineVisitStep1>();
             }
         }
         public List<GetDoctorPatients> GetPatientByDoctor(PatientSearchModel patientSearchModel)
@@ -693,6 +696,104 @@ namespace Docttors_portal.Services.Classes
                 throw ex;
             }
         }
+        public bool CompleteTreatment(int step1Id, int doctorId)
+        {
+            try
+            {
+                var currentStep1Data = _onlineVisitStep1.GetSingle(x => x.VisitId == step1Id);
+                if (currentStep1Data != null && currentStep1Data.DoctorId == doctorId)
+                {
+                    currentStep1Data.IsTreated = true;
+                    _onlineVisitStep1.Update(currentStep1Data);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
+        public DoctorServiceFeesModel LoadDoctorFeesByDoctorId(int doctorId)
+        {
+            try
+            {
+                var doctorServiceFeesModel = _doctorOnlineFees.GetAll(x => x.UserId == doctorId).Select(x => new DoctorServiceFeesModel()
+                {
+                    Id = x.Id,
+                    AskDoctor = x.AskDoctor,
+                    FaceToFace = x.face2face,
+                    VideoVisit = x.VideoEmail,
+                    RxRefill = x.RxRefill
+                }).FirstOrDefault();
+                return doctorServiceFeesModel;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public GetDoctorMessageDetails GetDoctorMessagesDetails(int visitId)
+        {
+            try
+            {
+                GetDoctorMessageDetails doctorMessages = new GetDoctorMessageDetails();
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("GetDoctorMessageDetails", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@visitId", SqlDbType.Int).Value = visitId;
+                        con.Open();
+                        SqlDataReader rdr = cmd.ExecuteReader();
+                        while (rdr.Read())
+                        {
+                            doctorMessages.VisitId = Convert.ToInt32(rdr["VisitId"]);
+                            doctorMessages.PatientName = Convert.ToString(rdr["PatientName"]);
+                            doctorMessages.DoctorName = Convert.ToString(rdr["DoctorName"]);
+                            doctorMessages.Subject = Convert.ToString(rdr["Subject"]);
+                            doctorMessages.CreatedOn = Convert.ToString(rdr["CreatedOn"]);
+                            doctorMessages.Phone = Convert.ToString(rdr["Phone"]);
+                            doctorMessages.PatientEmail = Convert.ToString(rdr["PatientEmail"]);
+                            doctorMessages.Sex = Convert.ToString(rdr["Sex"]);
+                            doctorMessages.Dob = Convert.ToString(rdr["Dob"]);
+                            doctorMessages.HeightWeight = Convert.ToString(rdr["HeightWeight"]);
+                            doctorMessages.Address = Convert.ToString(rdr["Address"]);
+                            doctorMessages.InsuranceCompanyName = Convert.ToString(rdr["InsuranceCompanyName"]);
+                            doctorMessages.InsuranceCompanyphone = Convert.ToString(rdr["InsuranceCompanyphone"]);
+                            doctorMessages.InsuranceCompanyAddress = Convert.ToString(rdr["InsuranceCompanyAddress"]);
+                            doctorMessages.InsuranceIdNumber = Convert.ToString(rdr["InsuranceIdNumber"]);
+                            doctorMessages.InsuranceGroupId = Convert.ToString(rdr["InsuranceGroupId"]);
+                            doctorMessages.PharmacyName = Convert.ToString(rdr["PharmacyName"]);
+                            doctorMessages.PharmacyState = Convert.ToString(rdr["PharmacyState"]);
+                            doctorMessages.PharmacyAddress = Convert.ToString(rdr["PharmacyAddress"]);
+                            doctorMessages.PharmacyCity = Convert.ToString(rdr["PharmacyCity"]);
+                            doctorMessages.PharmacyZipCode = Convert.ToString(rdr["PharmacyZipCode"]);
+                            doctorMessages.AppointmentDate = Convert.ToString(rdr["AppointmentDate"]);
+                            doctorMessages.TextMessage = Convert.ToString(rdr["TextMessage"]);
+                            doctorMessages.Complaint = Convert.ToString(rdr["Complaint"]);
+                            doctorMessages.Day = Convert.ToString(rdr["Day"]);
+                            doctorMessages.CType = Convert.ToString(rdr["CType"]);
+                            doctorMessages.Condition = Convert.ToString(rdr["Condition"]);
+                            doctorMessages.CurrentPresc = Convert.ToString(rdr["CurrentPresc"]);
+                            doctorMessages.BloodPressure = Convert.ToString(rdr["BloodPressure"]);
+                            doctorMessages.Breathing = Convert.ToString(rdr["Breathing"]);
+                            doctorMessages.Weight = Convert.ToString(rdr["Weight"]);
+                            doctorMessages.DoctorVisitDate = Convert.ToString(rdr["DoctorVisitDate"]);
+                            doctorMessages.OnlineVisitDate = Convert.ToString(rdr["OnlineVisitDate"]);
+                        }
+
+                    }
+                    con.Close();
+                }
+                return doctorMessages;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

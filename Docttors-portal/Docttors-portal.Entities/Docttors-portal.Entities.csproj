@@ -65,6 +65,7 @@
     <Compile Include="Classes\OnlineVisitStep1.cs" />
     <Compile Include="Classes\OnlineVisitStep2.cs" />
     <Compile Include="Classes\OnlineVisitStep5.cs" />
+    <Compile Include="Classes\OnlineVisitStep6.cs" />
     <Compile Include="Classes\PatientChronicConditions.cs" />
     <Compile Include="Classes\PatientClinicalHistory.cs" />
     <Compile Include="Classes\PatientCondition.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Classes\PatientSocialHisotry.cs" />
     <Compile Include="Classes\PatientSurgicalHistory.cs" />
     <Compile Include="Classes\PatientVitalsNew.cs" />
+    <Compile Include="Classes\Payment.cs" />
     <Compile Include="Classes\Role.cs" />
     <Compile Include="Classes\SpecialistInsurance.cs" />
     <Compile Include="Classes\SpecialistTypes.cs" />

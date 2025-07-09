@@ -53,5 +53,8 @@ namespace Docttors_portal.DataAccess.EntityModel
         public DbSet<OnlineVisitStep1> onlineVisitStep1s { get; set; }
         public DbSet<OnlineVisitStep2> onlineVisitStep2s { get; set; }
         public DbSet<OnlineVisitStep5> onlineVisitStep5s { get; set; }
+
+        public DbSet<OnlineVisitStep6> onlineVisitStep6s { get; set; }
+        public DbSet<Payment> payments { get; set; }
     }
 }
