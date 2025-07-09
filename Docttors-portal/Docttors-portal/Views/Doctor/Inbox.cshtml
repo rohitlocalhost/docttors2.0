@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Inbox";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+<article class="box post">
+    <h4 style="color: #1434A4;">
+        <span><u>INBOX</u> (<strong id="ctl00_ContentPlaceHolder1_span_NumberofMessage">0</strong>)</span>/
+        <span><a href="sent.aspx">SENT</a>/</span>
+        <span><a href="CCM.aspx">CCM</a> /</span>
+        <span id="ctl00_ContentPlaceHolder1_inviteSpan"><a href="invites.aspx">INVITES</a>/ </span>
+        <span id="ctl00_ContentPlaceHolder1_spnreferals"><a href="referals.aspx">REFERALS</a></span>
+    </h4>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=from" id="ctl00_ContentPlaceHolder1_header_from">From</a>
+                            </th>
+                            <th></th>
+                            <th>
+                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=TypeofService" id="ctl00_ContentPlaceHolder1_header_type">Type of Service</a>
+                            </th>
+
+                            <th>
+                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=mr" id="ctl00_ContentPlaceHolder1_Header_symptom">Symptom</a>
+                            </th>
+
+                            <th>
+                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=date" id="ctl00_ContentPlaceHolder1_header_date">Date/Time Rec’d</a>
+                            </th>
+
+                            <th>
+                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=mr" id="ctl00_ContentPlaceHolder1_header_appttime">Appt Time</a>
+                            </th>
+                            <th>
+                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=mr" id="ctl00_ContentPlaceHolder1_header_timeRemaining">Time Remaining</a>
+                            </th>
+                            <th>
+                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=mr" id="ctl00_ContentPlaceHolder1_header_mr">SSN#</a>
+                            </th>
+                            <th>
+                                <a href="#" id="ctl00_ContentPlaceHolder1_header_complete">Complete</a>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <p>There are no messages in your Inbox folder.</p>
+                <div class="row" id="Div2">
+                    <div class="col-sm-12 col-md-5">
+                        <div id="ctl00_ContentPlaceHolder1_PagingControl_pageLocationText" class="dataTables_info" role="status" aria-live="polite">Showing 1-0 of 0&nbsp;&nbsp;</div>
+                    </div>
+                    <div class="col-sm-12 col-md-7">
+                        <div class="row dataTables_paginate paging_simple_numbers" id="datatable_paginate">
+                            <span class="col-md-4" style="text-align: right"></span>
+                            <ul class="col-md-1 pagination">
+                                <li id="ctl00_ContentPlaceHolder1_PagingControl_pageNumbersLinks" class="paginate_button page-item active">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                            </ul>
+                            <span class="col-md-1" style="text-align: left"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+

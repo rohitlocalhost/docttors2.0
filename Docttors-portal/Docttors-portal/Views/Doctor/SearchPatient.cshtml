@@ -1,0 +1,99 @@
+﻿@model Docttors_portal.Common.Models.PatientSearchModel
+@{
+    ViewBag.Title = "SearchPatient";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header" style="background-color: #1434A4;">
+        <h3 class="card-title text-white">SEARCH PATIENT/FOLLOW UP</h3>
+    </div>
+    <div class="card-body">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Search by Basic Info</h3>
+            </div>
+            @using (Html.BeginForm("SearchPatient", "Doctor", FormMethod.Post))
+            {
+
+                <div class="card-body row g-3">
+                    <div class="col-md-6">
+                        <label for="">First Name</label>
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">Last Name</label>
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">Date Of Birth</label>
+                        @Html.TextBoxFor(m => m.DOB, new { @class = "datepicker form-control", name = "datepicker", type = "date" })
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">MR#</label>
+                        @Html.TextBoxFor(m => m.MR, new { @class = "form-control" })
+                    </div>
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-lg-10"></div>
+                        <div class="ol-auto col-sm-auto col-md-auto col-lg-auto">
+                            <input type="submit" value="Submit" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    @if (Model.IsSearchEnable)
+    {
+        <div class="row mt-2">
+            <h5>
+                <span> Total @Model.PatientData.Count Record(s) found!</span>
+            </h5>
+        </div>
+        <div class="row col-12 col-sm-12 col-md-12 mt-4">
+            @foreach (var item in Model.PatientData)
+            {
+                <div class="card">
+                    <div class="card-header">
+                        <a id="ctl00_ContentPlaceHolder1_rptr_Patient_ctl00_lnkFav" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$rptr_Patient$ctl00$lnkFav','')"></a>
+                        <h4 style="color: #1434A4">
+                            <i class="fa fa-user"></i>
+                            @item.Name
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <p>
+                                    <b>Name:</b>
+                                    @item.Name<br>
+                                    <b>Email:</b>
+                                    @item.EmailAddress
+                                </p>
+                            </div>
+                            <div class="col-lg-5">
+                                <p>
+                                    <b>MR#:</b>@item.Mrn
+                                    <br>
+
+                                    <b>Cell phone:</b>@item.CellPhone<br>
+
+                                    <b>DOB:</b>
+                                    @item.DOB.ToString("MM/dd/yyyy")
+                                </p>
+                            </div>
+                            <div class="col-lg-2 mt-4">
+
+                                <a class="btn text-white" style="background-color: #1434A4;" href="FollowUp.aspx?id=TlgvsHhoVCv%2b675xwi%2fx2A%23%23">Follow Up </a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a target="_blank" href="PatientDetails.aspx?id=TlgvsHhoVCv%2b675xwi%2fx2A%23%23">View more </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

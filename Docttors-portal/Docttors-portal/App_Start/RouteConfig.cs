@@ -18,6 +18,13 @@ namespace Docttors_portal
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "UnregisterCard",
+                url: "{controller}/{action}/{id}",
+                defaults: new { Controller = "MyController", Action = "Delete" },
+                constraints: new { httpMethod = new HttpMethodConstraint(new[] { "delete" }) }
+            );
         }
     }
 }

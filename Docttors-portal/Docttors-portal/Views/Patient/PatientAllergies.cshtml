@@ -1,0 +1,84 @@
+﻿@model Docttors_portal.Common.Models.PatientAllergiesModel
+@{
+    ViewBag.Title = "PatientAllergies";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<div id="wrapper" class="card">
+    <div class="card-header" style="background-color: #1434A4;">
+        <h1 class="card-title" style="color: #fff;">Allergy Details</h1>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("PatientAllergies", "Patient", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.PatientAllergyId)
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title" style="color: #1434A4;">
+                        Allergy Information
+                        <span style="font-size: 12px;"><a style="color: red;" id="help" onclick="helpclick(this)" href="#">Help?</a></span>
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AllergyName)
+                                <span class="mandatory">*</span>
+                                @Html.TextBoxFor(m => m.AllergyName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AllergyName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Reaction)
+                                @Html.TextBoxFor(m => m.Reaction, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 mt-1 mb-1 d-print-none justify-content-lg-end">
+                <div class="col-md-4"></div>
+                <div class="col-md-3">
+                    <a href="Javascript:void(0)" class="btn btn-rounded btn-secondary btn-wave"><i class="fa fa-print" aria-hidden="true"></i>Print This Page</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="@Url.Action("MyHealthRecord")" class="btn btn-rounded btn-warning btn-wave"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-rounded btn-success btn-wave"><i class="fas fa-save"></i> Save</button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                @foreach (var item in Model.AllergyList)
+                {
+                    <div class="col-md-4 pe-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <strong>Allergy Name: &nbsp;</strong><span style="color: darkblue;">@item.AllergyName</span>
+                                    <span style="color: darkblue;">
+                                        <a href="@Url.Action("DeleteAllergyDetails", "Patient", new {@patientAllergyId=item.PatientAllergyId})"><i class="bx bxs-trash float-end"></i></a>
+                                        <a href="@Url.Action("LoadwAllergyDetails", "Patient", new {@patientAllergyId=item.PatientAllergyId})"><i class="bx bxs-edit float-end"></i></a>
+                                    </span>
+                                </h2>
+                            </div>
+                            <div class="card-body">
+                                <p>
+                                    <strong>Allergy Reaction: &nbsp;@item.Reaction</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        }
+    </div>
+</div>
+
+

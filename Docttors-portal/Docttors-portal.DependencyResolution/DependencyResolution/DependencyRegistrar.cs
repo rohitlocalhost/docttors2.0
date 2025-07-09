@@ -51,9 +51,10 @@ namespace Docttors_portal.DependencyResolution.DependencyResolution
             {
                 For<IUnitOfWork>().Use<UnitOfWork<DocttorsEntities>>();
                 For<IUserLogOnService>().Use<UserLogOnService>();
-                //For<IAddressBookService>().Use<AddressBookService>();
                 For<ICommonUtilityService>().Use<CommonUtilityService>();
-                //For<IUserService>().Use<UserService>();
+                For<IDoctorServices>().Use<DoctorServices>();
+                For<IPatientPersonalServices>().Use<PatientPersonalServices>();
+                For<IPatientPhysicianServices>().Use<PatientPhysicianServices>();
                 //For<IExpenseService>().Use<ExpenseService>();
                 //For<IProjectService>().Use<ProjectServices>();
                 //For<IInvoiceService>().Use<InvoiceService>();

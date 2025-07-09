@@ -18,6 +18,8 @@ namespace Docttors_portal
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DependencyRegistrar.StructureMapper.Run();
+            HtmlHelper.ClientValidationEnabled = true;
+            HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
         }
         protected void Session_Start(object sender, EventArgs e)
         {

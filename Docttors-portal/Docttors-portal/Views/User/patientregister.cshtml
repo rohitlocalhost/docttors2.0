@@ -1,8 +1,117 @@
-﻿
+﻿@model Docttors_portal.Common.Models.PatientRegisterationModel
 @{
     ViewBag.Title = "patientregister";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>patientregister</h2>
+@{ if (Model.PatientId > 0)
+    {
+        <div class="green">
+            <p><strong>Success:</strong> patient Registeration Successfull.</p>
+        </div>
+    }
+}
+@using (Html.BeginForm("patientregister", "User", FormMethod.Post))
+{
+    <div style="max-width: 400px;">
+        <h2 class="form-signin-heading">
+            Patient Registration
+        </h2>
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="container mt">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10">
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <em style="float: right;"><i><span class="mandatory">*</span>-Indicates required field</i></em>
+                                    <br>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.FirstName)
+                                            <span class="mandatory">*</span>
+                                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.MiddleName)<span class="mandatory"></span>
+                                            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.LastName)<span class="mandatory">*</span>
+                                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.EmailAddress)<span class="mandatory">*</span>
+                                            @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Password)<span class="mandatory">*</span>
+                                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div>
+                                            @Html.LabelFor(m => m.CPassword)<span class="mandatory">*</span>
+                                            @Html.TextBoxFor(m => m.CPassword, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.CPassword, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            @Html.CheckBoxFor(m => m.TermsAndConditions)
+                                            This form allows you the provision to see and treat patients online. Please read the disclaimers and privacy statement carefully. By checking the box, you authorize us, to include you as a provider and certify that the information you have provided is true and correct.<br />
+                                            @Html.ValidationMessageFor(m => m.TermsAndConditions, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <input type="submit" value="Submit" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts
+{
+    <script>
+        // extend jquery range validator to work for required checkboxes
+        var defaultRangeValidator = $.validator.methods.range;
+        $.validator.methods.range = function (value, element, param) {
+            if (element.type === 'checkbox') {
+                // if it's a checkbox return true if it is checked
+                return element.checked;
+            } else {
+                // otherwise run the default validation function
+                return defaultRangeValidator.call(this, value, element, param);
+            }
+        }
+    </script>
+}

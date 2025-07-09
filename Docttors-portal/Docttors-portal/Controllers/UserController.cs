@@ -27,16 +27,16 @@ namespace Docttors_portal.Controllers
             return View(userRegisterationData);
         }
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult DoctorRegisteration(UserRegistrationModel userRegistrationModel)
         {
             if (ModelState.IsValid)
             {
                 //here will be insertion Code.
+                userRegistrationModel.IsDoctor = true;
                 userRegistrationModel.Password = Utilities.EncryptPassword(userRegistrationModel.CPassword);
                 int NewUserId = _userLoginService.AddNewUser(userRegistrationModel);
                 var userRegisterationData = LoadlistData();
-                userRegisterationData.RegistrationID = NewUserId;
+                userRegisterationData.DoctorId = NewUserId;
                 ModelState.Clear();
                 return View(userRegisterationData);
             }
@@ -44,7 +44,28 @@ namespace Docttors_portal.Controllers
         }
         public ActionResult patientregister()
         {
-            return View();
+            var patientRegisterationModel = new PatientRegisterationModel();
+            return View(patientRegisterationModel);
+        }
+        [HttpPost]
+        public ActionResult patientregister(PatientRegisterationModel patientRegisterationModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var userRegistertionModel = new UserRegistrationModel()
+                {
+                    FirstName = patientRegisterationModel.FirstName,
+                    MiddleName = patientRegisterationModel.MiddleName,
+                    LastName = patientRegisterationModel.LastName,
+                    EmailAddress = patientRegisterationModel.EmailAddress,
+                    Password = Utilities.EncryptPassword(patientRegisterationModel.Password),
+                    IsDoctor = false
+                };
+                int NewUserId = _userLoginService.AddNewUser(userRegistertionModel);
+                patientRegisterationModel.PatientId= NewUserId;
+                ModelState.Clear();
+            }
+            return View(patientRegisterationModel);
         }
         private UserRegistrationModel LoadlistData()
         {

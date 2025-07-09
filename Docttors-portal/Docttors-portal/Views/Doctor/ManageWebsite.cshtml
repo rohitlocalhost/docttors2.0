@@ -1,0 +1,796 @@
+﻿@model Docttors_portal.Common.Models.DoctorManagement
+
+@{
+    ViewBag.Title = "manageWebsite";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12 mt-4">
+        <div id="tabs" class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" role="presentation"><a class="nav-link active" id="nav-0" data-bs-toggle="tab" role="tab" href="#tabs-0" aria-selected="true">Practice Information</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" id="nav-1" data-bs-toggle="tab" role="tab" href="#tabs-1" aria-selected="false" tabindex="-1">Email</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" id="nav-2" data-bs-toggle="tab" role="tab" href="#tabs-2" aria-selected="false" tabindex="-1">eNews</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" id="nav-3" data-bs-toggle="tab" role="tab" href="#tabs-3" aria-selected="false" tabindex="-1">Online Fee</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" id="nav-4" data-bs-toggle="tab" role="tab" href="#tabs-4" aria-selected="false" tabindex="-1">Contact Information</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" id="nav-5" data-bs-toggle="tab" role="tab" href="#tabs-5" aria-selected="false" tabindex="-1">eMarketing</a></li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content p-3 text-muted">
+                    <div class="tab-pane active" id="tabs-0" role="tabpanel" aria-labelledby="#nav-0">
+                        @using (Html.BeginForm("ManageWebsite", "Doctor", FormMethod.Post))
+                        {
+                            @Html.HiddenFor(x => x.DoctorInfoId)
+                            @Html.HiddenFor(x => x.UserId)
+                            <div class="row mt-3">
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <h5 class="card-header border-bottom text-uppercase" style="background-color: #1434A4; color: #fff;">Name</h5>
+                                        <div class="card-body ">
+                                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-body ">
+                                            <div id="ctl00_ContentPlaceHolder1_ctl00">
+                                                <img src="../assets/images/doctor.jpg" style="height:100px;width:100px;border-width:0px;">
+                                                <span style="color:Red;visibility:hidden;">Please upload a valid Image format.</span>
+                                                <input type="file" class="form-control mt-2">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <h5 class="card-header border-bottom text-uppercase" style="background-color: #1434A4; color: #fff;">About the Doctor</h5>
+                                        <div class="card-body ">
+                                            @Html.TextAreaFor(m => m.AboutDoctor, new { @class = "form-control" })
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 ">
+                                    <div class="card">
+                                        <h5 class="card-header border-bottom text-uppercase" style="background-color: #1434A4; color: #fff;">Affilations</h5>
+                                        <div class="card-body ">
+                                            @Html.TextAreaFor(m => m.Affilation, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <h5 class="card-header border-bottom text-uppercase" style="background-color: #1434A4; color: #fff;">Medical Education</h5>
+                                        <div class="card-body ">
+                                            <div class="row mb-4">
+                                                <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">School</label>
+                                                <div class="col-sm-9">
+                                                    @Html.TextBoxFor(m => m.School, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="row mb-4">
+                                                <label for="horizontal-email-input" class="col-sm-3 col-form-label">City</label>
+                                                <div class="col-sm-9 ">
+                                                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="row mb-4">
+                                                <label for="horizontal-password-input" class="col-sm-3 col-form-label">State</label>
+                                                <div class="col-sm-9 ">
+                                                    @Html.DropDownListFor(model => model.StateId, new SelectList(Model.StateList, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="row mb-4">
+                                                <label for="horizontal-password-input" class="col-sm-3 col-form-label">Garduation Date</label>
+                                                <div class="col-sm-9">
+                                                    @Html.TextBoxFor(model => model.GraduationDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 ">
+                                    <div class="card">
+                                        <h5 class="card-header border-bottom text-uppercase" style="background-color: #1434A4; color: #fff;">Languages</h5>
+                                        <div class="card-body ">
+                                            @Html.TextAreaFor(m => m.language, new { @class = "form-control", @readonly = "readonly" })
+                                            <div class="hstack gap-3 mt-2">
+                                                <input type="text" id="txtNewlang" class="form-control " />
+                                                <span id="errorlang" style="color:Red;visibility:hidden;">Required language</span>
+                                                <input type="button" value="Add " onclick="" id="btnAddLang" class="btn btn-rounded btn-success btn-wave">
+                                                <div class="vr"></div>
+                                                <input type="button" value="Remove" id="btnRemoveLang" class="btn btn-rounded btn-outline-danger">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <h5 class="card-header border-bottom text-uppercase" style="background-color: #1434A4; color: #fff;">Insuarance Accepted</h5>
+                                        <div class="card-body ">
+                                            @Html.TextAreaFor(m => m.Insurance, new { @id = "selectedIns", @class = "form-control" })
+                                            <div class="hstack gap-3 mt-2">
+                                                @Html.DropDownListFor(model => model.Insurance, new SelectList(Model.AllInsaurance, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                                <span id="errorInsurance" style="color:Red;visibility:hidden;">Required Insurance Type</span>
+                                                <input type="button" value="Add " id="btnInsAdd" class="btn btn-rounded btn-success btn-wave">
+                                                <input type="button" value="Remove" id="btnInsRemove" class="btn btn-rounded btn-outline-danger">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <h5 class="card-header border-bottom text-uppercase" style="background-color: #1434A4; color: #fff;">Speciality &amp; Services</h5>
+                                        <div class="card-body">
+                                            @Html.TextAreaFor(m => m.Services, new { @id = "selectedService", @class = "form-control" })
+                                            <div class="hstack gap-3 mt-2">
+                                                @Html.DropDownListFor(model => model.Services, new SelectList(Model.AllSpecialty, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                                <span id="errorService" style="color:Red;visibility:hidden;">Required Specialty</span>
+                                                <input type="button" value="Add " id="btnServiceAdd" class="btn btn-rounded btn-success btn-wave">
+                                                <input type="button" value="Remove" id="btnServiceRemove" class="btn btn-rounded btn-outline-danger">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <h5 class="card-header border-bottom text-uppercase" style="background-color: #1434A4; color: #fff;">Referring Doctors</h5>
+                                        <div class="card-body">
+                                            @Html.TextAreaFor(m => m.RefferDoctor, new { @id = "selectedDoctor", @class = "form-control" })
+                                            <div class="hstack gap-3 mt-2">
+                                                @Html.DropDownListFor(model => model.RefferDoctor, new SelectList(Model.AllDoctors, "Id", "Name"), "--- Please Select ---", new { @class = "form-control" })
+                                                <span id="errorDoctor" style="color:Red;visibility:hidden;">Required Specialty</span>
+                                                <input type="button" value="Add " id="btnDoctorAdd" class="btn btn-rounded btn-success btn-wave">
+                                                <input type="button" value="Remove" id="btnDoctorRemove" class="btn btn-rounded btn-outline-danger">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <h5 class="card-header border-bottom text-uppercase" style="background-color: #1434A4; color: #fff;">Messages/Notices</h5>
+                                        <div class="card-body ">
+                                            @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-10"></div>
+                                <div class="col-lg-2">
+                                    <input type="submit" value=" Save" class="btn btn-primary waves-effect waves-light offset-5 mb-0">
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div id="tabs-1" class="tab-pane" role="tabpanel" aria-labelledby="#nav-1">
+                        @using (Html.BeginForm("AddDoctorEmail", "Doctor", FormMethod.Post))
+                        {
+                            @Html.HiddenFor(x => x.DoctorEmailConfigModel.Id)
+                            @Html.HiddenFor(x => x.UserId)
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row mb-4">
+                                        <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">
+                                            Doctor Email
+                                        </label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(m => m.DoctorEmailConfigModel.DoctorEmail, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                    </div>
+                                    <div id="email" class="row mb-4">
+                                        <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">
+                                            Nurse Email
+                                        </label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(m => m.DoctorEmailConfigModel.NurseEmail, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">
+                                            Billing Email
+                                        </label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(m => m.DoctorEmailConfigModel.BillingEmail, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">
+                                            Laboratory Email
+                                        </label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(m => m.DoctorEmailConfigModel.LaboratoryEmail, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">
+                                            Diagnostic Co. Email
+                                        </label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(m => m.DoctorEmailConfigModel.DiagnosticEmail, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-10"></div>
+                                <div class="col-lg-2">
+                                    <input type="submit" value=" Save" class="btn btn-primary btn-block ">
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div id="tabs-2" class="tab-pane" role="tabpanel" aria-labelledby="#nav-2">
+                        @using (Html.BeginForm("AddDoctoreNews", "Doctor", FormMethod.Post))
+                        {
+                            @Html.HiddenFor(x => x.DoctorNewsModel.Id)
+                            @Html.HiddenFor(x => x.UserId)
+                            <div class="card">
+                                <div class="card-body">
+                                    <div>
+                                        <table cellspacing="0" rules="all" border="1" style="border-color:Black;border-style:Solid;height:16px;width:100%;border-collapse:collapse;">
+                                            <tbody>
+                                                <tr style="color:White;background-color:#1434A4;">
+                                                    <th scope="col">&nbsp;</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">News Title</th>
+                                                </tr>
+                                                @foreach (var item in Model.AllNewsData)
+                                                {
+                                                    <tr style="border-color:Black;">
+                                                        <td style="width:30px;"><a>Edit</a> | <a href="@Url.Action("DeleteNews", "Doctor",new {id=item.Id})">Delete</a> | @Html.ActionLink("Delete2", "DeleteNews", new { id = item.Id })</td>
+                                                        <td style="height:10px;width:70px;">@item.PublishDate</td>
+                                                        <td style="height:10px;width:70px;">@item.NewsSubject</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <label id="ctl00_ContentPlaceHolder1_notificationAlert"></label>
+                                    <div class="mt-3" align="center">
+                                        <div class="row mb-4">
+                                            <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">
+                                                Date to Publish:
+                                                <span style="color: red">*</span>
+                                            </label>
+                                            <div class="col-sm-8">
+                                                @Html.TextBoxFor(model => model.DoctorNewsModel.PublishDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                                                @Html.ValidationMessageFor(model => model.DoctorNewsModel.PublishDate, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">
+                                                Subject/News:
+                                                <span style="color: red">*</span>
+                                            </label>
+                                            <div class="col-sm-8">
+                                                @Html.TextBoxFor(m => m.DoctorNewsModel.NewsSubject, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.DoctorNewsModel.NewsSubject, "", new { @class = "text-danger" })
+                                            </div>
+
+                                        </div>
+                                        <div class="row mb-4">
+                                            <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">
+                                                Description:
+                                                <span style="color: red">*</span>
+                                            </label>
+                                            <div class="col-sm-8">
+                                                @Html.TextAreaFor(m => m.DoctorNewsModel.Description, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.DoctorNewsModel.Description, "", new { @class = "text-danger" })
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-7">
+                                </div>
+                                <div class="col-lg-5">
+                                    <input type="submit" name="Command" value="Add New" class="btn btn-primary w-md" />
+                                    <input type="submit" name="Command" value="Save" class="btn btn-primary w-md" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div id="tabs-3" class="tab-pane" role="tabpanel" aria-labelledby="#nav-3">
+                        @using (Html.BeginForm("AddDoctorFees", "Doctor", FormMethod.Post))
+                        {
+                            @Html.HiddenFor(x => x.DoctorServiceFeesModel.Id)
+                            @Html.HiddenFor(x => x.UserId)
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 align="center">Online Fee per Encounter</h5>
+                                    <h6 align="center">(Set your charges for the services you are providing)</h6>
+                                    <div>
+                                        <div id="ctl00_ContentPlaceHolder1_aFDRow" class="row mb-4">
+                                            <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">
+                                                Ask A Doctor $
+                                            </label>
+                                            <div class="col-sm-8">
+                                                @Html.TextBoxFor(x => x.DoctorServiceFeesModel.AskDoctor, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div id="ctl00_ContentPlaceHolder1_vEmailRow" class="row mb-4">
+                                            <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">
+                                                Video Email Visit $
+                                            </label>
+                                            <div class="col-sm-8">
+                                                @Html.TextBoxFor(x => x.DoctorServiceFeesModel.VideoVisit, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div id="ctl00_ContentPlaceHolder1_vF2FRow" class="row mb-4">
+                                            <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">
+                                                Face-to-Face $
+                                            </label>
+                                            <div class="col-sm-8">
+                                                @Html.TextBoxFor(x => x.DoctorServiceFeesModel.FaceToFace, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div id="ctl00_ContentPlaceHolder1_vPRefillRow" class="row mb-4">
+                                            <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">
+                                                Rx Refill $
+                                            </label>
+                                            <div class="col-sm-8">
+                                                @Html.TextBoxFor(x => x.DoctorServiceFeesModel.RxRefill, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-10">
+                                </div>
+                                <div class="col-lg-2">
+                                    <input type="submit" value=" Save " class="btn btn-primary w-md">
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div id="tabs-4" class="tab-pane" role="tabpanel" aria-labelledby="#nav-4">
+                        @using (Html.BeginForm("AddDoctorContact", "Doctor", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            @Html.HiddenFor(x => x.DoctorContactModel.Id)
+                            @Html.HiddenFor(x => x.UserId)
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="card">
+                                            <h5 class="card-header border-bottom text-uppercase" style="background-color: #1434A4; color: #fff;">Main Office</h5>
+                                            <div class="card-body ">
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Doctor Name
+                                                        <span style="color: red">*</span>
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.DoctorName, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.DoctorContactModel.DoctorName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Practice Name
+                                                        <span style="color: red">*</span>
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.PracticeName, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.DoctorContactModel.PracticeName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Address
+                                                        <span style="color: red">*</span>
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextAreaFor(x => x.DoctorContactModel.Address, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.DoctorContactModel.Address, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Phone
+                                                        <span style="color: red">*</span>
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.Phone, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.DoctorContactModel.Phone, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Fax Number
+                                                        <span style="color: red">*</span>
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.FaxNumber, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.DoctorContactModel.FaxNumber, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Office Email
+                                                        <span style="color: red">*</span>
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.OfficeEmail, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.DoctorContactModel.OfficeEmail, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="card">
+                                            <h5 class="card-header border-bottom text-uppercase" style="background-color: #1434A4; color: #fff;">Office 1 (Optional)</h5>
+                                            <div class="card-body ">
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Doctor Name
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.DoctorName_Office1, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Practice Name
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.PracticeName_Office1, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Address
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextAreaFor(x => x.DoctorContactModel.Address_Office1, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Phone
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.Phone_Office1, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Fax Number
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.FaxNumber_Office1, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Office Email
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.OfficeEmail_Office1, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="card">
+                                            <h5 class="card-header border-bottom text-uppercase" style="background-color: #1434A4; color: #fff;">Office 2 (Optional)</h5>
+                                            <div class="card-body ">
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Doctor Name
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.DoctorName_Office2, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Practice Name
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.PracticeName_Office2, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Address
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextAreaFor(x => x.DoctorContactModel.Address_Office2, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Phone
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.Phone_Office2, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Fax Number
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.FaxNumber_Office2, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Office Email
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.OfficeEmail_Office2, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="card">
+                                            <h5 class="card-header border-bottom text-uppercase" style="background-color: #1434A4; color: #fff;">Office 3 (Optional)</h5>
+                                            <div class="card-body ">
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Doctor Name
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.DoctorName_Office3, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Practice Name
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.PracticeName_Office3, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Address
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextAreaFor(x => x.DoctorContactModel.Address_Office3, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Phone
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.Phone_Office3, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Fax Number
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.FaxNumber_Office3, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-sm-3 col-form-label">
+                                                        Office Email
+                                                    </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(x => x.DoctorContactModel.OfficeEmail_Office3, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <input type="submit" name="ctl00$ContentPlaceHolder1$btnContactSave" value="Save" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ContentPlaceHolder1$btnContactSave&quot;, &quot;&quot;, true, &quot;personal&quot;, &quot;&quot;, false, false))" id="ctl00_ContentPlaceHolder1_btnContactSave" class="btn btn-primary w-md">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                    <div id="tabs-5" class="tab-pane" role="tabpanel" aria-labelledby="#nav-5">
+                        <h6><a href="#" style="color: red" id="helpeMarketing" onclick="help3(this);">Help?</a></h6>
+                        <div class="card">
+                            <div class="row mt-3 mb-4">
+                                <div class="col-lg-12" align="center">
+                                    <label id="ctl00_ContentPlaceHolder1_Label1">Choose file then click 'Upload' to load the data</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="file" name="ctl00$ContentPlaceHolder1$excelUpload" id="ctl00_ContentPlaceHolder1_excelUpload">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10">
+                            </div>
+                            <div class="col-lg-2">
+                                <input type="submit" name="ctl00$ContentPlaceHolder1$btnUpload" value="Upload" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ContentPlaceHolder1$btnUpload&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="ctl00_ContentPlaceHolder1_btnUpload" class="btn btn-primary btn-block ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /*Adding language script from here */
+            $('#btnAddLang').click(function () {
+                var newlang = $('#txtNewlang').val();
+                if (newlang != '') {
+                    $('#errorlang').css({ visibility: 'hidden' });
+                    var langText = $('#language').val();
+                    if (langText != '') {
+                        if ($('#language').val() != '' && langText.indexOf(newlang) < 0) {
+                            $('#language').val($('#language').val() + ',' + newlang);
+                        }
+                    } else {
+                        $('#language').val(newlang);
+                    }
+                } else {
+                    $('#errorlang').css({ visibility: 'visible' });
+                }
+            })
+            $('#btnRemoveLang').click(function () {
+                var removelang = $('#txtNewlang').val();
+                var langText = $('#language').val();
+                if (removelang != '') {
+                    $('#errorlang').css({ visibility: 'hidden' });
+                    const arrayLang = langText.split(',');
+                    $('#language').val('');
+                    for (a in arrayLang) {
+                        if (removelang != arrayLang[a]) {
+                            if ($('#language').val() != '') {
+                                $('#language').val($('#language').val() + ',' + arrayLang[a]);
+                            } else {
+                                $('#language').val(arrayLang[a]);
+                            }
+                        }
+                    }
+                } else {
+                    $('#errorlang').css({ visibility: 'visible' });
+                }
+            })
+            /* Language Script End Here */
+            /* Insurance Script from here*/
+            $('#btnInsAdd').click(function () {
+                var selectedText = $("#Insurance option:selected").text();
+                var currentValue = $("#Insurance option:selected").val();
+                if (selectedText != '--- Please Select ---') {
+                    $('#errorInsurance').css({ visibility: 'hidden' });
+                    var insText = $('#selectedIns').val();
+                    if (insText != '') {
+                        if ($('#selectedIns').val() != '' && insText.indexOf(selectedText) < 0) {
+                            $('#selectedIns').val($('#selectedIns').val() + ',' + selectedText);
+                        }
+                    } else {
+                        $('#selectedIns').val(selectedText);
+                    }
+                } else {
+                    $('#errorInsurance').css({ visibility: 'visible' });
+                }
+            })
+            $('#btnInsRemove').click(function () {
+                var removeInsurance = $("#Insurance option:selected").text();
+                var insText = $('#selectedIns').val();
+                if (removeInsurance != '') {
+                    $('#errorInsurance').css({ visibility: 'hidden' });
+                    const arrayIns = insText.split(',');
+                    $('#selectedIns').val('');
+                    for (a in arrayIns) {
+                        if (removeInsurance != arrayIns[a]) {
+                            if ($('#selectedIns').val() != '') {
+                                $('#selectedIns').val($('#selectedIns').val() + ',' + arrayIns[a]);
+                            } else {
+                                $('#selectedIns').val(arrayIns[a]);
+                            }
+                        }
+                    }
+                } else {
+                    $('#errorInsurance').css({ visibility: 'visible' });
+                }
+            })
+            /* Insurance Script End Here */
+            /* Service Script from here*/
+            $('#btnServiceAdd').click(function () {
+                var selectedText = $("#Services option:selected").text();
+                if (selectedText != '--- Please Select ---') {
+                    $('#errorService').css({ visibility: 'hidden' });
+                    var serviceText = $('#selectedService').val();
+                    if (serviceText != '') {
+                        if ($('#selectedService').val() != '' && serviceText.indexOf(selectedText) < 0) {
+                            $('#selectedService').val($('#selectedService').val() + ',' + selectedText);
+                        }
+                    } else {
+                        $('#selectedService').val(selectedText);
+                    }
+                } else {
+                    $('#errorService').css({ visibility: 'visible' });
+                }
+            })
+            $('#btnServiceRemove').click(function () {
+                var removeInsurance = $("#Services option:selected").text();
+                var serviceText = $('#selectedService').val();
+                if (removeInsurance != '') {
+                    $('#errorService').css({ visibility: 'hidden' });
+                    const arrayService = serviceText.split(',');
+                    $('#selectedService').val('');
+                    for (a in arrayService) {
+                        if (removeInsurance != arrayService[a]) {
+                            if ($('#selectedService').val() != '') {
+                                $('#selectedService').val($('#selectedService').val() + ',' + arrayService[a]);
+                            } else {
+                                $('#selectedService').val(arrayService[a]);
+                            }
+                        }
+                    }
+                } else {
+                    $('#errorService').css({ visibility: 'visible' });
+                }
+            })
+            /* Service Script End Here */
+            /* ReferringDoctor Script from here*/
+            $('#btnDoctorAdd').click(function () {
+                var selectedText = $("#RefferDoctor option:selected").text();
+                if (selectedText != '--- Please Select ---') {
+                    $('#errorDoctor').css({ visibility: 'hidden' });
+                    var doctorText = $('#selectedDoctor').val();
+                    if (doctorText != '') {
+                        if ($('#selectedDoctor').val() != '' && doctorText.indexOf(selectedText) < 0) {
+                            $('#selectedDoctor').val($('#selectedDoctor').val() + ',' + selectedText);
+                        }
+                    } else {
+                        $('#selectedDoctor').val(selectedText);
+                    }
+                } else {
+                    $('#errorDoctor').css({ visibility: 'visible' });
+                }
+            })
+            $('#btnDoctorRemove').click(function () {
+                var removeInsurance = $("#RefferDoctor option:selected").text();
+                var doctorText = $('#selectedDoctor').val();
+                if (removeInsurance != '') {
+                    $('#errorDoctor').css({ visibility: 'hidden' });
+                    const arrayDoctor = doctorText.split(',');
+                    $('#selectedDoctor').val('');
+                    for (a in arrayDoctor) {
+                        if (removeInsurance != arrayDoctor[a]) {
+                            if ($('#selectedDoctor').val() != '') {
+                                $('#selectedDoctor').val($('#selectedDoctor').val() + ',' + arrayDoctor[a]);
+                            } else {
+                                $('#selectedDoctor').val(arrayDoctor[a]);
+                            }
+                        }
+                    }
+                } else {
+                    $('#errorDoctor').css({ visibility: 'visible' });
+                }
+            })
+            /* ReferringDoctor Script End Here */
+        })
+    </script>
+}
