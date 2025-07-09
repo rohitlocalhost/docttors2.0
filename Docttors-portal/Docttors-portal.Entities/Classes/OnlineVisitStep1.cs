@@ -17,5 +17,6 @@ namespace Docttors_portal.Entities.Classes
         public int PatientId { get; set; }
         public int DoctorId { get; set; }
         public int ServiceType { get; set; }
+        public bool IsTreated { get; set; }
     }
 }

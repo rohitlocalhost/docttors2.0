@@ -23,5 +23,8 @@ namespace Docttors_portal.Services.Interfaces
         bool DeleteNews(int doctorNewsId);
         VideoTab LoadVideoTabData(int doctorId);
         DoctorServiceFeesModel LoadDoctorFeesInfo(int doctorId);
+        bool CompleteTreatment(int step1Id, int doctorId);
+        DoctorServiceFeesModel LoadDoctorFeesByDoctorId(int doctorId);
+        GetDoctorMessageDetails GetDoctorMessagesDetails(int visitId);
     }
 }

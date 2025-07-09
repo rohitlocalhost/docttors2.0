@@ -45,6 +45,8 @@ namespace Docttors_portal.Services.Classes
         private IRepository<OnlineVisitStep1> _onlineVisitStep1;
         private IRepository<OnlineVisitStep2> _onlineVisitStep2;
         private IRepository<OnlineVisitStep5> _onlineVisitStep5;
+        private IRepository<OnlineVisitStep6> _onlineVisitStep6;
+        private IRepository<Payment> _payment;
         private string connectionString = ConfigurationManager.ConnectionStrings["DocttorsEntities"].ConnectionString;
         public PatientPersonalServices(IUnitOfWork unitOfWork)
         {
@@ -72,11 +74,13 @@ namespace Docttors_portal.Services.Classes
                 _onlineVisitStep1 = _unitOfWork.GetRepository<OnlineVisitStep1>();
                 _onlineVisitStep2 = _unitOfWork.GetRepository<OnlineVisitStep2>();
                 _onlineVisitStep5 = _unitOfWork.GetRepository<OnlineVisitStep5>();
+                _onlineVisitStep6 = _unitOfWork.GetRepository<OnlineVisitStep6>();
+                _payment = _unitOfWork.GetRepository<Payment>();
             }
         }
 
         #region patient Load Services
-        public List<GetpatientMessage> GetpatientMessages(int patientId)
+        public List<GetpatientMessage> GetpatientMessages(int? patientId, int? doctorId)
         {
             try
             {
@@ -87,6 +91,7 @@ namespace Docttors_portal.Services.Classes
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@patientId", SqlDbType.Int).Value = patientId;
+                        cmd.Parameters.Add("@doctorId", SqlDbType.Int).Value = doctorId;
                         con.Open();
                         SqlDataReader rdr = cmd.ExecuteReader();
                         while (rdr.Read())
@@ -96,13 +101,16 @@ namespace Docttors_portal.Services.Classes
                                 Step1Id = Convert.ToInt32(rdr["Step1Id"]),
                                 Step2Id = Convert.ToInt32(rdr["Step2Id"]),
                                 Status = Convert.ToString(rdr["Status"]),
+                                patientName = Convert.ToString(rdr["patientName"]),
                                 ProviderName = Convert.ToString(rdr["providerName"]),
                                 ServiceType = Convert.ToString(rdr["ServiceType"]),
                                 Symptoms = Convert.ToString(rdr["Symptoms"]),
                                 DateTimeRequested = Convert.ToString(rdr["DateTimeRequested"]),
                                 AppointmentDate = Convert.ToString(rdr["AppointmentDate"]),
                                 DateTreated = Convert.ToString(rdr["DateTreated"]),
-                                Amount = Convert.ToString(rdr["Amount"])
+                                Amount = Convert.ToString(rdr["Amount"]),
+                                SSN = Convert.ToString(rdr["Ssn"]),
+                                IsTreated = Convert.ToBoolean(rdr["IsTreated"])
                             };
                             patientMessages.Add(currentPatientMessage);
                         }
@@ -1864,7 +1872,8 @@ namespace Docttors_portal.Services.Classes
                     IsTncChecked = isTermAndConditionChecked,
                     PatientId = UserId,
                     DoctorId = doctorId,
-                    ServiceType = serviceType
+                    ServiceType = serviceType,
+                    IsTreated = false
                 };
                 _onlineVisitStep1.Add(onlineVisitStep1);
                 return onlineVisitStep1.VisitId;
@@ -1908,7 +1917,6 @@ namespace Docttors_portal.Services.Classes
                 throw ex;
             }
         }
-
         public int SaveStep5Data(VideoTab videoTab, int UserId)
         {
             try
@@ -1918,6 +1926,7 @@ namespace Docttors_portal.Services.Classes
                     PatientId = UserId,
                     DoctorId = videoTab.DoctorId,
                     TextMessage = videoTab.TextMessage,
+                    Step1Id = videoTab.Step1Id,
                     CreatedBy = UserId,
                     CreatedOn = DateTime.Now,
                     ModifiedBy = UserId,
@@ -1926,6 +1935,98 @@ namespace Docttors_portal.Services.Classes
                 };
                 _onlineVisitStep5.Add(onlineVisitStep5);
                 return onlineVisitStep5.VisitId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public int SaveStep6Data(paymentTab paymentTabData, int UserId)
+        {
+            int returnData = 0;
+            try
+            {
+                var newVisit = new OnlineVisitStep6()
+                {
+                    step1Id = paymentTabData.step1Id,
+                    Address = paymentTabData.Address,
+                    City = paymentTabData.City,
+                    doctorId = paymentTabData.DoctorId,
+                    Email = paymentTabData.Email,
+                    FirstName = paymentTabData.FirstName,
+                    LastName = paymentTabData.LastName,
+                    PatientId = paymentTabData.PatientId,
+                    Phone = paymentTabData.Phone,
+                    StateId = paymentTabData.StateId,
+                    Zip = paymentTabData.Zip,
+                    CreatedBy = UserId,
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = UserId,
+                    ModifiedOn = DateTime.Now
+                };
+                _onlineVisitStep6.Add(newVisit);
+                if (newVisit.VisitId > 0)
+                {
+                    //Save Payment Information
+                    var newPayment = new Payment()
+                    {
+                        VisitId = newVisit.VisitId,
+                        Amount = paymentTabData.Amount,
+                        CardId = paymentTabData.CardId,
+                        CardTypeId = paymentTabData.CardTypeId,
+                        CardExpMonthId = paymentTabData.CardExpMonthId,
+                        CardExpYearId = paymentTabData.CardExpYearId,
+                        PatientId = UserId,
+                        DoctorId = paymentTabData.DoctorId,
+                        TransactionDate = DateTime.Now,
+                        CreatedBy = UserId,
+                        CreatedOn = DateTime.Now,
+                        ModifiedOn = DateTime.Now,
+                        ModifiedBy = UserId,
+                        PaymentTransactionId = new Guid().ToString(),
+                    };
+                    _payment.Add(newPayment);
+                    returnData = newPayment.PaymentId;
+                }
+                return returnData;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public GetMessageDetails GetpatientMessagesDetails(int visitId)
+        {
+            try
+            {
+                GetMessageDetails patientMessages = new GetMessageDetails();
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("GetMessageDetails", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@visitId", SqlDbType.Int).Value = visitId;
+                        con.Open();
+                        SqlDataReader rdr = cmd.ExecuteReader();
+                        while (rdr.Read())
+                        {
+                            patientMessages.VisitId = Convert.ToInt32(rdr["VisitId"]);
+                            patientMessages.PatientName = Convert.ToString(rdr["PatientName"]);
+                            patientMessages.DoctorName = Convert.ToString(rdr["DoctorName"]);
+                            patientMessages.Subject = Convert.ToString(rdr["Subject"]);
+                            patientMessages.CreatedOn = Convert.ToString(rdr["CreatedOn"]);
+                            patientMessages.DoctorEmail = Convert.ToString(rdr["DoctorEmail"]);
+                            patientMessages.Position = Convert.ToString(rdr["Position"]);
+                            patientMessages.NurseEmail = Convert.ToString(rdr["NurseEmail"]);
+                            patientMessages.AppointmentDate = Convert.ToString(rdr["AppointmentDate"]);
+                            patientMessages.TextMessage = Convert.ToString(rdr["TextMessage"]);
+                            patientMessages.Phone = Convert.ToString(rdr["Phone"]);
+                        }
+
+                    }
+                    con.Close();
+                }
+                return patientMessages;
             }
             catch (Exception ex)
             {

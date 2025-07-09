@@ -48,7 +48,12 @@ namespace Docttors_portal.Common
         ComplaintType = 24,
         BloodPressure = 25,
         Breathing = 26,
-        Weight = 27
+        Weight = 27,
+        DoctorServiceType = 28,
+        CardExpiryMonth = 29,
+        CardExpiryYear = 30,
+        CardType = 31
+
     }
 
     public enum WeightEnum
@@ -82,12 +87,12 @@ namespace Docttors_portal.Common
     public enum DoctorServiceType
     {
         [Description("Video Chat")]
-        VideoChat =2082,
+        VideoChat = 2082,
         [Description("Video Email")]
-        VideoEmail =2083,
+        VideoEmail = 2083,
         [Description("Ask A Doctor")]
-        AskADoctor =2084,
+        AskADoctor = 2084,
         [Description("Prescription Refill")]
-        PrescriptionRefill =2085
+        PrescriptionRefill = 2085
     }
 }

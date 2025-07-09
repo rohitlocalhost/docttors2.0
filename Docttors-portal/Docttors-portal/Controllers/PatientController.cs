@@ -44,7 +44,7 @@ namespace Docttors_portal.Controllers
 
         private List<GetpatientMessage> LoadpatientMessage()
         {
-            return _patientServices.GetpatientMessages(SessionVariables.LoggedInUser.UserId);
+            return _patientServices.GetpatientMessages(SessionVariables.LoggedInUser.UserId, null);
         }
 
         #region MHR Section
@@ -843,6 +843,7 @@ namespace Docttors_portal.Controllers
         {
             var myProvider = LoadStep1Data();
             myProvider.ComplaintTab = LoadStep2Data();
+            myProvider.paymentTab = LoadStep6Data();
             return View(myProvider);
         }
         [HttpPost]
@@ -853,11 +854,13 @@ namespace Docttors_portal.Controllers
                 int visitId = _patientServices.SaveStep1Data(personalTab.TermAndCondition, SessionVariables.LoggedInUser.UserId, ConsentForm.DoctorId, ConsentForm.ServiceType);
                 if (visitId > 0)
                 {
+                    ConsentForm.Step1Id = visitId;
                     return RedirectToAction("OnlineVisitStep", new { step = 2, VisitId = visitId });
                 }
             }
             var myProvider = LoadStep1Data();
             myProvider.ComplaintTab = LoadStep2Data();
+            myProvider.paymentTab = LoadStep6Data();
             return View("OnlineVisitInfo", myProvider);
         }
         public ActionResult OnlineVisitStep(int step, int VisitId)
@@ -867,6 +870,7 @@ namespace Docttors_portal.Controllers
             currentTabData.ComplaintTab.Step1Id = VisitId;
             currentTabData.ComplaintTab.DoctorId = ConsentForm.DoctorId;
             currentTabData.videoTab = LoadStep5Data();
+            currentTabData.paymentTab = LoadStep6Data();
             return View("OnlineVisitInfo", currentTabData);
         }
         [HttpPost]
@@ -906,9 +910,32 @@ namespace Docttors_portal.Controllers
             }
             return RedirectToAction("OnlineVisitStep", new { step = 3, VisitId = 0 });
         }
+
+        [HttpPost]
+        public ActionResult OnlineVisitStep6(paymentTab paymentTab)
+        {
+            if (ModelState.IsValid)
+            {
+                int visit6Id = _patientServices.SaveStep6Data(paymentTab, SessionVariables.LoggedInUser.UserId);
+                if (visit6Id > 0)
+                {
+                    //Clearing session related token.
+                    ConsentForm.DoctorId = 0;
+                    ConsentForm.ServiceType = 0;
+                    return View("VisitComplete");
+                }
+            }
+            return RedirectToAction("OnlineVisitStep", new { step = 6, VisitId = 0 });
+        }
         public ActionResult VisitComplete()
         {
             return View();
+        }
+
+        public ActionResult MessageDetails(int step1Id)
+        {
+            var patientMessageDetails = _patientServices.GetpatientMessagesDetails(step1Id);
+            return View(patientMessageDetails);
         }
         private MyProvider LoadStep1Data()
         {
@@ -940,8 +967,41 @@ namespace Docttors_portal.Controllers
             videoTab.Title = doctorDetails.Position;
             videoTab.phone = doctorDetails.Phone1;
             videoTab.DoctorId = ConsentForm.DoctorId;
+            videoTab.Step1Id = ConsentForm.Step1Id;
             return videoTab;
         }
+
+        private paymentTab LoadStep6Data()
+        {
+            var paymentData = new paymentTab();
+            var paymentTabDataInfo = _doctorServices.LoadDoctorFeesByDoctorId(ConsentForm.DoctorId);
+            if (ConsentForm.ServiceType == (int)DoctorServiceType.VideoChat)
+            {
+                paymentData.Amount = (decimal)paymentTabDataInfo.VideoVisit;
+            }
+            else if (ConsentForm.ServiceType == (int)DoctorServiceType.VideoEmail)
+            {
+                paymentData.Amount = (decimal)paymentTabDataInfo.FaceToFace;
+            }
+            else if (ConsentForm.ServiceType == (int)DoctorServiceType.AskADoctor)
+            {
+                paymentData.Amount = (decimal)paymentTabDataInfo.AskDoctor;
+            }
+            else if (ConsentForm.ServiceType == (int)DoctorServiceType.PrescriptionRefill)
+            {
+                paymentData.Amount = (decimal)paymentTabDataInfo.RxRefill;
+            }
+            paymentData.DoctorId = ConsentForm.DoctorId;
+            paymentData.PatientId = SessionVariables.LoggedInUser.UserId;
+            paymentData.step1Id = ConsentForm.Step1Id;
+            paymentData.StateList = _commonUtilityService.GetAllStates();
+            paymentData.CardExpMonthList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.CardExpiryMonth);
+            paymentData.CardExpYearList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.CardExpiryYear);
+            paymentData.CardTypeList = _commonUtilityService.GetTypeCategoryByCategoryId((int)TypeCategory.CardType);
+            return paymentData;
+        }
+
+
         #endregion
 
         public ActionResult Search()
