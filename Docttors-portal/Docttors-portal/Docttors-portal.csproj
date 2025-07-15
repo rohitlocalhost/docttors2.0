@@ -470,6 +470,9 @@
     <Content Include="Views\Patient\OnlineVisitInfo.cshtml" />
     <Content Include="Views\Patient\VisitComplete.cshtml" />
     <Content Include="Views\Patient\SentMessage.cshtml" />
+    <Content Include="Views\Patient\MessageDetails.cshtml" />
+    <Content Include="Views\Doctor\OpenMessage.cshtml" />
+    <Content Include="Views\Login\ForgetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

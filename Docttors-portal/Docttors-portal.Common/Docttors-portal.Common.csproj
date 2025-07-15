@@ -51,6 +51,7 @@
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\DoctorAppointmentData.cs" />
     <Compile Include="Models\DoctorManagement.cs" />
+    <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\MyProvider.cs" />
     <Compile Include="Models\NameIdModel.cs" />
     <Compile Include="Models\patientClinicalHistoryViewModel.cs" />

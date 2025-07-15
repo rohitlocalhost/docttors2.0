@@ -2,8 +2,8 @@
 @{
     ViewBag.Title = "OnlineVisitInfo";
     Layout = "~/Views/Shared/_PatientLayout.cshtml";
+    ViewContext.ClientValidationEnabled = true;
 }
-
 <h2>OnlineVisitInfo</h2>
 <style>
     .mr-6 {
@@ -1083,260 +1083,150 @@
                 }
             </div>
             <div class="tab-pane" id="step-6" role="tabpanel">
-                <div class="card-body">
-                    <div id="ctl00_ContentPlaceHolder1_lblMessage"></div>
-                    <div style="color: Red; padding-bottom: 10px;">
-                        <h5>
-                            <span id="ctl00_ContentPlaceHolder1_lblInfo"> You selected to Pay for Video Email Visit</span>
-                        </h5>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>
-                                <b>First Name</b><span style="color: Red;">*</span>
-                            </label>
-                            <input name="ctl00$ContentPlaceHolder1$txtFirstName" type="text" id="ctl00_ContentPlaceHolder1_txtFirstName" class="form-control" fdprocessedid="rmza6">
-                            <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator17" style="color:Red;visibility:hidden;">Please enter first name</span>
-                            <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator2" style="color:Red;visibility:hidden;">Enter Valid First Name</span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>
-                                <b>Last Name</b><span style="color: Red;">*</span>
-                            </label>
-                            <input name="ctl00$ContentPlaceHolder1$txtLastName" type="text" id="ctl00_ContentPlaceHolder1_txtLastName" class="form-control" fdprocessedid="qhl348">
-                            <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator2" style="color:Red;visibility:hidden;">Please enter last name</span>
-                            <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator3" style="color:Red;visibility:hidden;">Enter Valid Last Name</span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>
-                                <b>Phone</b><span style="color: Red;">*</span>
-                            </label>
-                            <input name="ctl00$ContentPlaceHolder1$txtPhone" type="text" maxlength="10" id="ctl00_ContentPlaceHolder1_txtPhone" class="form-control" placeholder="ex.7137891234" ng-minlength="10" fdprocessedid="7u9o18">
-                            <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator3" style="color:Red;visibility:hidden;">Please enter phone#</span>
-
-                            <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator4" style="color:Red;visibility:hidden;">Enter Valid Phone</span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label><b>Email</b><span style="color: Red;">*</span></label>
-                            <input name="ctl00$ContentPlaceHolder1$txtEmail" type="text" id="ctl00_ContentPlaceHolder1_txtEmail" class="form-control" fdprocessedid="gcrlbe">
-                            <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator4" style="color:Red;visibility:hidden;">Please enter email address</span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>
-                                <b>Payment Amount</b>
-                            </label>
-                            <select name="ctl00$ContentPlaceHolder1$cboPaymentAmount" id="ctl00_ContentPlaceHolder1_cboPaymentAmount" disabled="disabled" class="form-select" fdprocessedid="mtr3w">
-                                <option value="0.0000">Ask A Doctor ($0.00)</option>
-                                <option selected="selected" value="1.0000">Video Email Visit ($1.00)</option>
-                                <option value="1.0000">Online Face to Face ($1.00)</option>
-                                <option value="0.0000">Prescription Refill ($0.00)</option>
-
-                            </select>
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>
-                                    <b>Credit Card Type</b>
-                                </label>
-                                <select name="ctl00$ContentPlaceHolder1$cboCreditCardType" id="ctl00_ContentPlaceHolder1_cboCreditCardType" class="form-select" fdprocessedid="md6cok">
-                                    <option value="Visa">Visa</option>
-                                    <option value="MasterCard">MasterCard</option>
-                                    <option value="Discover">Discover</option>
-                                    <option value="Amex">Amex</option>
-
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>
-                                    <b>Credit Card #</b><span style="color: Red;">*</span>
-                                </label>
-                                <input name="ctl00$ContentPlaceHolder1$txtCCNum" type="text" id="ctl00_ContentPlaceHolder1_txtCCNum" class="form-control" fdprocessedid="t3t14i">
-                                <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator5" style="color:Red;visibility:hidden;">Please enter credit card#</span>
-                                <br>
-                                <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator5" style="color:Red;visibility:hidden;">Enter Valid Credit Card Number</span>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>
-                                    <b>CVV</b><span style="color: Red;">*</span>
-                                </label>
-                                <input name="ctl00$ContentPlaceHolder1$txtCvv" type="text" id="ctl00_ContentPlaceHolder1_txtCvv" class="form-control" fdprocessedid="xtty69">
-                                <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator6" style="color:Red;visibility:hidden;">Please enter cvv</span>
-                                <br>
-                                <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator6" style="color:Red;visibility:hidden;">Enter Valid CVV</span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label><b>Exp Month</b></label>
-                                <select name="ctl00$ContentPlaceHolder1$DropDownMonth" id="ctl00_ContentPlaceHolder1_DropDownMonth" class="form-select" fdprocessedid="g2gacs">
-                                    <option value="01">01</option>
-                                    <option value="02">02</option>
-                                    <option value="03">03</option>
-                                    <option value="04">04</option>
-                                    <option value="05">05</option>
-                                    <option value="06">06</option>
-                                    <option value="07">07</option>
-                                    <option value="08">08</option>
-                                    <option value="09">09</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label><b>Exp Year</b></label>
-                                <select name="ctl00$ContentPlaceHolder1$DropDownYear" id="ctl00_ContentPlaceHolder1_DropDownYear" class="form-select" fdprocessedid="u2tawo">
-                                    <option selected="selected" value="24">24</option>
-                                    <option value="25">25</option>
-                                    <option value="26">26</option>
-                                    <option value="27">27</option>
-                                    <option value="28">28</option>
-                                    <option value="29">29</option>
-                                    <option value="30">30</option>
-                                    <option value="31">31</option>
-                                    <option value="32">32</option>
-                                    <option value="33">33</option>
-                                    <option value="34">34</option>
-                                    <option value="35">35</option>
-
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>
-                                <b>Address 1</b><span style="color: Red;">*</span>
-                            </label>
-                            <input name="ctl00$ContentPlaceHolder1$txtAddress" type="text" id="ctl00_ContentPlaceHolder1_txtAddress" class="form-control" fdprocessedid="620em6">
-                            <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator9" style="color:Red;visibility:hidden;">Please enter address 1</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>
-                                <b>Address 2</b>
-                            </label>
-                            <input name="ctl00$ContentPlaceHolder1$txtAddress2" type="text" id="ctl00_ContentPlaceHolder1_txtAddress2" class="form-control" fdprocessedid="4r0kr">
-                        </div>
-                    </div>
-                    <div class="row">
+                @using (Html.BeginForm("OnlineVisitStep6", "Patient", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(x => x.paymentTab.DoctorId);
+                    @Html.HiddenFor(x => x.paymentTab.PatientId);
+                    @Html.HiddenFor(x => x.paymentTab.step1Id);
+                    <div class="row card-body">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>
-                                    <b>City</b><span style="color: Red;">*</span>
+                                    <b>First Name</b><span style="color: Red;">*</span>
                                 </label>
-                                <input name="ctl00$ContentPlaceHolder1$txtCity" type="text" id="ctl00_ContentPlaceHolder1_txtCity" class="form-control" fdprocessedid="f8jucw">
-                                <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator11" style="color:Red;visibility:hidden;">Please enter city</span>
-                                <br>
-                                <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator1" style="color:Red;visibility:hidden;">Enter Valid City</span>
+                                @Html.TextBoxFor(x => x.paymentTab.FirstName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.paymentTab.FirstName, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>
-                                    <b>State/Province</b><span style="color: Red;">*</span>
+                                    <b>Last Name</b><span style="color: Red;">*</span>
                                 </label>
-                                <select name="ctl00$ContentPlaceHolder1$cboBillingState" id="ctl00_ContentPlaceHolder1_cboBillingState" class="form-select" fdprocessedid="4ismlg">
-                                    <option value="AL">Alabama</option>
-                                    <option value="AK">Alaska</option>
-                                    <option value="AZ">Arizona</option>
-                                    <option value="AR">Arkansas</option>
-                                    <option value="CA">California</option>
-                                    <option value="CO">Colorado</option>
-                                    <option value="CT">Connecticut</option>
-                                    <option value="DE">Delaware</option>
-                                    <option value="FL">Florida</option>
-                                    <option value="GA">Georgia</option>
-                                    <option value="HI">Hawaii</option>
-                                    <option value="ID">Idaho</option>
-                                    <option value="IL">Illinois</option>
-                                    <option value="IN">Indiana</option>
-                                    <option value="IA">Iowa</option>
-                                    <option value="KS">Kansas</option>
-                                    <option value="KY">Kentucky</option>
-                                    <option value="LA">Louisiana</option>
-                                    <option value="ME">Maine</option>
-                                    <option value="MD">Maryland</option>
-                                    <option value="MA">Massachusetts</option>
-                                    <option value="MI">Michigan</option>
-                                    <option value="MN">Minnesota</option>
-                                    <option value="MS">Mississippi</option>
-                                    <option value="MO">Missouri</option>
-                                    <option value="MT">Montana</option>
-                                    <option value="NE">Nebraska</option>
-                                    <option value="NV">Nevada</option>
-                                    <option value="NH">New Hampshire</option>
-                                    <option value="NJ">New Jersey</option>
-                                    <option value="NM">New Mexico</option>
-                                    <option value="NY">New York</option>
-                                    <option value="NC">North Carolina</option>
-                                    <option value="ND">North Dakota</option>
-                                    <option value="OH">Ohio</option>
-                                    <option value="OK">Oklahoma</option>
-                                    <option value="OR">Oregon</option>
-                                    <option value="PA">Pennsylvania</option>
-                                    <option value="RI">Rhode Island</option>
-                                    <option value="SC">South Carolina</option>
-                                    <option value="SD">South Dakota</option>
-                                    <option value="TN">Tennessee</option>
-                                    <option value="TX">Texas</option>
-                                    <option value="UT">Utah</option>
-                                    <option value="VT">Vermont</option>
-                                    <option value="VA">Virginia</option>
-                                    <option value="WA">Washington</option>
-                                    <option value="WV">West Virginia</option>
-                                    <option value="WI">Wisconsin</option>
-                                    <option value="WY">Wyoming</option>
-                                    <option value="KK">Other</option>
-                                    <option value="PB">Punjab</option>
-
-                                </select>
-                                <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator14" style="color:Red;display:none;">Please select state</span>
+                                @Html.TextBoxFor(x => x.paymentTab.LastName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.paymentTab.LastName, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>
-                                    <b>Zip</b><span style="color: Red;">*</span>
+                                    <b>Phone</b><span style="color: Red;">*</span>
                                 </label>
-                                <input name="ctl00$ContentPlaceHolder1$txtZip" type="text" maxlength="5" id="ctl00_ContentPlaceHolder1_txtZip" class="form-control" fdprocessedid="kk8yvf">
-                                <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator12" style="color:Red;visibility:hidden;">Please enter zip</span>
-                                <br>
-                                <span id="ctl00_ContentPlaceHolder1_RegularExpressionValidator7" style="color:Red;visibility:hidden;">Enter Valid Zip</span>
+                                @Html.TextBoxFor(x => x.paymentTab.Phone, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.paymentTab.Phone, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-9"></div>
-                        <div class="col-lg-auto" style="text-align: right">
-                            <input type="submit" name="ctl00$ContentPlaceHolder1$btnSearch" value="Submit Payment" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ContentPlaceHolder1$btnSearch&quot;, &quot;&quot;, true, &quot;billing&quot;, &quot;&quot;, false, false))" id="ctl00_ContentPlaceHolder1_btnSearch" class="btn btn-success" fdprocessedid="awe92i">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Email</b><span style="color: Red;">*</span></label>
+                                @Html.TextBoxFor(x => x.paymentTab.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.paymentTab.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>
+                                    <b>Payment Amount</b>
+                                </label>
+                                @Html.TextBoxFor(x => x.paymentTab.Amount, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        <b>Credit Card Type</b>
+                                    </label>
+                                    @Html.DropDownListFor(model => model.paymentTab.CardTypeId, new SelectList(Model.paymentTab.CardTypeList, "Id", "Name"), "--- Please Select Your State ---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.paymentTab.CardTypeId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        <b>Credit Card #</b><span style="color: Red;">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(x => x.paymentTab.CardId, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.paymentTab.CardId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>
+                                        <b>CVV</b><span style="color: Red;">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(x => x.paymentTab.CvvNumber, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.paymentTab.CvvNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label><b>Exp Month</b></label>
+                                    @Html.DropDownListFor(model => model.paymentTab.CardExpMonthId, new SelectList(Model.paymentTab.CardExpMonthList, "Id", "Name"), "--- Please Select Your State ---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.paymentTab.CardExpMonthId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label><b>Exp Year</b></label>
+                                    @Html.DropDownListFor(model => model.paymentTab.CardExpYearId, new SelectList(Model.paymentTab.CardExpYearList, "Id", "Name"), "--- Please Select Your State ---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.paymentTab.CardExpYearId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>
+                                        <b>Address 1</b><span style="color: Red;">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(x => x.paymentTab.Address, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.paymentTab.Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>
+                                        <b>City</b><span style="color: Red;">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(x => x.paymentTab.City, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.paymentTab.City, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>
+                                        <b>State/Province</b><span style="color: Red;">*</span>
+                                    </label>
+                                    @Html.DropDownListFor(model => model.paymentTab.StateId, new SelectList(Model.paymentTab.StateList, "Id", "Name"), "--- Please Select Your State ---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.paymentTab.StateId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>
+                                        <b>Zip</b><span style="color: Red;">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(x => x.paymentTab.Zip, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.paymentTab.Zip, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-9"></div>
+                            <div class="col-lg-auto" style="text-align: right">
+                                <input type="submit" value="Submit Payment" class="btn btn-success" id="paymentSubmit" />
+                            </div>
                         </div>
                     </div>
-
-                </div>
+                }
             </div>
         </div>
     </div>
@@ -1344,7 +1234,6 @@
 @section Scripts
 {
     <script type="text/javascript">
-        debugger
         var urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('step')) {
             $('#tabList li:first a').removeClass('active');
@@ -1354,12 +1243,18 @@
                 case 2:
                     $('#step-1').hide();
                     $('#step-3').hide();
+                    $('#step-4').hide();
+                    $('#step-5').hide();
+                    $('#step-6').hide();
                     $('#tabList li:nth-child(2) a').addClass('active');
                     $('#step-' + stepValue).addClass('active');
                     break;
                 case 3:
                     $('#step-1').hide();
                     $('#step-2').hide();
+                    $('#step-4').hide();
+                    $('#step-5').hide();
+                    $('#step-6').hide();
                     $('#tabList li:nth-child(3) a').addClass('active');
                     $('#step-' + stepValue).addClass('active');
                     break;
@@ -1370,6 +1265,7 @@
                     $('#step-2').hide();
                     $('#step-3').hide();
                     $('#step-4').hide();
+                    $('#step-6').hide();
                     $('#tabList li:nth-child(5) a').addClass('active');
                     $('#step-' + stepValue).addClass('active');
                     break;

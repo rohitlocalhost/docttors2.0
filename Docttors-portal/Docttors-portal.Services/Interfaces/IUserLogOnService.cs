@@ -16,7 +16,8 @@ namespace Docttors_portal.Services.Interfaces
         long UserLogOn(string email, string password);
 
         AppUser GetUserDetailsByUserId(long userId);
-
+        AppUser GetUserDetailsByEmailId(string emailId);
+        bool SentNewPassword(AppUser userInfo);
         int AddNewUser(UserRegistrationModel userRegistrationModel);
 
         #endregion

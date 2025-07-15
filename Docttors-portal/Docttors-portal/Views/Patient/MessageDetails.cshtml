@@ -1,0 +1,132 @@
+﻿@model Docttors_portal.Common.procedureModels.GetMessageDetails
+@{
+    ViewBag.Title = "MessageDetails";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<article class="box post" id="pagecontainer_main">
+    <h3 id="ctl00_ContentPlaceHolder1_headerdetails" class="text-center" style="font-weight: bold">Message Details</h3>
+    <div class="row">
+        <div class="panel-body">
+            <label id="ctl00_ContentPlaceHolder1_message" style="color: red"></label>
+        </div>
+    </div>
+    <div id="messagebox">
+        <div class="row g-3 justify-content-between">
+            <div class="col-auto col-sm-auto col-md-auto col-lg-auto">
+                <p><b>From: </b><span>@Model.PatientName</span></p>
+                <p><b>Subject:</b> <span><span style="font-size:18px">@Model.Subject</span></span></p>
+            </div>
+            <div class="col-auto col-sm-auto col-md-auto col-lg-auto">
+                <p><b>To:</b> <span>@Model.DoctorName</span></p>
+                <p><b>Date:</b> <span>@Model.CreatedOn</span></p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header text-white" style="background-color: #1434A4;">
+                <h3 class="card-title">Provider Details</h3>
+            </div>
+            <div class="card-body row">
+                <div class="col-lg-6">
+                    <p><b>Provider:</b><span>@Model.DoctorName</span></p>
+                    <p><b>Title:</b> <span>@Model.Position</span></p>
+                    <p><b>Phone:</b> <span>@Model.Phone</span></p>
+                </div>
+                <div class="col-lg-6">
+                    <p>
+                        <b>Doctor Email:</b> <span>@Model.DoctorEmail</span>
+                    </p>
+                    <p><b>Nurse Email:</b> <span>@Model.NurseEmail</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header text-white" style="background-color: #1434A4;">
+                <h3 class="card-title">Appointment Details</h3>
+            </div>
+            <div class="card-body row">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        Appointment Time :&nbsp;<span>@Model.AppointmentDate</span>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header text-white" style="background-color: #1434A4;">
+                <h3 class="card-title">Video (from patient)</h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12 mobileViewAdjust">
+
+                    <u>
+                        <h4 class="text-center text-danger">
+                            <p></p><div class="Literal1">NO VIDEO PROVIDED</div><p></p>
+                        </h4>
+                    </u>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header text-white" style="background-color: #1434A4;">
+                <h3 class="card-title">Text message (from patient)</h3>
+            </div>
+
+            <div class="card-body">
+                <textarea readonly="readonly" class="form-control">@Model.TextMessage</textarea>
+            </div>
+        </div>
+        <div id="ctl00_ContentPlaceHolder1_additionalInfo" class="card">
+            <div class="card-header text-white" style="background-color: #1434A4;">
+                <h3 class="card-title">Additional Information</h3>
+            </div>
+            <div class="card-body">
+                <div id="ctl00_ContentPlaceHolder1_MessageAttachment_pnlAttachment" class="card">
+                    <div class="card-header text-white" style="background-color: #1434A4;">
+                        <h3 class="card-title">Attachment</h3>
+                    </div>
+                    <div class="card-body">
+
+
+                        <div class="table-responsive">
+                            <table id="tblAttachments" class="table table-sm table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th></th>
+                                        <th><strong>From:</strong></th>
+                                        <th><strong>Document Name:</strong></th>
+                                        <th><strong>Date:</strong></th>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-lg-7">
+
+            </div>
+            <div class="col-lg-auto pe-2">
+                <a href="Javascript:void(0)" id="ctl00_ContentPlaceHolder1_ctl00_ContentPlaceHolder1_btnPrint" class="btn btn-rounded btn-secondary btn-wave">
+                    <i class="fa fa-print" aria-hidden="true"></i>Print
+                </a>
+            </div>
+            <div class="col-lg-auto pe-2">
+                <a href="Javascript:window.location.href = document.referrer;" class="btn btn-warning btn-rounded">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>Back
+                </a>
+            </div>
+            <div class="col-lg-auto">
+
+            </div>
+        </div>
+    </div>
+</article>
+
+

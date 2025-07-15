@@ -126,6 +126,30 @@ namespace Docttors_portal.Controllers
             }
         }
 
+        public ActionResult ForgetPassword()
+        {
+            var objUserLogOnModel = new UserLogOnModel();
+            return View(objUserLogOnModel);
+        }
+        [HttpPost]
+        public ActionResult ForgetPassword(UserLogOnModel objUserLogOnModel)
+        {
+            if (!string.IsNullOrEmpty(objUserLogOnModel.Email))
+            {
+                var userDetails = _userLoginService.GetUserDetailsByEmailId(objUserLogOnModel.Email);
+                if (userDetails != null)
+                {
+                    _userLoginService.SentNewPassword(userDetails);
+                    ViewBag.Message = "Temprary password sent to emailId, please change after login";
+                }
+                else
+                {
+                    return View(objUserLogOnModel);
+                }
+            }
+            return View(objUserLogOnModel);
+        }
+
         private void SetSessionOfUser(AppUser user, UserLogOnModel objUserLogOnModel)
         {
             UserRegistrationModel objUserRegistrationModel = new UserRegistrationModel();

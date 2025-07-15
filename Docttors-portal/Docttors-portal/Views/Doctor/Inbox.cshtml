@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Docttors_portal.Common.procedureModels.GetpatientMessage>
 @{
     ViewBag.Title = "Inbox";
     Layout = "~/Views/Shared/_DoctorLayout.cshtml";
@@ -18,40 +18,72 @@
                     <thead>
                         <tr>
                             <th>
-                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=from" id="ctl00_ContentPlaceHolder1_header_from">From</a>
+                                <a>From</a>
                             </th>
                             <th></th>
                             <th>
-                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=TypeofService" id="ctl00_ContentPlaceHolder1_header_type">Type of Service</a>
+                                <a>Type of Service</a>
                             </th>
 
                             <th>
-                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=mr" id="ctl00_ContentPlaceHolder1_Header_symptom">Symptom</a>
+                                <a>Symptom</a>
                             </th>
 
                             <th>
-                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=date" id="ctl00_ContentPlaceHolder1_header_date">Date/Time Rec’d</a>
+                                <a>Date/Time Rec’d</a>
                             </th>
 
                             <th>
-                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=mr" id="ctl00_ContentPlaceHolder1_header_appttime">Appt Time</a>
+                                <a>Appt Time</a>
                             </th>
                             <th>
-                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=mr" id="ctl00_ContentPlaceHolder1_header_timeRemaining">Time Remaining</a>
+                                <a>SSN#</a>
                             </th>
                             <th>
-                                <a href="https://vishal.techfeature.in/Doctor/inbox.aspx?pageIndex=0&amp;sort=mr" id="ctl00_ContentPlaceHolder1_header_mr">SSN#</a>
-                            </th>
-                            <th>
-                                <a href="#" id="ctl00_ContentPlaceHolder1_header_complete">Complete</a>
+                                <a>Complete</a>
                             </th>
                         </tr>
                     </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.patientName
+                                </td>
+                                <td>
+                                    @item.ProviderName
+                                </td>
+                                <td>
+                                    <a href="OpenMessage.aspx?ID=K1iUFbusi1MQWsV%2bfPz9Tw%23%23&amp;source=ShNfn5Qxs%2f29Sw3074iD4Q%23%23">@item.ServiceType</a>
+                                </td>
+                                <td>
+                                    <span>@item.Symptoms</span>
+                                </td>
+                                <td>
+                                    <span>@item.DateTimeRequested</span>
+                                </td>
+                                <td>
+                                    <span>@item.AppointmentDate</span>
+                                </td>
+                                <td>
+                                    @item.SSN
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(x => item.IsTreated, new { Step1Id = item.Step1Id, @class = "toggle", data_url = Url.Action("CompleteTreatment", "Doctor"), @disabled = !item.IsTreated })
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
                 </table>
-                <p>There are no messages in your Inbox folder.</p>
+                @if (Model.Count == 0)
+                {
+                    <p>There are no messages in your Inbox folder.</p>
+                }
                 <div class="row" id="Div2">
                     <div class="col-sm-12 col-md-5">
-                        <div id="ctl00_ContentPlaceHolder1_PagingControl_pageLocationText" class="dataTables_info" role="status" aria-live="polite">Showing 1-0 of 0&nbsp;&nbsp;</div>
+                        <div id="ctl00_ContentPlaceHolder1_PagingControl_pageLocationText" class="dataTables_info" role="status" aria-live="polite">Showing 1-0 of @Model.Count  &nbsp;&nbsp;</div>
                     </div>
                     <div class="col-sm-12 col-md-7">
                         <div class="row dataTables_paginate paging_simple_numbers" id="datatable_paginate">
@@ -67,4 +99,25 @@
         </div>
     </div>
 </article>
-
+@section scripts {
+    <script>
+        $(function () {
+            $('.toggle').change(function () {
+                var self = $(this);
+                var url = self.data('url');
+                var id = self.attr('step1Id');
+                var value = self.prop('checked');
+                if (value) {
+                    $.ajax({
+                        url: url,
+                        data: { Step1Id: id },
+                        type: 'GET',
+                        success: function (response) {
+                            //alert(response);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

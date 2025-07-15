@@ -37,6 +37,10 @@ namespace Docttors_portal.Controllers
                 int NewUserId = _userLoginService.AddNewUser(userRegistrationModel);
                 var userRegisterationData = LoadlistData();
                 userRegisterationData.DoctorId = NewUserId;
+                if (NewUserId > 1)
+                {
+                    CommonFunctions.SentRegiterationEmail(userRegistrationModel.EmailAddress, "Doctor");
+                }
                 ModelState.Clear();
                 return View(userRegisterationData);
             }
@@ -62,7 +66,11 @@ namespace Docttors_portal.Controllers
                     IsDoctor = false
                 };
                 int NewUserId = _userLoginService.AddNewUser(userRegistertionModel);
-                patientRegisterationModel.PatientId= NewUserId;
+                patientRegisterationModel.PatientId = NewUserId;
+                if (NewUserId > 1)
+                {
+                    CommonFunctions.SentRegiterationEmail(patientRegisterationModel.EmailAddress, "Patient");
+                }
                 ModelState.Clear();
             }
             return View(patientRegisterationModel);
