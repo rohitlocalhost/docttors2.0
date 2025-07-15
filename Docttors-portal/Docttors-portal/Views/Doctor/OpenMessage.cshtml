@@ -1,0 +1,618 @@
+﻿@model Docttors_portal.Common.procedureModels.GetDoctorMessageDetails
+@{
+    ViewBag.Title = "OpenMessage";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+<h2>OpenMessage</h2>
+<article class="box post" id="pagecontainer_main">
+    <div id="printablediv">
+        <h3 id="ctl00_ContentPlaceHolder1_headerDetails" class="text-center">Message From Patient</h3>
+        <div class="row g-3 justify-content-between mt-lg-0 mt-4" id="messagebox">
+            <label id="ctl00_ContentPlaceHolder1_message" style="color: red"></label>
+            <div class="col-auto col-sm-auto col-md-auto col-lg-auto fs-5" style="padding-left: 40px">
+                <p>
+                    <b>From :</b>
+                    <span>@Model.PatientName</span>
+                </p>
+                <p>
+                    <b>Subject :</b>
+                    <span style="font-size:18px">@Model.Subject</span>
+                </p>
+            </div>
+            <div class="col-auto col-sm-auto col-md-auto col-lg-auto fs-5">
+                <p>
+                    <b>To :</b>
+                    <span>@Model.DoctorName</span>
+                </p>
+                <p>
+                    <b>Date :</b>
+                    <span>@Model.CreatedOn</span>
+                </p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" style="background-color: #1434A4;">
+                <h3 class="card-title text-white">Patient Personal Details</h3>
+            </div>
+            <div class="card-body d-lg-flex justify-content-lg-between" id="divFirst">
+                <div class="col-lg-6 fs-5">
+                    <div class="col-auto">
+                        <p>
+                            <b>Name :</b>@Model.PatientName
+                        </p>
+                        <p id="ctl00_ContentPlaceHolder1_OpenMessage1_MessagePersonalInsurance1_ucmcSexlbl">
+                            <b>Sex :</b>@Model.Sex
+                        </p>
+
+                        <p>
+                            <b>Date of Birth :</b>@Model.Dob
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6 fs-5">
+                    <div class="col-auto">
+
+                        <p id="ctl00_ContentPlaceHolder1_OpenMessage1_MessagePersonalInsurance1_ucmcPhonelbl">
+                            <b>Phone :</b>@Model.Phone
+                        </p>
+                        <p id="ctl00_ContentPlaceHolder1_OpenMessage1_MessagePersonalInsurance1_ucmcHWGTlbl">
+                            <b>Height/Weight :</b>@Model.HeightWeight
+                        </p>
+                        <p id="ctl00_ContentPlaceHolder1_OpenMessage1_MessagePersonalInsurance1_ucmcAddresslbl">
+                            <b>Address :</b>@Model.Address
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div id="ctl00_ContentPlaceHolder1_OpenMessage1_MessagePersonalInsurance1_insuranceHeadDiv" class="card-header d-flex justify-content-between" style="background-color: #1434A4; cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#pid" aria-expanded="false" aria-controls="pid">
+                <h3 class="card-title text-white">Patient Insurance Details</h3>
+            </div>
+            <div class="collapse" id="pid">
+                <div id="ctl00_ContentPlaceHolder1_OpenMessage1_MessagePersonalInsurance1_insuranceBodyDiv" class="card-body d-lg-flex justify-content-lg-between">
+                    <div class="col-lg-6 fs-5">
+                        <div class="col-auto">
+                            <p>
+                                <b>Insurance Company:&nbsp;</b>@Model.InsuranceCompanyName
+                            </p>
+                            <p>
+                                <b>Insurance Company Address:&nbsp;</b>
+                                @Model.InsuranceCompanyAddress
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 fs-5">
+                        <div class="col-auto">
+                            <p>
+                                <b>Phone:&nbsp;</b>
+                                @Model.InsuranceCompanyphone
+                            </p>
+                            <p>
+                                <b>Insurance Plan Number:&nbsp;</b>@Model.InsuranceIdNumber
+                            </p>
+                            <p>
+                                <b>Insurance Group ID:&nbsp;</b>@Model.InsuranceGroupId
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div id="ctl00_ContentPlaceHolder1_OpenMessage1_MessagePersonalInsurance1_pharmacyDiv" class="card-header" style="background-color: #1434A4; cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#ppd" aria-expanded="false" aria-controls="ppd">
+                <h3 class="card-title text-white">Patient Pharmacy Details</h3>
+            </div>
+            <div class="collapse" id="ppd">
+                <div id="ctl00_ContentPlaceHolder1_OpenMessage1_MessagePersonalInsurance1_pharmacyDetailsDiv" class="card-body d-lg-flex justify-content-lg-between">
+                    <div class="col-lg-6 fs-5">
+                        <div class="col-auto">
+                            <p>
+                                <b>Name :</b>@Model.PharmacyName
+                            </p>
+                            <p>
+                                <b>Address :</b>@Model.PharmacyAddress
+                            </p>
+                            <p>
+                                <b>City :</b>@Model.PharmacyCity
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 fs-5">
+                        <div class="col-auto">
+                            <p>
+                                <b>State :</b>@Model.PharmacyState
+                            </p>
+                            <p>
+                                <b>Phone :</b>@Model.PharmacyPhone
+                            </p>
+                            <p>
+                                <b>Zip :</b>@Model.PharmacyZipCode
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-header" style="background-color: #1434A4;">
+                <h3 class="card-title text-white">
+                    Patient Video Message
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="col-lg-12">
+                    <ziggeo src="" ziggeo-video="" ziggeo-width="320" ziggeo-height="240">
+                        <span style="display:none"></span><ba-ziggeoplayer ba-if="false" ba-theme="modern" ba-themecolor="red" ba-lazy-application="true" ba-client-auth="null" ba-server-auth="null" ba-intermediate-token="null" ba-application="null" ba-stretch="false" ba-width="320" ba-height="240" ba-effect-profile="" ba-video="" ba-stream="null" ba-loop="false" ba-autoplay="false" ba-nofullscreen="false" ba-popup="false" ba-popup-width="null" ba-popup-height="null" ba-stream-width="null" ba-stream-height="null" ba-event:error="event_player_error" ba-event:playing="event_player_playing" ba-event:paused="event_player_paused" ba-event:ended="event_player_ended" ba-event:ready_to_play="event_player_ready_to_play" style="display: none;"></ba-ziggeoplayer><span style="display:none"></span><ba-ziggeorecorder ba-if="true" ba-theme="modern" ba-themecolor="red" ba-lazy-application="true" ba-client-auth="null" ba-server-auth="null" ba-intermediate-token="null" ba-application="null" ba-stretch="false" ba-width="320" ba-height="240" ba-filesizelimit="null" ba-effect-profile="" ba-video="" ba-allowedextensions="null" ba-skipinitial="false" ba-picksnapshots="true" ba-faceoutline="false" ba-manualsubmit="false" ba-framerate="null" ba-custom-covershots="false" ba-flip-camera="false" ba-simulate="false" ba-noaudio="false" ba-timelimit="null" ba-timeminlimit="null" ba-countdown="3" ba-recordingwidth="null" ba-recordingheight="null" ba-input-bind="null" ba-form-accept="null" ba-microphone-volume="null" ba-autoplay="false" ba-display-timer="true" ba-audio-test-mandatory="true" ba-title="null" ba-description="null" ba-tags="null" ba-custom-data="null" ba-key="null" ba-auto-crop="false" ba-auto-pad="false" ba-force-overwrite="false" ba-video-profile="null" ba-meta-profile="null" ba-enforce-duration="false" ba-expiration-days="null" ba-recover-streams="false" ba-delete-old-streams="false" ba-allowrecord="true" ba-allowupload="false" ba-rerecordable="true" ba-recordermode="true" ba-playermodeifexists="null" ba-rerecordableifexists="null" ba-recordings="null" ba-early-rerecord="false" ba-framerate-warning="null" ba-event:camera_unresponsive="event_recorder_camera_unresponsive" ba-event:camera_signal="event_recorder_camera_signal" ba-event:camera_nosignal="event_recorder_camera_nosignal" ba-event:access_granted="event_recorder_access_granted" ba-event:access_forbidden="event_recorder_access_forbidden" ba-event:upload_progress="event_recorder_upload_progress" ba-event:processing="event_recorder_processing" ba-event:recording="event_recorder_recording" ba-event:uploading="event_recorder_uploading" ba-event:recording_stopped="event_recorder_recording_stopped" ba-event:recording_progress="event_recorder_recording_progress" ba-event:manually_submitted="event_recorder_manually_submitted" ba-event:countdown="event_recorder_countdown" ba-event:rerecord="event_recorder_rerecord" ba-event:error="event_recorder_error" ba-event:playing="event_recorder_playing" ba-event:paused="event_recorder_paused" ba-event:ready_to_record="event_recorder_ready_to_record" ba-event:uploaded="event_recorder_uploaded" ba-event:verified="event_recorder_verified" ba-event:upload_selected="event_recorder_upload_selected" class="ba-commoncss-full-width" style="display: inline-block; aspect-ratio: 640 / 480;">
+                            <div data-selector="video-recorder-container" ba-show="true" class="ba-videorecorder-container ba-recorder-theme-modern ba-videorecorder-size-normal
+     ba-videorecorder-noie8 ba-videorecorder-normal-view
+     ba-recorder-common-browser
+     ba-recorder-red-color
+	 ba-commoncss-full-width" ba-styles="[object Object]" style="aspect-ratio: 640 / 480;">
+
+                                <video tabindex="-1" data-selector="recorder-status" class="ba-videorecorder-video ba-videorecorder-norecorder" data-video="video" playsinline="" disablepictureinpicture=""></video>
+                                <ba-videorecorder-faceoutline class="ba-videorecorder-overlay" ba-if="false" style="display: none;"></ba-videorecorder-faceoutline>
+                                <div data-selector="recorder-overlay" style="" class="ba-recorder-overlay " ba-show="true" data-overlay="overlay">
+                                    <ba-videorecorder-loader ba-css="ba-videorecorder" ba-cssrecorder="ba-recorder" ba-themecolor="red" ba-template="" ba-show="false" ba-tooltip="null" ba-hovermessage="null" ba-label="null" style="display: none;">
+                                        <div class="ba-recorder-loader-container">
+                                            <div data-selector="recorder-loader-block" class="ba-recorder-loader-loader" title="">
+                                            </div>
+                                        </div><div data-selector="recorder-loader-label-container" class="ba-recorder-loader-label" ba-show="null" style="display: none;">
+                                            null
+                                        </div>
+                                    </ba-videorecorder-loader>
+
+                                    <ba-videorecorder-message ba-css="ba-videorecorder" ba-themecolor="red" ba-cssrecorder="ba-recorder" ba-template="" ba-show="true" ba-message="You need to confirm / upgrade your account." ba-links="null" ba-event:click="message_click" ba-event:link="message_link_click" style="">
+                                        <div data-selector="recorder-message-container" class="ba-videorecorder-message-container" ba-click="{{click()}}">
+                                            <div data-selector="recorder-message-block" class="ba-videorecorder-message-message">
+                                                <p>
+                                                    You need to confirm / upgrade your account.
+                                                </p>
+                                                <ul ba-if="false" ba-repeat="[object Object]" style="display: none;"></ul>
+                                            </div>
+                                        </div>
+                                    </ba-videorecorder-message>
+
+                                    <ba-videorecorder-topmessage ba-css="ba-videorecorder" ba-themecolor="red" ba-cssrecorder="ba-recorder" ba-template="" ba-show="false" ba-topmessage="null" style="display: none;">
+                                        <div class="ba-videorecorder-topmessage-container">
+                                            <div class="ba-videorecorder-topmessage-background">
+                                            </div>
+                                            <div data-selector="recorder-topmessage-block" class="ba-videorecorder-topmessage-message">
+                                                null
+                                            </div>
+                                        </div>
+                                    </ba-videorecorder-topmessage>
+
+                                    <ba-videorecorder-chooser ba-if="false" ba-onlyaudio="false" ba-facecamera="null" ba-recordviafilecapture="false" ba-css="ba-videorecorder" ba-themecolor="red" ba-cssrecorder="ba-recorder" ba-template="" ba-allowscreen="false" ba-allowmultistreams="false" ba-parentpopup="false" ba-allowrecord="true" ba-allowupload="false" ba-allowcustomupload="true" ba-allowedextensions="null" ba-primaryrecord="true" ba-initialmessages="" ba-timelimit="null" ba-event:record="record_video" ba-event:record-screen="record_screen" ba-event:upload="video_file_selected" style="display: none;">
+                                        <div class="ba-videorecorder-chooser-container">
+                                            <div ba-if="false" class="ba-commoncss-message-container" style="display: none;">
+                                                <ul ba-repeat="{{initialmessage :: initialmessages}}">
+                                                    <li ba-if="{{initialmessage.message}}" class="{{csscommon}}-message-text {{csscommon}}-message-{{initialmessage.type ? initialmessage.type : 'default'}}">
+                                                        {{ initialmessage.message }}
+                                                        <span ba-if="{{initialmessage.id}}" class="{{csscommon}}-action-button" ba-click="close_message(initialmessage.id)">
+                                                            <i class="{{csscommon}}-icon-cancel"></i>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="ba-videorecorder-chooser-button-container">
+
+                                                <div class="ba-videorecorder-chooser-icon-container">
+                                                    <i class="ba-commoncss-icon-videocam"></i>
+                                                </div>
+                                                <div ba-repeat="[object Object]"></div>
+                                            </div>
+                                        </div>
+                                    </ba-videorecorder-chooser>
+
+                                    <ba-{{dynimagegallery}} ba-if="false" ba-css="ba-videorecorder" ba-themecolor="red" ba-cssrecorder="ba-recorder" ba-template="" ba-imagecount="3" ba-snapshots="" ba-imagenativewidth="640" ba-imagenativeheight="480" ba-event:image-selected="select_image" ba-event:upload-covershot="upload_covershot" style="display: none;"></ba-{{dynimagegallery}}>
+
+                                    <ba-videorecorder-controlbar ba-css="ba-videorecorder" ba-cssrecorder="ba-recorder" ba-csstheme="ba-recorder-theme-modern" ba-themecolor="red" ba-template="" ba-show="false" ba-cameras="null" ba-microphones="null" ba-noaudio="false" ba-novideo="false" ba-allowscreen="false" ba-selectedcamera="0" ba-selectedmicrophone="0" ba-addstreamdeviceid="null" ba-showaddstreambutton="false" ba-camerahealthy="null" ba-microphonehealthy="null" ba-hovermessage="null" ba-settingsvisible="null" ba-recordvisible="null" ba-cancelvisible="false" ba-uploadcovershotvisible="null" ba-rerecordvisible="null" ba-stopvisible="null" ba-skipvisible="null" ba-controlbarlabel="null" ba-mintimeindicator="null" ba-timeminlimit="5" ba-resumevisible="null" ba-pausable="false" ba-firefox="false" ba-event:select-camera="select_camera" ba-event:select-microphone="select_microphone" ba-event:invoke-record="record" ba-event:invoke-rerecord="rerecord" ba-event:invoke-stop="stop" ba-event:invoke-skip="invoke_skip" ba-event:invoke-pause="pause_recorder" ba-event:invoke-resume="resume" ba-event:invoke-cancel="cancel" ba-event:upload-covershot="upload_covershot" ba-event:toggle-face-mode="toggle_face_mode" ba-event:add-new-stream="add_new_stream" style="display: none;">
+                                        <div class="ba-videorecorder-dashboard">
+                                            <div class="ba-videorecorder-backbar"></div>
+                                            <div data-selector="recorder-settings" class="ba-videorecorder-settings" ba-show="null" style="display: none;">
+                                                <div class="ba-videorecorder-settings-backbar"></div>
+                                                <div data-selector="settings-list-front" class="ba-videorecorder-settings-front">
+                                                    <ul data-selector="add-new-stream" ba-if="null" style="display: none;">
+                                                        <li>
+                                                            <div data-selector="single-camera-stream">
+                                                                <i class="ba-commoncss-icon-plus"></i> {{string('add-stream')}}
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div data-selector="single-camera-stream" class="{{csscommon}}-text-error">
+                                                                {{videoselectnotification}}
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <ul data-selector="add-new-stream" ba-show="false" style="display: none;">
+                                                        <li>
+                                                            <div data-selector="single-camera-stream" class="ba-videorecorder-add-stream" onclick="" onmouseenter="">
+                                                                <i class="ba-commoncss-icon-plus"></i> Add Stream
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+
+                                                    <ul data-selector="add-new-stream" ba-show="false" ba-repeat="null" style="display: none;"></ul>
+                                                    <hr ba-show="false" style="display: none;">
+                                                    <ul data-selector="camera-settings" ba-repeat="null" ba-show="true"></ul>
+                                                    <hr ba-show="true">
+                                                    <ul data-selector="microphone-settings" ba-repeat="null" ba-show="true"></ul>
+                                                </div>
+                                            </div>
+                                            <div data-selector="controlbar" class="ba-videorecorder-controlbar">
+
+                                                <div class="ba-videorecorder-leftbutton-container" ba-show="null" style="display: none;">
+                                                    <div data-selector="face-mode-toggle-icon" class="ba-videorecorder-mobile-camera-switcher ba-videorecorder-button-inner" onclick="" onmouseenter="">
+                                                        <i class="ba-commoncss-icon-arrows-cw"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="ba-videorecorder-leftbutton-container" ba-show="null" style="display: none;">
+                                                    <div tabindex="0" ba-hotkey:space^enter="{{settingsopen=!settingsopen}}" onmouseout="this.blur()" data-selector="record-button-icon-cog" class="ba-videorecorder-button-inner ba-videorecorder-button-unselected" onclick="" onmouseenter="" onmouseleave="">
+                                                        <i class="ba-commoncss-icon-cog"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="ba-videorecorder-lefticon-container" ba-show="null" style="display: none;">
+                                                    <div data-selector="record-button-icon-videocam" class="ba-commoncss-icon-inner" onmouseenter="" onmouseleave="">
+                                                        <i class="ba-commoncss-icon-videocam ba-commoncss-icon-state-bad"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="ba-videorecorder-lefticon-container" ba-show="null" style="display: none;">
+                                                    <div data-selector="record-button-icon-mic" class="ba-commoncss-icon-inner" onmouseenter="" onmouseleave="">
+                                                        <i class="ba-commoncss-icon-mic ba-commoncss-icon-state-bad"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="ba-videorecorder-lefticon-container" ba-show="null" style="display: none;">
+                                                    <div data-selector="recording-indicator" class="ba-videorecorder-recording-indication">
+                                                    </div>
+                                                </div>
+
+                                                <div class="ba-videorecorder-label-container" ba-show="null" style="display: none;">
+                                                    <div data-selector="record-label-block" class="ba-videorecorder-label-label">
+                                                        null
+                                                    </div>
+                                                </div>
+
+                                                <div class="ba-videorecorder-rightbutton-container" ba-show="null" style="display: none;">
+                                                    <div tabindex="0" ba-hotkey:space^enter="{{record()}}" onmouseout="this.blur()" data-selector="record-primary-button" class="ba-videorecorder-button-primary" onclick="" onmouseenter="" onmouseleave="">
+                                                        Record
+                                                    </div>
+                                                </div>
+
+                                                <div class="ba-videorecorder-rightbutton-container" ba-if="null" style="display: none;">
+                                                    <div data-selector="covershot-primary-button" class="{{css}}-button-primary" onmouseenter="{{hover(string('upload-covershot-tooltip'))}}" onmouseleave="{{unhover()}}">
+                                                        <input type="file" class="{{css}}-chooser-file" style="height:100" onchange="{{uploadCovershot(domEvent)}}" accept="{{covershot_accept_string}}">
+                                                        <span>
+                                                            {{string('upload-covershot')}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="ba-videorecorder-rightbutton-container" ba-show="null" style="display: none;">
+                                                    <div tabindex="0" ba-hotkey:space^enter="{{rerecord()}}" onmouseout="this.blur()" data-selector="rerecord-primary-button" class="ba-videorecorder-button-primary" onclick="" onmouseenter="" onmouseleave="">
+                                                        Redo
+                                                    </div>
+                                                </div>
+
+                                                <div class="ba-videorecorder-rightbutton-container" ba-show="false" style="display: none;">
+                                                    <div tabindex="0" ba-hotkey:space^enter="{{cancel()}}" onmouseout="this.blur()" data-selector="cancel-primary-button" class="ba-videorecorder-button-primary" onclick="" onmouseenter="" onmouseleave="">
+                                                        Cancel
+                                                    </div>
+                                                </div>
+
+                                                <div class="ba-videorecorder-rightbutton-container" ba-show="null" style="display: none;">
+                                                    <div tabindex="0" ba-hotkey:space^enter="{{stop()}}" onmouseout="this.blur()" data-selector="stop-primary-button" class="ba-videorecorder-button-primary " title="Click here to stop." onclick="" onmouseenter="" onmouseleave="">
+                                                        Stop
+                                                    </div>
+                                                </div>
+
+                                                <div class="ba-videorecorder-rightbutton-container" ba-show="false" style="display: none;">
+                                                    <div tabindex="0" ba-hotkey:space^enter="{{pause()}}" onmouseout="this.blur()" data-selector="pause-primary-button" class="ba-videorecorder-button-primary" title="Pause Recorder" onclick="" onmouseenter="" onmouseleave="">
+                                                        <i class="ba-commoncss-icon-pause"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="ba-videorecorder-rightbutton-container" ba-show="false" style="display: none;">
+                                                    <div tabindex="0" ba-hotkey:space^enter="{{resume()}}" onmouseout="this.blur()" data-selector="resume-primary-button" class="ba-videorecorder-button-primary" title="Resume Recorder" onclick="" onmouseenter="" onmouseleave="">
+                                                        <i class="ba-commoncss-icon-ccw"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="ba-videorecorder-centerbutton-container" ba-show="null" style="display: none;">
+                                                    <div tabindex="0" ba-hotkey:space^enter="{{skip()}}" onmouseout="this.blur()" data-selector="skip-primary-button" class="ba-videorecorder-button-primary" onclick="" onmouseenter="" onmouseleave="">
+                                                        Skip
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ba-videorecorder-controlbar>
+
+                                    <ba-{{dynhelperframe}} ba-if="false" ba-template="" ba-framereversable="true" ba-framedragable="true" ba-frameresizeable="false" ba-framepositionx="5" ba-framepositiony="5" ba-frameproportional="true" ba-flipframe="0" style="display: none;"></ba-{{dynhelperframe}}>
+                                </div>
+                            </div><div data-selector="recorder-player" ba-if="false" ba-styles="[object Object]" style="display: none; aspect-ratio: 640 / 480;">
+                                <span ba-show="{{ie8}}">&nbsp;</span>
+                                <ba-{{dynvideoplayer}} ba-theme="{{theme || 'default'}}" ba-themecolor="{{themecolor}}" ba-cssrecorder="{{cssrecorder || css}}" ba-source="{{localplayback ? playbacksource : ''}}" ba-poster="{{localplayback ? playbackposter : ''}}" ba-localplayback="{{localplayback}}" ba-hideoninactivity="{{false}}" ba-showsettingsmenu="{{showplayersettingsmenu}}" ba-onlyaudio="{{onlyaudio}}" ba-attrs="{{playerattrs}}" ba-data:id="player" ba-width="100%" ba-height="100%" ba-totalduration="{{duration}}" ba-rerecordable="{{rerecordable &amp;&amp; (recordings === null || recordings > 0)}}" ba-submittable="{{manualsubmit &amp;&amp; verified}}" ba-reloadonplay="{{true}}" ba-autoplay="{{autoplay}}" ba-nofullscreen="{{nofullscreen}}" ba-topmessage="{{playertopmessage}}" ba-allowtexttrackupload="{{allowtexttrackupload}}" ba-uploadtexttracksvisible="{{uploadtexttracksvisible}}" ba-snapshottype="{{snapshottype}}" ba-tracktags="{{tracktags}}" ba-tracktagsstyled="{{tracktagsstyled}}" ba-trackcuetext="{{trackcuetext}}" ba-acceptedtracktexts="{{acceptedtracktexts}}" ba-sharevideo="{{sharevideo}}" ba-videofitstrategy="{{videofitstrategy}}" ba-posterfitstrategy="{{posterfitstrategy}}" ba-placeholderstyle="{{placeholderstyle}}" ba-event:loaded="ready_to_play" ba-event:rerecord="rerecord" ba-event:playing="playing" ba-event:paused="paused" ba-event:ended="ended" ba-event:submit="manual_submit" ba-event:upload-text-tracks="upload_text_tracks" ba-tracksshowselection="{{tracksshowselection}}" ba-trackselectorhovered="{{trackselectorhovered}}" ba-uploadlocales="{{uploadlocales}}" ba-frameselectionmode="{{frameselectionmode}}" ba-timeminlimit="{{timeminlimit}}" ba-event:selected_label_value="selected_label_value" ba-event:move_to_option="move_to_option">
+                                </ba-{{dynvideoplayer}}>
+                            </div>
+                        </ba-ziggeorecorder><span style="display:none"></span>
+                    </ziggeo>
+                    <div id="ctl00_ContentPlaceHolder1_OpenMessage1_PlayvideoControl1_imgNoVideo" class="ltrno_video">NO VIDEO PROVIDED</div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" style="background-color: #1434A4;">
+                <h3 id="ctl00_ContentPlaceHolder1_OpenMessage1_txtmessageheader" class="card-title text-white">
+                    Patient Text Message
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="col-lg-12">
+                    <div></div>
+                    <textarea readonly="readonly" class="form-control">@Model.TextMessage</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" style="background-color: #1434A4;">
+                <h3 class="card-title text-white">Patient Attachments</h3>
+            </div>
+            <div class="card-body">
+                <div id="ctl00_ContentPlaceHolder1_OpenMessage1_DoctorAttachment1_pnlAttachment" class="card">
+                    <div class="card-header" style="background-color: #1434A4;">
+                        <h4 class="card-title text-white">Attachment</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+                            <table id="tblAttachments" class="table table-sm table-bordered table-hover table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th></th>
+                                        <th><strong>From:</strong></th>
+                                        <th><strong>Document Name:</strong></th>
+                                        <th><strong>Date:</strong></th>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" style="background-color: #1434A4;">
+                <h3 class="card-title text-white">
+                    Patient Visit History
+                    <p class="float-end">(This panel displays the Visit history of the patient (MMDDYYYY -SM/VC- Message Id))</p>
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                    <p id="ctl00_ContentPlaceHolder1_OpenMessage1_VisitHistory_pNoHistory" class="no_video">
+                        <span id="ctl00_ContentPlaceHolder1_OpenMessage1_VisitHistory_ltrNoAttachment">NO MESSAGE HISTORY</span>
+                    </p>
+                    <div id="ctl00_ContentPlaceHolder1_OpenMessage1_VisitHistory_pnlAttachment" class="col-lg-12" style="text-align: left">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="ctl00_ContentPlaceHolder1_OpenMessage1_pnlReasonForVisit">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center mb-4">(Check Box to track symptoms/chronic illness)</h3>
+                    <div class="row">
+                        <div id="ctl00_ContentPlaceHolder1_OpenMessage1_divRFV" class="col-lg-6" style="width:700px;">
+                            <h4 class="text-center">Reason for Visit</h4>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                                <tbody>
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#E8E8E8" style="padding: 8px;">
+                                            1.
+                                            <input id="ctl00_ContentPlaceHolder1_OpenMessage1_MessageReasonForVisit1_rprtQuestions_ctl00_chkQuest" type="checkbox" name="ctl00$ContentPlaceHolder1$OpenMessage1$MessageReasonForVisit1$rprtQuestions$ctl00$chkQuest">
+                                            What is your Chief Complaint or the Reason for Online Visit?&nbsp;
+
+
+                                        </td>
+                                    </tr>
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#FFFFFF" style="padding: 8px;">
+                                            <span style="color:Red"> &nbsp;&nbsp;&nbsp;&nbsp;Cough and Cold</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#E8E8E8" style="padding: 8px;">
+                                            2.
+                                            <input id="ctl00_ContentPlaceHolder1_OpenMessage1_MessageReasonForVisit1_rprtQuestions_ctl01_chkQuest" type="checkbox" name="ctl00$ContentPlaceHolder1$OpenMessage1$MessageReasonForVisit1$rprtQuestions$ctl01$chkQuest">
+                                            How many days have you been feeling this way?
+
+
+                                        </td>
+                                    </tr>
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#FFFFFF" style="padding: 8px;">
+                                            <span style="color:Red"> &nbsp;&nbsp;&nbsp;&nbsp;5</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#E8E8E8" style="padding: 8px;">
+                                            3.
+                                            <input id="ctl00_ContentPlaceHolder1_OpenMessage1_MessageReasonForVisit1_rprtQuestions_ctl02_chkQuest" type="checkbox" name="ctl00$ContentPlaceHolder1$OpenMessage1$MessageReasonForVisit1$rprtQuestions$ctl02$chkQuest">
+                                            Do you consider this to be mild, moderate or severe?
+
+
+                                        </td>
+                                    </tr>
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#FFFFFF" style="padding: 8px;">
+                                            <span style="color:Red"> &nbsp;&nbsp;&nbsp;&nbsp; Moderate</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#E8E8E8" style="padding: 8px;">
+                                            4.
+                                            <input id="ctl00_ContentPlaceHolder1_OpenMessage1_MessageReasonForVisit1_rprtQuestions_ctl03_chkQuest" type="checkbox" name="ctl00$ContentPlaceHolder1$OpenMessage1$MessageReasonForVisit1$rprtQuestions$ctl03$chkQuest">
+                                            What do you think might have caused this condition?
+
+
+                                        </td>
+                                    </tr>
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#FFFFFF" style="padding: 8px;">
+                                            <span style="color:Red"> &nbsp;&nbsp;&nbsp;&nbsp;Winters</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#E8E8E8" style="padding: 8px;">
+                                            5.
+                                            <input id="ctl00_ContentPlaceHolder1_OpenMessage1_MessageReasonForVisit1_rprtQuestions_ctl04_chkQuest" type="checkbox" name="ctl00$ContentPlaceHolder1$OpenMessage1$MessageReasonForVisit1$rprtQuestions$ctl04$chkQuest">
+                                            List current prescription or nonprescription treatments you have used for the condition?
+
+
+                                        </td>
+                                    </tr>
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#FFFFFF" style="padding: 8px;">
+                                            <span style="color:Red">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;Paracetamol
+                                                Zandu
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#E8E8E8" style="padding: 8px;">
+                                            6.
+                                            <input id="ctl00_ContentPlaceHolder1_OpenMessage1_MessageReasonForVisit1_rprtQuestions_ctl05_chkQuest" type="checkbox" name="ctl00$ContentPlaceHolder1$OpenMessage1$MessageReasonForVisit1$rprtQuestions$ctl05$chkQuest">
+                                            How is your Blood Pressure?
+
+
+                                        </td>
+                                    </tr>
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#FFFFFF" style="padding: 8px;">
+                                            <span style="color:Red"> &nbsp;&nbsp;&nbsp;&nbsp; High</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#E8E8E8" style="padding: 8px;">
+                                            7.
+                                            <input id="ctl00_ContentPlaceHolder1_OpenMessage1_MessageReasonForVisit1_rprtQuestions_ctl06_chkQuest" type="checkbox" name="ctl00$ContentPlaceHolder1$OpenMessage1$MessageReasonForVisit1$rprtQuestions$ctl06$chkQuest">
+                                            How is your Breathing?
+
+
+                                        </td>
+                                    </tr>
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#FFFFFF" style="padding: 8px;">
+                                            <span style="color:Red"> &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#E8E8E8" style="padding: 8px;">
+                                            9.
+                                            <input id="ctl00_ContentPlaceHolder1_OpenMessage1_MessageReasonForVisit1_rprtQuestions_ctl07_chkQuest" type="checkbox" name="ctl00$ContentPlaceHolder1$OpenMessage1$MessageReasonForVisit1$rprtQuestions$ctl07$chkQuest">
+                                            How is your Weight?
+
+
+                                        </td>
+                                    </tr>
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#FFFFFF" style="padding: 8px;">
+                                            <span style="color:Red"> &nbsp;&nbsp;&nbsp;&nbsp; Normal</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#E8E8E8" style="padding: 8px;">
+                                            10.
+                                            <input id="ctl00_ContentPlaceHolder1_OpenMessage1_MessageReasonForVisit1_rprtQuestions_ctl08_chkQuest" type="checkbox" name="ctl00$ContentPlaceHolder1$OpenMessage1$MessageReasonForVisit1$rprtQuestions$ctl08$chkQuest">
+                                            Approximate date of your last visit to doctor/clinic/ER?
+
+
+                                        </td>
+                                    </tr>
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#FFFFFF" style="padding: 8px;">
+                                            <span style="color:Red"> &nbsp;&nbsp;&nbsp;&nbsp;02/01/2025</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#E8E8E8" style="padding: 8px;">
+                                            11.
+                                            <input id="ctl00_ContentPlaceHolder1_OpenMessage1_MessageReasonForVisit1_rprtQuestions_ctl09_chkQuest" type="checkbox" name="ctl00$ContentPlaceHolder1$OpenMessage1$MessageReasonForVisit1$rprtQuestions$ctl09$chkQuest">
+                                            Approximately date of your last Online Visit?
+
+
+                                        </td>
+                                    </tr>
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#FFFFFF" style="padding: 8px;">
+                                            <span style="color:Red"> &nbsp;&nbsp;&nbsp;&nbsp;07/18/2024</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#E8E8E8" style="padding: 8px;">
+                                            12.
+                                            <input id="ctl00_ContentPlaceHolder1_OpenMessage1_MessageReasonForVisit1_rprtQuestions_ctl10_chkQuest" type="checkbox" name="ctl00$ContentPlaceHolder1$OpenMessage1$MessageReasonForVisit1$rprtQuestions$ctl10$chkQuest">
+                                            Symptoms (check all that apply)
+
+
+                                        </td>
+                                    </tr>
+                                    <tr class="textgrey">
+                                        <td align="left" valign="middle" bgcolor="#FFFFFF" style="padding: 8px;">
+                                            <span style="color:Red"> &nbsp;&nbsp;&nbsp;&nbsp; Fever, Cough, Sore throat, Sinus Infection, Headache</span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row mb-5 justify-content-center">
+            <div class="col-auto col-sm-auto col-md-auto col-lg-auto pe-2">
+                <input type="submit" name="ctl00$ContentPlaceHolder1$OpenMessage1$btnPrint" value="Print" onclick="javascript:printDiv('printablediv');" id="ctl00_ContentPlaceHolder1_OpenMessage1_btnPrint" class="btn btn-primary">
+            </div>
+            <div class="col-auto col-sm-auto col-md-auto col-lg-auto pe-2">
+                <input name="ctl00$ContentPlaceHolder1$OpenMessage1$Button1" type="button" id="ctl00_ContentPlaceHolder1_OpenMessage1_Button1" class="btn btn-primary" value="Back">
+            </div>
+
+            <div class="col-auto col-sm-auto col-md-auto col-lg-auto">
+                <input type="submit" name="ctl00$ContentPlaceHolder1$OpenMessage1$btnDiagnosis" value="Open EMR" id="ctl00_ContentPlaceHolder1_OpenMessage1_btnDiagnosis" class="btn btn-primary">
+            </div>
+        </div>
+        <div id="ctl00_ContentPlaceHolder1_OpenMessage1_divsent" class="row">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-3">
+            </div>
+        </div>
+    </div>
+</article>

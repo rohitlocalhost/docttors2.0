@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Docttors_portal.Common.procedureModels.GetpatientMessage>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_DoctorLayout.cshtml";
@@ -38,30 +38,75 @@
             </h4>
         </div>
         <div class="card-body ">
-            @*<p id="ctl00_ContentPlaceHolder1_WelcomeControl1_apptInfo">
-                <b>This is your appointment schedule for today:</b>
-            </p>*@
             <div class="table-responsive">
                 <div class="table-responsive hidden-xs">
                     <div id="ctl00_ContentPlaceHolder1_WelcomeControl1_doctable">
-                        <table id="tblList" class="table table-responsive hover">
+                        <table class="table table-sm table-hover">
                             <thead>
                                 <tr>
-                                    <th>Col 1</th>
-                                    <th>Col 2</th>
+                                    <th>
+                                        <a id="ctl00_ContentPlaceHolder1_WelcomeControl1_rptrSent_ctl00_header_from">From Patient</a>
+                                    </th>
+                                    <th>
+                                        <a id="ctl00_ContentPlaceHolder1_WelcomeControl1_rptrSent_ctl00_headerTo">Doctor/Provider</a>
+                                    </th>
+                                    <th>
+                                        <a id="ctl00_ContentPlaceHolder1_WelcomeControl1_rptrSent_ctl00_header_type">Type of Service</a>
+                                    </th>
+                                    <th>
+                                        <a id="ctl00_ContentPlaceHolder1_WelcomeControl1_rptrSent_ctl00_Header_symptom">Symptom</a>
+                                    </th>
+
+                                    <th>
+                                        <a id="ctl00_ContentPlaceHolder1_WelcomeControl1_rptrSent_ctl00_header_date">Date Received</a>
+                                    </th>
+                                    <th>
+                                        <a id="ctl00_ContentPlaceHolder1_WelcomeControl1_rptrSent_ctl00_header_appttime">Appt Time</a>
+                                    </th>
+                                    <th>
+                                        <a id="ctl00_ContentPlaceHolder1_WelcomeControl1_rptrSent_ctl00_header_mr">SSN#</a>
+                                    </th>
                                 </tr>
                             </thead>
-                            <tbody id="tbody">
-                                <tr>
-                                    <td>Col 1 Data</td>
-                                    <td>Col 20 Data</td>
-                                </tr>
-                                <tr>
-                                    <td>Col 10 Data</td>
-                                    <td>Col 15 Data</td>
-                                </tr>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.patientName
+                                        </td>
+                                        <td>
+                                            @item.ProviderName
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("OpenMessage", "Doctor", new {@visitId=item.Step1Id})">@item.ServiceType</a>
+                                        </td>
+                                        <td>
+                                            <span>@item.Symptoms</span>
+                                        </td>
+                                        <td>
+                                            <span>@item.DateTimeRequested</span>
+                                        </td>
+                                        <td>
+                                            <span>@item.AppointmentDate</span>
+                                        </td>
+                                        <td>
+                                            @item.SSN
+                                        </td>
+
+                                    </tr>
+                                }
                             </tbody>
                         </table>
+                        @if (Model.Count == 0)
+                        {
+                            <p>There are no messages in your Inbox folder.</p>
+                        }
+                        else
+                        {
+                            <a href="/Doctor/Inbox" class="btn btn-primary waves-effect waves-light w-35 mb-2" style="left: 50%;">More</a>
+                        }
                     </div>
                 </div>
             </div>
