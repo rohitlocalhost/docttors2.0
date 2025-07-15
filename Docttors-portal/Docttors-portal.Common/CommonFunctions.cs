@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Docttors_portal.Common.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -836,5 +839,68 @@ namespace Docttors_portal.Common
         }
 
         #endregion
+
+        #region Sending Email
+        public static bool SendEmail(MailModel _objModelMail)
+        {
+            MailMessage mail = new MailMessage();
+            mail.To.Add(_objModelMail.To);
+            mail.From = new MailAddress("rohitairi.airi@gmail.com", "Docttors");
+            mail.Subject = _objModelMail.Subject;
+            mail.Body = _objModelMail.Body;
+            mail.IsBodyHtml = true;
+            try
+            {
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.Credentials = new System.Net.NetworkCredential("rohitairi.airi@gmail.com", "yhogvkycbxdottyh");
+                smtp.EnableSsl = true;
+               // smtp.UseDefaultCredentials = false;
+                smtp.Send(mail);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+
+        public static bool SentRegiterationEmail(string toEmail,string userType)
+        {
+            MailModel mailModel = new MailModel();
+            mailModel.To = toEmail;
+            mailModel.From = "Docttors";
+            mailModel.Subject = userType+" Registeration";
+            mailModel.Body = "Welcome to Docttors.com, Now you can access the portal.";
+            return SendEmail(mailModel);
+        }
+        #endregion
+        public static string GenrateRandomString()
+        {
+            Random rand = new Random();
+
+            // Choosing the size of string
+            // Using Next() string
+            int stringlen = rand.Next(4, 10);
+            int randValue;
+            string str = "";
+            char letter;
+            for (int i = 0; i < stringlen; i++)
+            {
+
+                // Generating a random number.
+                randValue = rand.Next(0, 26);
+
+                // Generating random character by converting
+                // the random number into character.
+                letter = Convert.ToChar(randValue + 65);
+
+                // Appending the letter to string.
+                str = str + letter;
+            }
+            return str;
+        } 
     }
 }

@@ -11,6 +11,7 @@ namespace Docttors_portal.Common.procedureModels
         public int Step1Id { get; set; }
         public int Step2Id { get; set; }
         public string Status { get; set; }
+        public string patientName { get; set; }
         public string ProviderName { get; set; }
         public string ServiceType { get; set; }
         public string Symptoms { get; set; }
@@ -18,6 +19,8 @@ namespace Docttors_portal.Common.procedureModels
         public string AppointmentDate { get; set; }
         public string DateTreated { get; set; }
         public string Amount { get; set; }
+        public string SSN { get; set; }
+        public bool IsTreated { get; set; } 
 
     }
 }

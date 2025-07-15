@@ -62,7 +62,7 @@
                                 <tr data-id="1" style="cursor: pointer;">
                                     <td data-field="id" style="width: 80px"><button type="button" class="btn btn-warning waves-effect btn-label waves-light"><i class="bx bx-loader label-icon"></i> Pending</button></td>
                                     <td data-field="name">@item.ProviderName</td>
-                                    <td data-field="age"><a href="">@item.ServiceType</a></td>
+                                    <td data-field="age"><a href="@Url.Action("MessageDetails",new { @step1Id = item.Step1Id })">@item.ServiceType</a></td>
                                     <td data-field="gender">@item.Symptoms</td>
                                     <td>@item.DateTimeRequested</td>
                                     <td>@item.AppointmentDate</td>
@@ -74,19 +74,6 @@
                                 </tr>
 
                             }
-                            @*<tr data-id="1" style="cursor: pointer;">
-                                    <td data-field="id" style="width: 80px"><button type="button" class="btn btn-warning waves-effect btn-label waves-light"><i class="bx bx-loader label-icon"></i> Pending</button></td>
-                                    <td data-field="name">DoctorS Second, ANP</td>
-                                    <td data-field="age"><a href="">Video Email Visit</a></td>
-                                    <td data-field="gender">Low Blood Pressure</td>
-                                    <td>12/31/2022 01:18:53 PM CST</td>
-                                    <td>12/31/2022 05:18:53 PM CST</td>
-                                    <td>01/27/2023 04:41:06 AM</td>
-                                    <td>$0.00</td>
-                                    <td style="width: 100px">
-                                        <a class="btn btn-outline-secondary btn-sm edit" title="Edit">CCR</a>
-                                    </td>
-                                </tr>*@
 
                     </table>
                     <a href="/Patient/Message" class="btn btn-primary waves-effect waves-light w-35 mb-2" style="left: 50%;">More</a>

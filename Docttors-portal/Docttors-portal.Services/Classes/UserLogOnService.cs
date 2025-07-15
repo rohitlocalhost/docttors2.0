@@ -72,7 +72,10 @@ namespace Docttors_portal.Services.Classes
         {
             return _userRepository.GetSingle(x => x.Id == userId);
         }
-
+        public AppUser GetUserDetailsByEmailId(string emailId)
+        {
+            return _userRepository.GetSingle(x => x.EmailId == emailId);
+        }
         public int AddNewUser(UserRegistrationModel userRegistrationModel)
         {
             try
@@ -115,6 +118,20 @@ namespace Docttors_portal.Services.Classes
                 throw;
             }
         }
+
+
+        public bool SentNewPassword(AppUser userInfo)
+        {
+            string updatedPassword = CommonFunctions.GenrateRandomString();
+            MailModel mailModel = new MailModel();
+            mailModel.To = userInfo.EmailId;
+            mailModel.Subject = "New Password";
+            mailModel.Body = "Your new password is =" + updatedPassword;
+            userInfo.Password = Utilities.EncryptPassword(updatedPassword);
+            _userRepository.Update(userInfo);
+            return CommonFunctions.SendEmail(mailModel);
+
+        }
         #endregion
         #region Password
         public bool ChangePassword(ChangePasswordModel changePasswordModel)
@@ -147,6 +164,7 @@ namespace Docttors_portal.Services.Classes
             else
                 return false;
         }
+
         #endregion
 
 

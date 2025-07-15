@@ -23,14 +23,18 @@
         <div>
             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "error" })
         </div>
-        <div class="checkbox">
+        <div class="">
             @Html.CheckBoxFor(m => m.RememberMe)
             @Html.Label("Remember Me", new { @for = "RememberMe" })
+            <span style="margin:0 0 0 59px">@Html.ActionLink("ForgetPassword", "ForgetPassword")</span>
+        </div>
+        <div>
+
         </div>
         <input type="submit" value="Submit" class="btn btn-primary" />
         <br />
         <br />
-        @if (ViewBag.Message!=null && ViewBag.Message != "")
+        @if (ViewBag.Message != null && ViewBag.Message != "")
         {
             <div class="alert alert-danger">
                 <strong>Error!</strong>
